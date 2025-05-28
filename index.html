@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lit Button Demo</title>
+  <script type="module" src="/src/lit-button.ts"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .demo-section {
+      margin-bottom: 2rem;
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lit Button Component Demo</h1>
+
+  <div class="demo-section">
+    <h2>Variants</h2>
+    <div class="button-grid">
+      <lit-button>Primary Button</lit-button>
+      <lit-button variant="secondary">Secondary Button</lit-button>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Sizes</h2>
+    <div class="button-grid">
+      <lit-button size="small">Small Button</lit-button>
+      <lit-button size="medium">Medium Button</lit-button>
+      <lit-button size="large">Large Button</lit-button>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>States</h2>
+    <div class="button-grid">
+      <lit-button disabled>Disabled Button</lit-button>
+      <lit-button type="submit">Submit Button</lit-button>
+      <lit-button type="reset">Reset Button</lit-button>
+    </div>
+  </div>
+</body>
+</html>
