@@ -1,16 +1,16 @@
-import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { buttonStyles } from './lit-button.styles.js';
+import { LitElement, html, PropertyDeclaration } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { buttonStyles } from "./lit-button.styles.js";
 
-@customElement('lit-button')
+@customElement("lit-button")
 export class LitButton extends LitElement {
   static styles = buttonStyles;
 
-  @property({ reflect: true, useDefault: true })
-  variant: 'primary' | 'secondary' = 'primary';
+  @property({ reflect: true, useDefault: true } as PropertyDeclaration)
+  variant: "primary" | "secondary" = "primary";
 
-  @property({ reflect: true, useDefault: true })
-  size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ reflect: true, useDefault: true } as PropertyDeclaration)
+  size: "small" | "medium" | "large" = "medium";
 
   // Native button properties are automatically included
   [key: string]: any;
