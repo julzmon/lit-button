@@ -29,21 +29,6 @@ export class LitButton extends LitElement {
   @property({ type: String })
   form?: string;
 
-  @property({ type: String })
-  formaction?: string;
-
-  @property({ type: String })
-  formenctype?: 'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain';
-
-  @property({ type: String })
-  formmethod?: 'get' | 'post';
-
-  @property({ type: Boolean })
-  formnovalidate = false;
-
-  @property({ type: String })
-  formtarget?: '_self' | '_blank' | '_parent' | '_top';
-
   render() {
     return html`
       <button
@@ -54,11 +39,6 @@ export class LitButton extends LitElement {
         name=${this.name || ''}
         value=${this.value || ''}
         form=${this.form || ''}
-        formaction=${this.formaction || ''}
-        formenctype=${ifDefined(this.formenctype)}
-        formmethod=${ifDefined(this.formmethod)}
-        ?formnovalidate=${this.formnovalidate}
-        formtarget=${ifDefined(this.formtarget)}
       >
         <slot></slot>
       </button>
