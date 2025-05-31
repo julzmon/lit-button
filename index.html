@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lit Button Demo</title>
-  <script type="module" src="/src/lit-button.ts"></script>
+  <script type="module" src="/src/lit-button.component.ts"></script>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
       padding: 2rem;
-      max-width: 800px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     .demo-section {
@@ -22,24 +22,57 @@
       margin-top: 1rem;
     }
   </style>
+  <link rel="stylesheet" href="./tokens.css">
 </head>
-<body>
+<body data-mode="light">
   <h1>Lit Button Component Demo</h1>
 
   <div class="demo-section">
-    <h2>Variants</h2>
+    <h2>Priorities</h2>
     <div class="button-grid">
-      <lit-button>Primary Button</lit-button>
-      <lit-button variant="secondary">Secondary Button</lit-button>
+      <lit-button>Default Button</lit-button>
+      <lit-button priority="primary">Primary Button</lit-button>
+      <lit-button priority="secondary">Primary Button</lit-button>
+      <lit-button priority="tertiary">Primary Button</lit-button>
+    </div>
+  </div>
+
+  <div class="demo-section">
+    <h2>Colors & Variants</h2>
+    <div class="button-grid">
+      <lit-button color="neutral" variant="solid">Default Button</lit-button>
+      <lit-button color="neutral" variant="outline">Default Button</lit-button>
+      <lit-button color="neutral" variant="transparent">Default Button</lit-button>
+    </div>
+    <div class="button-grid">
+      <lit-button color="negative" variant="solid">Default Button</lit-button>
+      <lit-button color="negative" variant="outline">Default Button</lit-button>
+      <lit-button color="negative" variant="transparent">Default Button</lit-button>
+    </div>
+    <div class="button-grid">
+      <lit-button color="positive" variant="solid">Default Button</lit-button>
+      <lit-button color="positive" variant="outline">Default Button</lit-button>
+      <lit-button color="positive" variant="transparent">Default Button</lit-button>
+    </div>
+    <div class="button-grid">
+      <lit-button color="info" variant="solid">Default Button</lit-button>
+      <lit-button color="info" variant="outline">Default Button</lit-button>
+      <lit-button color="info" variant="transparent">Default Button</lit-button>
+    </div>
+    <div class="button-grid">
+      <lit-button color="warning" variant="solid">Default Button</lit-button>
+      <lit-button color="warning" variant="outline">Default Button</lit-button>
+      <lit-button color="warning" variant="transparent">Default Button</lit-button>
     </div>
   </div>
 
   <div class="demo-section">
     <h2>Sizes</h2>
     <div class="button-grid">
-      <lit-button size="small">Small Button</lit-button>
-      <lit-button size="medium">Medium Button</lit-button>
-      <lit-button size="large">Large Button</lit-button>
+      <lit-button size="xs">Extra Small Button</lit-button>
+      <lit-button size="sm">Small Button</lit-button>
+      <lit-button size="md">Medium Button</lit-button>
+      <lit-button size="lg">Large Button</lit-button>
     </div>
   </div>
 

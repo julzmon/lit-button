@@ -1,6 +1,6 @@
 import { LitElement, html, PropertyDeclaration } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { buttonStyles } from "./lit-button.styles.js";
 
 @customElement("lit-button")
@@ -8,14 +8,22 @@ export class LitButton extends LitElement {
   static styles = buttonStyles;
   static shadowRootOptions: ShadowRootInit = { mode: 'open' as ShadowRootMode, delegatesFocus: true };
 
-  @property({ reflect: true, useDefault: true } as PropertyDeclaration)
-  variant: "primary" | "secondary" = "primary";
+  @property({ type: String, reflect: true})
+  priority?: "primary" | "secondary" | "tertiary";
+
+  @property ({ type: String, reflect: true })
+  color?: "neutral" | "info" | "positive" | "negative" | "warning";
+
+  @property ({ type: String, reflect: true})
+  variant?: "solid" | "outline" | "transparent" | "link";
 
   @property({ reflect: true, useDefault: true } as PropertyDeclaration)
-  size: "small" | "medium" | "large" = "medium";
+  size: "xs" | "sm" | "md" | "lg" = "md";
 
   @property({ type: String })
   type: HTMLButtonElement['type'] = 'button';
+
+  // Native props
 
   @property({ type: Boolean })
   disabled = false;
@@ -30,12 +38,18 @@ export class LitButton extends LitElement {
   form?: string;
 
   render() {
+    const classes = {
+      [this.priority ?? '']: !!this.priority,
+      [this.color ?? '']: !!this.color,
+      [this.variant ?? '']: !!this.variant,
+      [this.size ?? '']: !!this.size,
+    };
+
     return html`
       <button
+        class=${classMap(classes)}
         ?disabled=${this.disabled}
         type=${this.type}
-        variant=${this.variant}
-        size=${this.size}
         name=${this.name || ''}
         value=${this.value || ''}
         form=${this.form || ''}
@@ -43,5 +57,10 @@ export class LitButton extends LitElement {
         <slot></slot>
       </button>
     `;
+  }
+}
+declare global {
+  interface HTMLElementTagNameMap {
+    'lit-button': LitButton;
   }
 }
