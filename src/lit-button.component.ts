@@ -11,8 +11,8 @@ export class LitButton extends LitElement {
   @property({ type: String, reflect: true})
   priority?: "primary" | "secondary" | "tertiary";
 
-  @property ({ type: String, reflect: true })
-  color?: "neutral" | "info" | "positive" | "negative" | "warning";
+  @property({ type: String, reflect: true })
+  color?: "neutral" | "positive" | "negative" | "warning" | "info";
 
   @property ({ type: String, reflect: true})
   variant?: "solid" | "outline" | "transparent" | "link";
@@ -39,10 +39,14 @@ export class LitButton extends LitElement {
 
   render() {
     const classes = {
-      [this.priority ?? '']: !!this.priority,
-      [this.color ?? '']: !!this.color,
-      [this.variant ?? '']: !!this.variant,
-      [this.size ?? '']: !!this.size,
+      [this.size as string]: true,
+      // Only apply color and variant if no priority is set
+      ...(this.priority ? {} : {
+        ...(this.color && { [this.color]: true }),
+        ...(this.variant && { [this.variant]: true })
+      }),
+      // Priority always takes precedence
+      ...(this.priority && { [this.priority]: true })
     };
 
     return html`
