@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lit Button Demo</title>
-    <script type="module" src="/src/lit-button.component.ts"></script>
+    <script type="module" src="/src/kds-button.component.ts"></script>
     <style>
       body {
         font-family: system-ui, -apple-system, sans-serif;
@@ -31,74 +31,74 @@
     <div class="demo-section">
       <h2>Priorities</h2>
       <div class="button-grid">
-        <lit-button>Default Button</lit-button>
-        <lit-button priority="primary">Primary Button</lit-button>
-        <lit-button priority="secondary">Secondary Button</lit-button>
-        <lit-button priority="tertiary">Tertiary Button</lit-button>
-        <lit-button priority="link">Link Button</lit-button>
+        <kds-button>Default Button</kds-button>
+        <kds-button priority="primary">Primary Button</kds-button>
+        <kds-button priority="secondary">Secondary Button</kds-button>
+        <kds-button priority="tertiary">Tertiary Button</kds-button>
+        <kds-button priority="link">Link Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
       <h2>Colors & Variants</h2>
       <div class="button-grid">
-        <lit-button color="neutral" variant="solid">Solid Button</lit-button>
-        <lit-button color="neutral" variant="outline">Outline Button</lit-button>
-        <lit-button color="neutral" variant="transparent">Transparent Button</lit-button>
+        <kds-button color="neutral" variant="solid">Solid Button</kds-button>
+        <kds-button color="neutral" variant="outline">Outline Button</kds-button>
+        <kds-button color="neutral" variant="transparent">Transparent Button</kds-button>
       </div>
       <div class="button-grid">
-        <lit-button color="negative" variant="solid">Solid Button</lit-button>
-        <lit-button color="negative" variant="outline">Outline Button</lit-button>
-        <lit-button color="negative" variant="transparent">Transparent Button</lit-button>
+        <kds-button color="negative" variant="solid">Solid Button</kds-button>
+        <kds-button color="negative" variant="outline">Outline Button</kds-button>
+        <kds-button color="negative" variant="transparent">Transparent Button</kds-button>
       </div>
       <div class="button-grid">
-        <lit-button color="positive" variant="solid">Solid Button</lit-button>
-        <lit-button color="positive" variant="outline">Outline Button</lit-button>
-        <lit-button color="positive" variant="transparent">Transparent Button</lit-button>
+        <kds-button color="positive" variant="solid">Solid Button</kds-button>
+        <kds-button color="positive" variant="outline">Outline Button</kds-button>
+        <kds-button color="positive" variant="transparent">Transparent Button</kds-button>
       </div>
       <div class="button-grid">
-        <lit-button color="info" variant="solid">Solid Button</lit-button>
-        <lit-button color="info" variant="outline">Outline Button</lit-button>
-        <lit-button color="info" variant="transparent">Transparent Button</lit-button>
+        <kds-button color="info" variant="solid">Solid Button</kds-button>
+        <kds-button color="info" variant="outline">Outline Button</kds-button>
+        <kds-button color="info" variant="transparent">Transparent Button</kds-button>
       </div>
       <div class="button-grid">
-        <lit-button color="warning" variant="solid">Solid Button</lit-button>
-        <lit-button color="warning" variant="outline">Outline Button</lit-button>
-        <lit-button color="warning" variant="transparent">Transparent Button</lit-button>
+        <kds-button color="warning" variant="solid">Solid Button</kds-button>
+        <kds-button color="warning" variant="outline">Outline Button</kds-button>
+        <kds-button color="warning" variant="transparent">Transparent Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
       <h2>Sizes</h2>
       <div class="button-grid">
-        <lit-button size="xs">Extra Small Button</lit-button>
-        <lit-button size="sm">Small Button</lit-button>
-        <lit-button size="md">Medium Button</lit-button>
-        <lit-button size="lg">Large Button</lit-button>
+        <kds-button size="xs">Extra Small Button</kds-button>
+        <kds-button size="sm">Small Button</kds-button>
+        <kds-button size="md">Medium Button</kds-button>
+        <kds-button size="lg">Large Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
       <h2>States</h2>
       <div class="button-grid">
-        <lit-button disabled="disabled">Disabled Button</lit-button>
-        <lit-button id="focus-button">Focus Button</lit-button>
-        <lit-button type="submit">Submit Button</lit-button>
-        <lit-button type="reset">Reset Button</lit-button>
+        <kds-button disabled="disabled">Disabled Button</kds-button>
+        <kds-button id="focus-button">Focus Button</kds-button>
+        <kds-button type="submit">Submit Button</kds-button>
+        <kds-button type="reset">Reset Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
       <h2>Anchor</h2>
       <div class="button-grid">
-        <lit-button href="#">Anchor Button</lit-button>
+        <kds-button href="#">Anchor Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
       <h2>Slots</h2>
       <div class="button-grid">
-        <lit-button>
+        <kds-button>
           <span slot="start">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewbox="0 0 16 16">
               <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -108,13 +108,13 @@
               <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
             </svg>
           </span>
-        </lit-button>
+        </kds-button>
       </div>
 
       <div class="demo-section">
         <h2>Full width</h2>
         <div class="button-grid">
-          <lit-button href="#"  style="width: 100%">Full Width Button</lit-button>
+          <kds-button href="#"  style="width: 100%">Full Width Button</kds-button>
         </div>
       </div>
     </div>

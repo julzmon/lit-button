@@ -2,7 +2,7 @@ import { LitElement, html, PropertyDeclaration } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { buttonStyles } from "./lit-button.styles.js";
+import { buttonStyles } from "./kds-button.styles.js";
 
 /**
  * @summary Buttons summary.
@@ -40,8 +40,8 @@ import { buttonStyles } from "./lit-button.styles.js";
  * @csspart end - The container that wraps the end.
  */
 
-@customElement("lit-button")
-export class LitButton extends LitElement {
+@customElement("kds-button")
+export class KdsButton extends LitElement {
   static styles = buttonStyles;
   static shadowRootOptions: ShadowRootInit = { mode: 'open' as ShadowRootMode, delegatesFocus: true };
 
@@ -133,6 +133,6 @@ export class LitButton extends LitElement {
 }
 declare global {
   interface HTMLElementTagNameMap {
-    'lit-button': LitButton;
+    'kds-button': KdsButton;
   }
 }

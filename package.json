@@ -1,5 +1,5 @@
 {
-  "name": "lit-button",
+  "name": "kds-button",
   "version": "1.0.0",
   "description": "A simple button component built with Lit",
   "type": "module",
