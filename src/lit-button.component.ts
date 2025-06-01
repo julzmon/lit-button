@@ -1,7 +1,29 @@
 import { LitElement, html, PropertyDeclaration } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { buttonStyles } from "./lit-button.styles.js";
+
+/**
+ * @summary Buttons summary.
+ * @documentation URL
+ * @status stable
+ * @since 2.0
+ *
+ * @dependency kds-spinner
+ *
+ * @event kds-blur - Emitted when the button loses focus.
+ * @event kds-focus - Emitted when the button gains focus.
+ * @event kds-invalid - Emitted when the form control has been checked for validity and its constraints aren't satisfied.
+ *
+ * @slot - The button's label.
+ * @slot prefix - A presentational prefix icon or similar element.
+ * @slot suffix - A presentational suffix icon or similar element.
+ *
+ * @csspart base - The button's label.
+ * @csspart prefix - The container that wraps the prefix.
+ * @csspart suffix - The container that wraps the suffix.
+ */
 
 @customElement("lit-button")
 export class LitButton extends LitElement {
@@ -23,6 +45,9 @@ export class LitButton extends LitElement {
   @property({ type: String })
   type: HTMLButtonElement['type'] = 'button';
 
+  @property({ type: String })
+  url?: string;
+
   // Native props
 
   @property({ type: Boolean })
@@ -36,6 +61,7 @@ export class LitButton extends LitElement {
 
   @property({ type: String })
   form?: string;
+
 
   render() {
     const classes = {
@@ -51,12 +77,14 @@ export class LitButton extends LitElement {
 
     return html`
       <button
+        part="base"
         class=${classMap(classes)}
         ?disabled=${this.disabled}
         type=${this.type}
-        name=${this.name || ''}
-        value=${this.value || ''}
-        form=${this.form || ''}
+        name=${ifDefined(this.name)}
+        value=${ifDefined(this.value)}
+        form=${ifDefined(this.form)}
+        url=${ifDefined(this.url)}
       >
         <slot></slot>
       </button>
