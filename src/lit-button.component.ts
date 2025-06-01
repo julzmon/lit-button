@@ -46,7 +46,7 @@ export class LitButton extends LitElement {
   type: HTMLButtonElement['type'] = 'button';
 
   @property({ type: String })
-  url?: string;
+  href?: string;
 
   // Native props
 
@@ -64,7 +64,9 @@ export class LitButton extends LitElement {
 
 
   render() {
+    // Build class map for styling based on component properties
     const classes = {
+      button: true,
       [this.size as string]: true,
       // Only apply color and variant if no priority is set
       ...(this.priority ? {} : {
@@ -75,16 +77,31 @@ export class LitButton extends LitElement {
       ...(this.priority && { [this.priority]: true })
     };
 
+    // Render anchor tag if href is provided
+    if (this.href) {
+      return html`
+        <a
+          part="base"
+          class=${classMap(classes)}
+          ?disabled=${this.disabled}
+          href=${this.href}
+        >
+          <slot></slot>
+        </a>
+      `;
+    }
+
+    // Render button tag with form-related attributes
     return html`
       <button
         part="base"
+        role="button"
         class=${classMap(classes)}
         ?disabled=${this.disabled}
         type=${this.type}
         name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}
         form=${ifDefined(this.form)}
-        url=${ifDefined(this.url)}
       >
         <slot></slot>
       </button>

@@ -8,7 +8,7 @@ export const buttonStyles = css`
     cursor: pointer;
   }
 
-  button {
+  .button {
     --kds-btn-height: var(--mod-btn-height, var(--kds-button-input-height-md));
     --kds-btn-min-width: var(--mod-btn-min-width, auto);
     --kds-btn-padding-inline: var(
