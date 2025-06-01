@@ -9,7 +9,7 @@
       body {
         font-family: system-ui, -apple-system, sans-serif;
         padding: 2rem;
-        max-width: 1200px;
+        max-width: 1024px;
         margin: 0 auto;
       }
       .demo-section {
@@ -17,9 +17,10 @@
       }
       .button-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         gap: 1rem;
         margin-top: 1rem;
+        justify-items: start;
       }
     </style>
     <link rel="stylesheet" href="./tokens.css">
@@ -108,6 +109,13 @@
             </svg>
           </span>
         </lit-button>
+      </div>
+
+      <div class="demo-section">
+        <h2>Full width</h2>
+        <div class="button-grid">
+          <lit-button href="#"  style="width: 100%">Full Width Button</lit-button>
+        </div>
       </div>
     </div>
     <script>

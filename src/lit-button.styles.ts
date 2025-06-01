@@ -58,12 +58,14 @@ export const buttonStyles = css`
     justify-content: center;
     box-sizing: border-box;
     margin: 0;
+    width: 100%;
+    white-space: nowrap;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: var(--kds-btn-line-height);
     text-decoration: none;
     text-transform: none;
-    vertical-align: top;
+    vertical-align: middle;
     -webkit-appearance: button;
     border-style: solid;
     transition: var(--kds-animation-duration-normal) background-color,
