@@ -20,9 +20,24 @@ import { buttonStyles } from "./lit-button.styles.js";
  * @slot prefix - A presentational prefix icon or similar element.
  * @slot suffix - A presentational suffix icon or similar element.
  *
+ * @cssprop --mod-btn-height
+ * @cssprop --mod-btn-min-width
+ * @cssprop --mod-btn-padding-inline
+ * @cssprop --mod-btn-gap
+ * @cssprop --mod-btn-color
+ * @cssprop --mod-btn-color-hover
+ * @cssprop --mod-btn-font-size
+ * @cssprop --mod-btn-line-height
+ * @cssprop --mod-btn-border-width
+ * @cssprop --mod-btn-border-radius
+ * @cssprop --mod-btn-border-color
+ * @cssprop --mod-btn-border-color-hover
+ * @cssprop --mod-btn-background-color
+ * @cssprop --mod-btn-background-color-hover
+ *
  * @csspart base - The button's label.
- * @csspart prefix - The container that wraps the prefix.
- * @csspart suffix - The container that wraps the suffix.
+ * @csspart start - The container that wraps the start.
+ * @csspart end - The container that wraps the end.
  */
 
 @customElement("lit-button")
@@ -86,9 +101,9 @@ export class LitButton extends LitElement {
           ?disabled=${this.disabled}
           href=${this.href}
         >
-          <slot name="start"></slot>
+          <slot name="start" part="start"></slot>
           <slot></slot>
-          <slot name="end"></slot>
+          <slot name="end" part="end"></slot>
         </a>
       `;
     }
@@ -105,9 +120,9 @@ export class LitButton extends LitElement {
         value=${ifDefined(this.value)}
         form=${ifDefined(this.form)}
       >
-          <slot name="start"></slot>
+          <slot name="start" part="start"></slot>
           <slot></slot>
-          <slot name="end"></slot>
+          <slot name="end" part="end"></slot>
       </button>
     `;
   }

@@ -46,7 +46,7 @@ export const buttonStyles = css`
       var(--kds-bg-neutral-emphasis-hover)
     );
     --kds-btn-text-decoration-hover: var(--kds-btn-text-decoration-hover, none);
-    --kds-btn-opacity-disabled: var(--mod-btn-opacity-disabled, 1);
+    --kds-btn-opacity-disabled: 1;
 
     cursor: pointer;
     user-select: none;
@@ -97,7 +97,12 @@ export const buttonStyles = css`
     }
 
     &:focus {
-      outline: none;
+      // outline: none;
+    }
+
+    &:focus-visible {
+      outline: 4px;
+      outline-offset: 2px;
     }
 
     &:disabled {
