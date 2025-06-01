@@ -86,7 +86,9 @@ export class LitButton extends LitElement {
           ?disabled=${this.disabled}
           href=${this.href}
         >
+          <slot name="start"></slot>
           <slot></slot>
+          <slot name="end"></slot>
         </a>
       `;
     }
@@ -103,7 +105,9 @@ export class LitButton extends LitElement {
         value=${ifDefined(this.value)}
         form=${ifDefined(this.form)}
       >
-        <slot></slot>
+          <slot name="start"></slot>
+          <slot></slot>
+          <slot name="end"></slot>
       </button>
     `;
   }

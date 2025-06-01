@@ -15,6 +15,7 @@ export const buttonStyles = css`
       --mod-btn-padding-inline,
       var(--kds-spacing-md)
     );
+    --kds-btn-gap: var(--mod-btn-gap, var(--kds-spacing-sm));
     --kds-btn-color: var(--mod-btn-color, var(--kds-fg-on-emphasis));
     --kds-btn-color-hover: var(
       --mod-btn-color-hover,
@@ -52,6 +53,7 @@ export const buttonStyles = css`
     position: relative;
     overflow: visible;
     display: inline-flex;
+    gap: var(--kds-btn-gap);
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -87,7 +89,7 @@ export const buttonStyles = css`
     -webkit-user-select: none;
     opacity: var(--kds-btn-opacity-disabled, 1);
 
-    &:hover:enabled {
+    &:hover:not(:disabled) {
       color: var(--kds-btn-color-hover);
       background-color: var(--kds-btn-bg-color-hover);
       border-color: var(--kds-btn-border-color-hover);
@@ -268,5 +270,13 @@ export const buttonStyles = css`
       --kds-btn-font-size: var(--kds-font-size-lg);
       --kds-btn-padding-inline: var(--kds-spacing-lg);
     }
+  }
+
+  ::slotted([slot="start"]),
+  ::slotted([slot="end"]) {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    pointer-events: none;
   }
 `;
