@@ -1,107 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lit Button Demo</title>
-  <script type="module" src="/src/lit-button.component.ts"></script>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .demo-section {
-      margin-bottom: 2rem;
-    }
-    .button-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-  </style>
-  <link rel="stylesheet" href="./tokens.css">
-</head>
-<body data-mode="light">
-  <h1>Lit Button Component Demo</h1>
-
-  <div class="demo-section">
-    <h2>Priorities</h2>
-    <div class="button-grid">
-      <lit-button>Default Button</lit-button>
-      <lit-button priority="primary">Primary Button</lit-button>
-      <lit-button priority="secondary">Primary Button</lit-button>
-      <lit-button priority="tertiary">Primary Button</lit-button>
-      <lit-button priority="link">Primary Button</lit-button>
-    </div>
-  </div>
-
-  <div class="demo-section">
-    <h2>Colors & Variants</h2>
-    <div class="button-grid">
-      <lit-button color="neutral" variant="solid">Default Button</lit-button>
-      <lit-button color="neutral" variant="outline">Default Button</lit-button>
-      <lit-button color="neutral" variant="transparent">Default Button</lit-button>
-    </div>
-    <div class="button-grid">
-      <lit-button color="negative" variant="solid">Default Button</lit-button>
-      <lit-button color="negative" variant="outline">Default Button</lit-button>
-      <lit-button color="negative" variant="transparent">Default Button</lit-button>
-    </div>
-    <div class="button-grid">
-      <lit-button color="positive" variant="solid">Default Button</lit-button>
-      <lit-button color="positive" variant="outline">Default Button</lit-button>
-      <lit-button color="positive" variant="transparent">Default Button</lit-button>
-    </div>
-    <div class="button-grid">
-      <lit-button color="info" variant="solid">Default Button</lit-button>
-      <lit-button color="info" variant="outline">Default Button</lit-button>
-      <lit-button color="info" variant="transparent">Default Button</lit-button>
-    </div>
-    <div class="button-grid">
-      <lit-button color="warning" variant="solid">Default Button</lit-button>
-      <lit-button color="warning" variant="outline">Default Button</lit-button>
-      <lit-button color="warning" variant="transparent">Default Button</lit-button>
-    </div>
-  </div>
-
-  <div class="demo-section">
-    <h2>Sizes</h2>
-    <div class="button-grid">
-      <lit-button size="xs">Extra Small Button</lit-button>
-      <lit-button size="sm">Small Button</lit-button>
-      <lit-button size="md">Medium Button</lit-button>
-      <lit-button size="lg">Large Button</lit-button>
-    </div>
-  </div>
-
-  <div class="demo-section">
-    <h2>States</h2>
-    <div class="button-grid">
-      <lit-button disabled>Disabled Button</lit-button>
-      <lit-button type="submit">Submit Button</lit-button>
-      <lit-button type="reset">Reset Button</lit-button>
-    </div>
-  </div>
-
-  <div class="demo-section">
-    <h2>Anchor</h2>
-    <div class="button-grid">
-      <lit-button href="#">Default Button</lit-button>
-    </div>
-  </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lit Button Demo</title>
+    <script type="module" src="/src/lit-button.component.ts"></script>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .demo-section {
+        margin-bottom: 2rem;
+      }
+      .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+    </style>
+    <link rel="stylesheet" href="./tokens.css">
+  </head>
+  <body data-mode="light">
+    <h1>Lit Button Component Demo</h1>
 
     <div class="demo-section">
-    <h2>Slots</h2>
-    <div class="button-grid">
-      <lit-button><span slot="start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-</svg></span>Default Button<span slot="end"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-</svg></span></lit-button>
+      <h2>Priorities</h2>
+      <div class="button-grid">
+        <lit-button>Default Button</lit-button>
+        <lit-button priority="primary">Primary Button</lit-button>
+        <lit-button priority="secondary">Secondary Button</lit-button>
+        <lit-button priority="tertiary">Tertiary Button</lit-button>
+        <lit-button priority="link">Link Button</lit-button>
+      </div>
     </div>
-  </div>
-</body>
+
+    <div class="demo-section">
+      <h2>Colors & Variants</h2>
+      <div class="button-grid">
+        <lit-button color="neutral" variant="solid">Solid Button</lit-button>
+        <lit-button color="neutral" variant="outline">Outline Button</lit-button>
+        <lit-button color="neutral" variant="transparent">Transparent Button</lit-button>
+      </div>
+      <div class="button-grid">
+        <lit-button color="negative" variant="solid">Solid Button</lit-button>
+        <lit-button color="negative" variant="outline">Outline Button</lit-button>
+        <lit-button color="negative" variant="transparent">Transparent Button</lit-button>
+      </div>
+      <div class="button-grid">
+        <lit-button color="positive" variant="solid">Solid Button</lit-button>
+        <lit-button color="positive" variant="outline">Outline Button</lit-button>
+        <lit-button color="positive" variant="transparent">Transparent Button</lit-button>
+      </div>
+      <div class="button-grid">
+        <lit-button color="info" variant="solid">Solid Button</lit-button>
+        <lit-button color="info" variant="outline">Outline Button</lit-button>
+        <lit-button color="info" variant="transparent">Transparent Button</lit-button>
+      </div>
+      <div class="button-grid">
+        <lit-button color="warning" variant="solid">Solid Button</lit-button>
+        <lit-button color="warning" variant="outline">Outline Button</lit-button>
+        <lit-button color="warning" variant="transparent">Transparent Button</lit-button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Sizes</h2>
+      <div class="button-grid">
+        <lit-button size="xs">Extra Small Button</lit-button>
+        <lit-button size="sm">Small Button</lit-button>
+        <lit-button size="md">Medium Button</lit-button>
+        <lit-button size="lg">Large Button</lit-button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>States</h2>
+      <div class="button-grid">
+        <lit-button disabled="disabled">Disabled Button</lit-button>
+        <lit-button id="focus-button">Focus Button</lit-button>
+        <lit-button type="submit">Submit Button</lit-button>
+        <lit-button type="reset">Reset Button</lit-button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Anchor</h2>
+      <div class="button-grid">
+        <lit-button href="#">Anchor Button</lit-button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Slots</h2>
+      <div class="button-grid">
+        <lit-button>
+          <span slot="start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewbox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+            </svg>
+          </span>Slots Button<span slot="end">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewbox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+            </svg>
+          </span>
+        </lit-button>
+      </div>
+    </div>
+    <script>
+      window.addEventListener('load', () => {
+        const button = document.getElementById('focus-button');
+        button
+          ?.focus();
+      });
+    </script>
+  </body>
 </html>

@@ -97,12 +97,12 @@ export const buttonStyles = css`
     }
 
     &:focus {
-      // outline: none;
+      outline: none;
     }
 
     &:focus-visible {
-      outline: 4px;
-      outline-offset: 2px;
+      outline: var(--kds-border-width-sm) solid var(--kds-border-info-emphasis-base);
+      outline-offset: var(--kds-border-width-sm);
     }
 
     &:disabled {

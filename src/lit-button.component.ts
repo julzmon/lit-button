@@ -77,6 +77,8 @@ export class LitButton extends LitElement {
   @property({ type: String })
   form?: string;
 
+  @property({ type: Number })
+  tabindex?: number;
 
   render() {
     // Build class map for styling based on component properties
@@ -100,6 +102,7 @@ export class LitButton extends LitElement {
           class=${classMap(classes)}
           ?disabled=${this.disabled}
           href=${this.href}
+          tabindex=${ifDefined(this.tabindex)}
         >
           <slot name="start" part="start"></slot>
           <slot></slot>
@@ -119,6 +122,7 @@ export class LitButton extends LitElement {
         name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}
         form=${ifDefined(this.form)}
+        tabindex=${ifDefined(this.tabindex)}
       >
           <slot name="start" part="start"></slot>
           <slot></slot>
