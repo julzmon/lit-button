@@ -219,16 +219,6 @@ export const buttonStyles = css`
       --kds-btn-color-hover: var(--kds-fg-info-base);
     }
 
-    /* Link */
-    &.link {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: transparent;
-      --kds-btn-color: var(--kds-fg-link-base);
-      --kds-btn-color-hover: var(--kds-fg-link-hover);
-      --kds-btn-text-decoration-hover: underline;
-      --kds-btn-padding-inline: 0;
-    }
-
     /* Property Priority */
 
     /* Priority */
@@ -276,6 +266,17 @@ export const buttonStyles = css`
       --kds-btn-height: var(--kds-button-input-height-lg);
       --kds-btn-font-size: var(--kds-font-size-lg);
       --kds-btn-padding-inline: var(--kds-spacing-lg);
+    }
+
+    /* Link */
+    &.link {
+      --kds-btn-bg-color: transparent;
+      --kds-btn-bg-color-hover: transparent;
+      --kds-btn-color: var(--kds-fg-link-base);
+      --kds-btn-color-hover: var(--kds-fg-link-hover);
+      --kds-btn-text-decoration-hover: underline;
+      --kds-btn-padding-inline: 0;
+      --kds-btn-height: initial;
     }
   }
 
