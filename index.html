@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lit Button Demo</title>
     <script type="module" src="/src/kds-button.component.ts"></script>
+    <script type="module" src="/src/kds-progress-circle.component.ts"></script>
     <style>
       body {
         font-family: system-ui, -apple-system, sans-serif;
@@ -23,6 +24,20 @@
         gap: 1rem;
         margin-top: 1rem;
         justify-items: start;
+      }
+
+      .progress-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .progress-grid > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
       }
     </style>
     <link rel="stylesheet" href="./tokens.css">
@@ -123,6 +138,32 @@
         <h2>Full width</h2>
         <div class="button-grid">
           <kds-button href="#" style="width: 100%">Full Width Button</kds-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Progress Circle</h2>
+      <div class="progress-grid">
+        <div>
+          <span>Indeterminate</span>
+          <kds-progress-circle aria-label="Content loading"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Determinate 65%</span>
+          <kds-progress-circle progress="65" label="Upload progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Large</span>
+          <kds-progress-circle size="xl" progress="30" label="Sync progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Themed</span>
+          <kds-progress-circle
+            progress="45"
+            label="Processing"
+            style="--mod-progress-indicator-color: var(--kds-fg-positive-base); --mod-progress-track-color: var(--kds-bg-positive-muted-base); --mod-progress-size: 48px;"
+          ></kds-progress-circle>
         </div>
       </div>
     </div>
