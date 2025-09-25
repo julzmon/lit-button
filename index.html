@@ -146,23 +146,23 @@
       <h2>Progress Circle</h2>
       <div class="progress-grid">
         <div>
-          <span>Indeterminate</span>
-          <kds-progress-circle aria-label="Content loading"></kds-progress-circle>
+          <span>Default</span>
+          <kds-progress-circle aria-label="Loading"></kds-progress-circle>
         </div>
         <div>
-          <span>Determinate 65%</span>
-          <kds-progress-circle progress="65" label="Upload progress"></kds-progress-circle>
+          <span>Small</span>
+          <kds-progress-circle size="sm" aria-label="Fetching items"></kds-progress-circle>
         </div>
         <div>
           <span>Large</span>
-          <kds-progress-circle size="xl" progress="30" label="Sync progress"></kds-progress-circle>
+          <kds-progress-circle size="lg" aria-label="Processing"></kds-progress-circle>
         </div>
         <div>
-          <span>Themed</span>
+          <span>XL Themed</span>
           <kds-progress-circle
-            progress="45"
-            label="Processing"
-            style="--mod-progress-indicator-color: var(--kds-fg-positive-base); --mod-progress-track-color: var(--kds-bg-positive-muted-base); --mod-progress-size: 48px;"
+            size="xl"
+            aria-label="Saving"
+            style="--mod-progress-indicator-color: var(--kds-fg-positive-base); --mod-progress-track-color: var(--kds-bg-positive-muted-base); --mod-progress-size: 3rem;"
           ></kds-progress-circle>
         </div>
       </div>

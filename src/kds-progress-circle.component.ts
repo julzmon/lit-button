@@ -27,7 +27,7 @@ export class KdsProgressCircle extends LitElement {
           cy="25"
           r="20"
           fill="none"
-          stroke-width="5"
+          vector-effect="non-scaling-stroke"
         />
         <circle
           class="indicator"
@@ -35,7 +35,7 @@ export class KdsProgressCircle extends LitElement {
           cy="25"
           r="20"
           fill="none"
-          stroke-width="5"
+          vector-effect="non-scaling-stroke"
         />
       </svg>
     `;
