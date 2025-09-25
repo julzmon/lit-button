@@ -147,23 +147,56 @@
       <div class="progress-grid">
         <div>
           <span>Default</span>
-          <kds-progress-circle aria-label="Loading"></kds-progress-circle>
+          <kds-progress-circle></kds-progress-circle>
         </div>
         <div>
           <span>Small</span>
-          <kds-progress-circle size="sm" aria-label="Fetching items"></kds-progress-circle>
+          <kds-progress-circle size="sm"></kds-progress-circle>
         </div>
         <div>
           <span>Large</span>
-          <kds-progress-circle size="lg" aria-label="Processing"></kds-progress-circle>
+          <kds-progress-circle size="lg"></kds-progress-circle>
         </div>
         <div>
           <span>XL Themed</span>
           <kds-progress-circle
             size="xl"
             aria-label="Saving"
-            style="--mod-progress-indicator-color: var(--kds-fg-positive-base); --mod-progress-track-color: var(--kds-bg-positive-muted-base); --mod-progress-size: 3rem;"
           ></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress 30%</span>
+          <kds-progress-circle
+            progress="30"
+            label="Upload progress"
+          ></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress 100%</span>
+          <kds-progress-circle
+            progress="100"
+            label="Sync complete"
+          ></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress xs</span>
+          <kds-progress-circle size="xs" progress="40" label="XS progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress sm</span>
+          <kds-progress-circle size="sm" progress="50" label="SM progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress md</span>
+          <kds-progress-circle size="md" progress="60" label="MD progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress lg</span>
+          <kds-progress-circle size="lg" progress="70" label="LG progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Progress xl</span>
+          <kds-progress-circle size="xl" progress="85" label="XL progress"></kds-progress-circle>
         </div>
       </div>
     </div>
