@@ -2,8 +2,13 @@ import { css } from "lit";
 
 export const progressCircleStyles = css`
   :host {
+    container-type: size;
     --kds-progress-size: var(--mod-progress-size, var(--kds-icon-size-md, 1rem));
-    --kds-progress-stroke-width: var(--mod-progress-stroke-width, 2px);
+    --kds-progress-stroke-width: clamp(
+      2px,
+      calc(0.12 * min(100cqw, 100cqh)),
+      8px
+    );
     --kds-progress-track-color: var(
       --mod-progress-track-color,
       var(--kds-bg-surface-level-2)
@@ -19,27 +24,26 @@ export const progressCircleStyles = css`
     width: var(--kds-progress-size);
     height: var(--kds-progress-size);
     flex: none;
-  border: 1px solid black;
   }
 
   :host([size="xs"]) {
-    --kds-progress-size: var(--kds-icon-size-xs);
+    --kds-progress-size: 1rem;
   }
 
   :host([size="sm"]) {
-    --kds-progress-size: var(--kds-icon-size-sm);
+    --kds-progress-size: 1.5rem;
   }
 
   :host([size="md"]) {
-    --kds-progress-size: var(--kds-icon-size-md);
+    --kds-progress-size: 2rem;
   }
 
   :host([size="lg"]) {
-    --kds-progress-size: var(--kds-icon-size-lg);
+    --kds-progress-size: 2.5rem;
   }
 
   :host([size="xl"]) {
-    --kds-progress-size: 3rem;
+    --kds-progress-size: 8rem;
   }
 
   .ring {
