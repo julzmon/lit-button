@@ -81,8 +81,8 @@ export const progressCircleStyles = css`
   .indicator::before {
     background: conic-gradient(
       from 0deg,
-      var(--kds-progress-indicator-color) 0deg
-        var(--arc-deg, var(--kds-progress-spinner-arc)),
+      var(--kds-bg-surface-level-2) 0deg,
+       var(--kds-progress-indicator-color) var(--arc-deg, var(--kds-progress-spinner-arc)),
       transparent var(--arc-deg, var(--kds-progress-spinner-arc)) 360deg
     );
     mask:
