@@ -15,6 +15,27 @@
         background-color: var(--kds-bg-surface-base);
         color: var(--kds-fg-base);
       }
+      .theme-toggle {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: var(--kds-border-radius-pill, 999px);
+        border: 1px solid var(--kds-border-neutral-muted-base, #ccc);
+        background: var(--kds-bg-surface-overlay, #fff);
+        color: inherit;
+        font-size: 0.875rem;
+        cursor: pointer;
+        box-shadow: 0 2px 8px color(srgb 0 0 0 / 0.06);
+        transition: background 0.2s ease;
+      }
+      .theme-toggle:hover {
+        background: var(--kds-bg-surface-level-1, #f5f5f5);
+      }
       .demo-section {
         margin-bottom: 2rem;
       }
@@ -43,6 +64,9 @@
     <link rel="stylesheet" href="./tokens.css">
   </head>
   <body data-mode="light">
+    <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+      🌙
+    </button>
     <h1>Lit Button Component Demo</h1>
 
     <div class="demo-section">
@@ -206,8 +230,35 @@
     <script>
       window.addEventListener('load', () => {
         const button = document.getElementById('focus-button');
-        button
-          ?.focus();
+        button?.focus();
+
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle) {
+          return;
+        }
+
+        const prefersDark = typeof window.matchMedia === 'function'
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false;
+        const initialMode = document.body.dataset.mode || (prefersDark ? 'dark' : 'light');
+
+        const applyMode = (mode) => {
+          const isDark = mode === 'dark';
+          document.body.dataset.mode = mode;
+          themeToggle.textContent = isDark ? '☀️' : '🌙';
+          themeToggle.setAttribute(
+            'aria-label',
+            isDark ? 'Switch to light mode' : 'Switch to dark mode',
+          );
+          themeToggle.setAttribute('aria-pressed', String(isDark));
+        };
+
+        applyMode(initialMode);
+
+        themeToggle.addEventListener('click', () => {
+          const nextMode = document.body.dataset.mode === 'dark' ? 'light' : 'dark';
+          applyMode(nextMode);
+        });
       });
     </script>
   </body>
