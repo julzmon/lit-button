@@ -76,10 +76,11 @@ export const progressCircleStyles = css`
   }
 
   .indicator::before {
+    --kds-progress-leading-color: transparent;
     background: conic-gradient(
       from 0deg,
-       transparent 0deg,
-       currentColor var(--arc-deg, var(--kds-progress-spinner-arc)),
+      var(--kds-progress-leading-color) 0deg,
+      currentColor var(--arc-deg, var(--kds-progress-spinner-arc)),
       transparent var(--arc-deg, var(--kds-progress-spinner-arc)) 360deg
     );
     mask:
@@ -107,6 +108,11 @@ export const progressCircleStyles = css`
   }
 
   :host(.is-determinate) .indicator::before {
+    --kds-progress-leading-color: color-mix(
+      in srgb,
+      currentColor 10%,
+      transparent
+    );
     transition: background var(--kds-animation-duration-normal, 0.24s)
       var(--kds-animation-easing-standard, ease);
   }
