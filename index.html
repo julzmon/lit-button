@@ -146,23 +146,20 @@
       <h2>Progress Circle</h2>
       <div class="progress-grid">
         <div>
-          <span>Default</span>
+          <span>Default md</span>
           <kds-progress-circle></kds-progress-circle>
         </div>
         <div>
-          <span>Small</span>
+          <span>xs</span>
+          <kds-progress-circle size="xs"></kds-progress-circle>
+        </div>
+        <div>
+          <span>sm</span>
           <kds-progress-circle size="sm"></kds-progress-circle>
         </div>
         <div>
-          <span>Large</span>
+          <span>lg</span>
           <kds-progress-circle size="lg"></kds-progress-circle>
-        </div>
-        <div>
-          <span>XL Themed</span>
-          <kds-progress-circle
-            size="xl"
-            aria-label="Saving"
-          ></kds-progress-circle>
         </div>
         <div>
           <span>Progress 30%</span>
@@ -195,8 +192,14 @@
           <kds-progress-circle size="lg" progress="70" label="LG progress"></kds-progress-circle>
         </div>
         <div>
-          <span>Progress xl</span>
+          <span>Could be very big, with label in center?</span>
           <kds-progress-circle size="xl" progress="85" label="XL progress"></kds-progress-circle>
+        </div>
+        <div>
+          <span>Button in center?</span>
+          <kds-button><kds-progress-circle label="XL progress" style="margin-inline: var(--kds-size-32)"></kds-progress-circle></kds-button>
+          <kds-button priority="primary"><kds-progress-circle label="XL progress" style="margin-inline: var(--kds-size-32)"></kds-progress-circle></kds-button>
+          <kds-button priority="secondary"><kds-progress-circle label="XL progress" style="margin-inline: var(--kds-size-32)"></kds-progress-circle></kds-button>
         </div>
       </div>
     </div>
