@@ -4,9 +4,6 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { progressCircleStyles } from "./kds-progress-circle.styles.js";
 
-const MIN_VISIBLE_PERCENT = 1;
-const DEFAULT_SPINNER_ARC_DEG = 80;
-
 @customElement("kds-progress-circle")
 export class KdsProgressCircle extends LitElement {
   static styles = progressCircleStyles;
@@ -21,7 +18,7 @@ export class KdsProgressCircle extends LitElement {
   @property({ reflect: true })
   size: "xs" | "sm" | "md" | "lg" | "xl" = "md";
 
-  private arcDeg: number = DEFAULT_SPINNER_ARC_DEG;
+  private arcDeg = 0;
 
   protected willUpdate(_changed: PropertyValues): void {
     super.willUpdate(_changed);
@@ -34,8 +31,7 @@ export class KdsProgressCircle extends LitElement {
 
     if (determinate) {
       const clamped = Math.min(100, Math.max(0, progressValue!));
-      const normalized = Math.max(MIN_VISIBLE_PERCENT, clamped) / 100;
-      this.arcDeg = normalized * 360;
+      this.arcDeg = (clamped / 100) * 360;
     }
   }
 
@@ -58,6 +54,17 @@ export class KdsProgressCircle extends LitElement {
     const progressValue = this.getProgressValue();
     const determinate = progressValue !== undefined;
     const hasLabel = typeof this.label === "string" && this.label.length > 0;
+    const hostLabel = this.getAttribute("aria-label");
+    const hostLabelledBy = this.getAttribute("aria-labelledby");
+    const hostDescribedBy = this.getAttribute("aria-describedby");
+    const hostManagesSemantics =
+      this.hasAttribute("role") ||
+      this.hasAttribute("aria-valuenow") ||
+      this.hasAttribute("aria-valuemin") ||
+      this.hasAttribute("aria-valuemax");
+    const hostProvidesName = Boolean(hostLabel || hostLabelledBy);
+    const manageInternally = hasLabel || (!hostManagesSemantics && hostProvidesName);
+
     const clamped = determinate
       ? Math.min(100, Math.max(0, progressValue!))
       : 0;
@@ -66,18 +73,36 @@ export class KdsProgressCircle extends LitElement {
       ? { "--arc-deg": `${this.arcDeg}deg` }
       : {};
 
+    const role = manageInternally
+      ? determinate
+        ? "progressbar"
+        : "status"
+      : undefined;
+    const ariaLabel = manageInternally
+      ? hasLabel
+        ? this.label!
+        : hostLabel ?? undefined
+      : undefined;
+    const ariaLabelledBy = manageInternally && !hasLabel ? hostLabelledBy ?? undefined : undefined;
+    const ariaDescribedBy = manageInternally ? hostDescribedBy ?? undefined : undefined;
+    const ariaLive = manageInternally && !determinate ? "polite" : undefined;
+    const ariaHidden = manageInternally ? undefined : "true";
+    const ariaValueNow = manageInternally && determinate ? String(clamped) : undefined;
+    const ariaValueMin = manageInternally && determinate ? "0" : undefined;
+    const ariaValueMax = manageInternally && determinate ? "100" : undefined;
+
     return html`
       <div
         class="ring"
-        role=${ifDefined(hasLabel ? (determinate ? "progressbar" : "status") : undefined)}
-        aria-label=${ifDefined(hasLabel ? this.label : undefined)}
-        aria-live=${ifDefined(!determinate && hasLabel ? "polite" : undefined)}
-        aria-valuemin=${ifDefined(determinate && hasLabel ? "0" : undefined)}
-        aria-valuemax=${ifDefined(determinate && hasLabel ? "100" : undefined)}
-        aria-valuenow=${ifDefined(
-          determinate && hasLabel ? String(Math.round(clamped)) : undefined
-        )}
-        aria-hidden=${ifDefined(hasLabel ? undefined : "true")}
+        role=${ifDefined(role)}
+        aria-label=${ifDefined(ariaLabel)}
+        aria-labelledby=${ifDefined(ariaLabelledBy)}
+        aria-describedby=${ifDefined(ariaDescribedBy)}
+        aria-live=${ifDefined(ariaLive)}
+        aria-valuemin=${ifDefined(ariaValueMin)}
+        aria-valuemax=${ifDefined(ariaValueMax)}
+        aria-valuenow=${ifDefined(ariaValueNow)}
+        aria-hidden=${ifDefined(ariaHidden)}
       >
         <div class="track" part="track"></div>
         <div

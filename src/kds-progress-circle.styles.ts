@@ -10,10 +10,6 @@ export const progressCircleStyles = css`
       8px
     );
     --kds-progress-track-color: color(srgb 0 0 0 / 0.1);
-    --kds-progress-indicator-color: var(
-      --mod-progress-indicator-color,
-      black
-    );
     --kds-progress-speed: var(--mod-progress-speed, 1s);
     --kds-progress-spinner-arc: var(--mod-progress-spinner-arc, 40deg);
 
