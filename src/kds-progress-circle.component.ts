@@ -4,17 +4,41 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { progressCircleStyles } from "./kds-progress-circle.styles.js";
 
+/**
+ * @summary Circular indicator for determinate progress values or indeterminate loading states.
+ * @documentation URL
+ * @status beta
+ * @since 1.0
+ *
+ * @cssprop --mod-progress-size - Preferred size of the control.
+ * @cssprop --mod-progress-indicator-color - Color of the active progress arc.
+ * @cssprop --mod-progress-speed - Animation duration for indeterminate mode.
+ * @cssprop --mod-progress-spinner-arc - Sweep angle used when spinning.
+ * @cssprop --kds-progress-track-color - Color of the inactive track.
+ *
+ */
 @customElement("kds-progress-circle")
 export class KdsProgressCircle extends LitElement {
   static styles = progressCircleStyles;
 
-  /** Determinate progress percentage (0-100). Omit for spinner mode. */
+  /**
+   * Determinate progress percentage (0-100). Omit for spinner mode.
+   * Fractions are allowed and will render proportionally.
+   */
   @property({ type: Number }) progress?: number;
 
-  /** Optional accessible label. */
+  /** Optional accessible label. Provide when the spinner conveys status. */
   @property({ type: String }) label?: string;
 
-  /** Preset sizes mapped to design tokens. */
+  /**
+   * Preset sizes mapped to design tokens.
+   *
+   * - `xs`: Extra small
+   * - `sm`: Small
+   * - `md`: Medium (default)
+   * - `lg`: Large
+   * - `xl`: Extra large
+   */
   @property({ reflect: true })
   size: "xs" | "sm" | "md" | "lg" | "xl" = "md";
 
@@ -104,10 +128,9 @@ export class KdsProgressCircle extends LitElement {
         aria-valuenow=${ifDefined(ariaValueNow)}
         aria-hidden=${ifDefined(ariaHidden)}
       >
-        <div class="track" part="track"></div>
+        <div class="track"></div>
         <div
           class="indicator"
-          part="indicator"
           style=${styleMap(indicatorStyle)}
         ></div>
       </div>
