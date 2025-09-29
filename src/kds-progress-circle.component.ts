@@ -17,6 +17,7 @@ import { progressCircleStyles } from "./kds-progress-circle.styles.js";
  * @cssprop --kds-progress-track-color - Color of the inactive track.
  *
  */
+
 @customElement("kds-progress-circle")
 export class KdsProgressCircle extends LitElement {
   static styles = progressCircleStyles;

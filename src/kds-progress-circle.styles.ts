@@ -11,9 +11,13 @@ export const progressCircleStyles = css`
       calc(0.12 * min(100cqw, 100cqh)),
       8px
     );
+    --kds-progress-indicator-color: var(
+      --mod-progress-indicator-color,
+      currentColor
+    );
     /* Track fallback for legacy browsers plus a color-mix override that follows currentColor. */
-    --kds-progress-track-color: rgba(0, 0, 0, 0.1);
-    --kds-progress-track-color: color-mix(in srgb, currentColor 16%, transparent);
+    // --kds-progress-track-color: rgba(0, 0, 0, 0.1);
+    --kds-progress-track-color: color-mix(in srgb, currentColor 10%, transparent);
     --kds-progress-speed: var(--mod-progress-speed, 1s);
     --kds-progress-spinner-arc: var(--mod-progress-spinner-arc, 40deg);
 
@@ -86,7 +90,8 @@ export const progressCircleStyles = css`
     background: conic-gradient(
       from 0deg,
       var(--kds-progress-leading-color) 0deg,
-      currentColor var(--arc-deg, var(--kds-progress-spinner-arc)),
+      var(--kds-progress-indicator-color)
+        var(--arc-deg, var(--kds-progress-spinner-arc)),
       transparent var(--arc-deg, var(--kds-progress-spinner-arc)) 360deg
     );
     mask:
@@ -118,7 +123,7 @@ export const progressCircleStyles = css`
   :host(.is-determinate) .indicator::before {
     --kds-progress-leading-color: color-mix(
       in srgb,
-      currentColor 10%,
+      var(--kds-progress-indicator-color) 10%,
       transparent
     );
     transition: background var(--kds-animation-duration-normal, 0.24s)
