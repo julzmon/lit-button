@@ -6,6 +6,8 @@
     <title>Lit Button Demo</title>
     <script type="module" src="/src/kds-button.component.ts"></script>
     <script type="module" src="/src/kds-progress-circle.component.ts"></script>
+    <script type="module" src="/src/kds-input.component.ts"></script>
+    <script type="module" src="/src/kds-input-group.component.ts"></script>
     <style>
       body {
         font-family: system-ui, -apple-system, sans-serif;
@@ -229,6 +231,127 @@
           <kds-button priority="primary"><kds-progress-circle label="XL progress" style="margin-inline: var(--kds-size-32)"></kds-progress-circle></kds-button>
           <kds-button priority="secondary"><kds-progress-circle label="XL progress" style="margin-inline: var(--kds-size-32)"></kds-progress-circle></kds-button>
         </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Input Fields</h2>
+
+      <h3>Basic Inputs</h3>
+      <div class="button-grid">
+        <kds-input label="Default Input" placeholder="Enter text..."></kds-input>
+        <kds-input label="With Value" value="Sample text"></kds-input>
+        <kds-input label="Required Field" placeholder="Required..." required></kds-input>
+      </div>
+
+      <h3>Sizes</h3>
+      <div class="button-grid">
+        <kds-input size="sm" label="Small Input" placeholder="Small..."></kds-input>
+        <kds-input size="md" label="Medium Input" placeholder="Medium..."></kds-input>
+      </div>
+
+      <h3>States</h3>
+      <div class="button-grid">
+        <kds-input label="Normal" placeholder="Normal state"></kds-input>
+        <kds-input label="Invalid" placeholder="Invalid state" invalid error-message="This field is required"></kds-input>
+        <kds-input label="Disabled" placeholder="Disabled state" disabled></kds-input>
+        <kds-input label="Readonly" value="Read-only text" readonly></kds-input>
+      </div>
+
+      <h3>Input Types</h3>
+      <div class="button-grid">
+        <kds-input type="email" label="Email" placeholder="email@example.com"></kds-input>
+        <kds-input type="password" label="Password" placeholder="••••••••"></kds-input>
+        <kds-input type="number" label="Number" placeholder="123" min="0" max="100"></kds-input>
+        <kds-input type="tel" label="Phone" placeholder="(555) 123-4567"></kds-input>
+      </div>
+
+  <h3>With Start/End</h3>
+      <div class="button-grid">
+        <kds-input label="With Start" placeholder="Search...">
+          <span slot="start">🔍</span>
+        </kds-input>
+        <kds-input label="With End" placeholder="Amount">
+          <span slot="end">USD</span>
+        </kds-input>
+        <kds-input label="With End" placeholder="Amount">
+                  <kds-button slot="end" priority="tertiary">Tertiary Button</kds-button>
+
+        </kds-input>
+        <kds-input label="Both" placeholder="Price">
+          <span slot="start">$</span>
+          <span slot="end">.00</span>
+        </kds-input>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Input Groups</h2>
+
+      <h3>Search with Button</h3>
+      <div class="button-grid">
+        <kds-input-group>
+          <kds-input placeholder="Search..." label="Basic Search"></kds-input>
+          <kds-button slot="end">🔍</kds-button>
+        </kds-input-group>
+
+        <kds-input-group size="sm">
+          <kds-input placeholder="Small search..." label="Small Search"></kds-input>
+          <kds-button slot="end">🔍</kds-button>
+        </kds-input-group>
+      </div>
+
+      <h3>Dropdown with Input</h3>
+      <div class="button-grid">
+        <kds-input-group placement="start">
+          <kds-button slot="start">Button ▼</kds-button>
+          <kds-input placeholder="With dropdown..." label="Dropdown Input"></kds-input>
+        </kds-input-group>
+
+        <kds-input-group placement="start" size="sm">
+          <kds-button slot="start">Options ▼</kds-button>
+          <kds-input placeholder="Small dropdown..." label="Small Dropdown"></kds-input>
+        </kds-input-group>
+      </div>
+
+      <h3>Complex Groups</h3>
+      <div class="button-grid">
+        <kds-input-group placement="both">
+          <kds-button slot="start">Type ▼</kds-button>
+          <kds-input placeholder="Search with options..." label="Complex Search"></kds-input>
+          <kds-button slot="end">Go</kds-button>
+        </kds-input-group>
+      </div>
+
+      <h3>Invalid State Groups</h3>
+      <div class="button-grid">
+        <kds-input-group invalid>
+          <kds-input placeholder="Invalid input..." label="Error Search" invalid error-message="Search term is required"></kds-input>
+          <kds-button slot="end">🔍</kds-button>
+        </kds-input-group>
+
+        <kds-input-group placement="start" invalid>
+          <kds-button slot="start">Category ▼</kds-button>
+          <kds-input placeholder="Invalid with dropdown..." label="Error Dropdown" invalid error-message="Please select a category"></kds-input>
+        </kds-input-group>
+      </div>
+
+      <h3>Different Button Styles</h3>
+      <div class="button-grid">
+        <kds-input-group>
+          <kds-input placeholder="Primary action..." label="Primary Button"></kds-input>
+          <kds-button slot="end" priority="primary">Send</kds-button>
+        </kds-input-group>
+
+        <kds-input-group>
+          <kds-input placeholder="Secondary action..." label="Secondary Button"></kds-input>
+          <kds-button slot="end" priority="secondary">Save</kds-button>
+        </kds-input-group>
+
+        <kds-input-group>
+          <kds-input placeholder="Danger action..." label="Negative Button"></kds-input>
+          <kds-button slot="end" color="negative">Delete</kds-button>
+        </kds-input-group>
       </div>
     </div>
     <script>

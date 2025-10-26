@@ -19,7 +19,7 @@ export const progressCircleStyles = css`
     // --kds-progress-track-color: rgba(0, 0, 0, 0.1);
     --kds-progress-track-color: color-mix(in srgb, currentColor 10%, transparent);
     --kds-progress-speed: var(--mod-progress-speed, 1s);
-    --kds-progress-spinner-arc: var(--mod-progress-spinner-arc, 40deg);
+    --kds-progress-spinner-arc: var(--mod-progress-spinner-arc, 90deg);
 
     display: inline-flex;
     width: var(--kds-progress-size);
