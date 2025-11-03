@@ -6,10 +6,9 @@ export const inputStyles = css`
     position: relative;
     inline-size: 100%;
 
-    /* Host-level hooks (override with --mod-*) */
     --input-height: var(--mod-input-height, var(--kds-button-input-height-md));
     --input-padding-inline: var(--mod-input-padding-inline, var(--kds-spacing-md));
-    --input-gap: var(--mod-input-gap, var(--kds-space-xs));
+    --input-gap: var(--mod-input-gap, var(--kds-spacing-xs));
     --input-color: var(--mod-input-color, var(--kds-fg-base));
     --input-font-size: var(--mod-input-font-size, var(--kds-font-size-md));
     --input-line-height: var(--mod-input-line-height, 1.5);
@@ -19,6 +18,7 @@ export const inputStyles = css`
     --input-border-color-hover: var(--mod-input-border-color-hover, var(--kds-border-neutral-emphasis-hover));
     --input-border-color-focus: var(--mod-input-border-color-focus, var(--kds-border-info-emphasis-base));
     --input-background-color: var(--mod-input-background-color, var(--kds-bg-surface-base));
+
     --placeholder-color: var(--mod-placeholder-color, var(--kds-fg-neutral-base));
     --placeholder-style: var(--mod-placeholder-style, italic);
 
@@ -27,7 +27,6 @@ export const inputStyles = css`
     --label-font-weight: var(--mod-label-font-weight);
     --label-margin-bottom: var(--mod-label-margin-bottom, var(--kds-spacing-2xs));
 
-    /* Focus ring that does NOT affect layout (used for normal + invalid) */
     --focus-ring-width: var(--mod-focus-ring-width, var(--kds-border-width-sm, 2px));
     --focus-ring-color: var(--mod-focus-ring-color, var(--input-border-color-focus));
     --focus-ring-color-invalid: var(--mod-focus-ring-color-invalid, var(--kds-border-negative-emphasis-base));
@@ -115,7 +114,8 @@ export const inputStyles = css`
 
   /* Native input */
   .native-input {
-    flex: 1;
+    appearance: none;
+    width: 100%;
     min-inline-size: 0;
     border: none;
     outline: none;
@@ -126,7 +126,7 @@ export const inputStyles = css`
     font-weight: var(--font-weight-regular);
     line-height: var(--input-line-height);
     letter-spacing: 0.022em;
-    margin: 0;
+    margin: auto 0px;
     padding: 0;
 
     &::placeholder {
