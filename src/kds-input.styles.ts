@@ -1,6 +1,30 @@
 import { css } from "lit";
 
 export const inputStyles = css`
+  .clear-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--input-color, currentColor);
+    width: var(--kds-button-input-height-sm);
+    height: var(--kds-button-input-height-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.05em;
+    padding: 0;
+    margin-inline-start: 0.25rem;
+    transition: background 0.12s ease, box-shadow 0.12s ease;
+  }
+  .clear-btn:hover { background: rgba(0,0,0,0.04); }
+  .clear-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 var(--focus-ring-width, 3px) var(--focus-ring-color);
+  }
+
   :host {
     display: block;
     position: relative;

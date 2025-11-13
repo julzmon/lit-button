@@ -212,6 +212,12 @@ export class KdsInput extends LitElement {
    */
   @property({ type: String }) pattern?: string;
 
+  /**
+   * Enable the clear button when not blank.
+   * Use `clearable` for clarity.
+   */
+  @property({ attribute: 'clearable', type: Boolean, reflect: true }) clearable = false;
+
   // ─────────────────────────────────────────────────────────────────────────────
   // Internal state / refs
   // ─────────────────────────────────────────────────────────────────────────────
@@ -225,14 +231,20 @@ export class KdsInput extends LitElement {
   /** True if the `error` slot has content. */
   @state() private _hasErrorSlot = false;
 
+  /** True when the field currently contains text and the clear button should show. */
+  @state() private _showClear = false;
+
   /** Unique id to associate `<label>` → `<input>`. */
   @state() private _inputId = `kds-input-${++uid}`;
 
   /** Field wrapper used by CSS for `:focus-within` visuals. */
-  @query(".input") private _wrapper!: HTMLDivElement;
+  // NOTE: removed `_wrapper` query use to avoid unused variable lint warnings.
 
   /** Native input element. */
-  @query("#input") private _native!: HTMLInputElement;
+  @query('.native-input') private _native!: HTMLInputElement;
+
+  /** Tracks whether the user performed an explicit interaction (e.g. cleared). */
+  private hadUserInteraction = false;
 
   // ─────────────────────────────────────────────────────────────────────────────
   // Public methods
@@ -254,6 +266,7 @@ export class KdsInput extends LitElement {
   private handleInput = (event: Event) => {
     const target = event.target as HTMLInputElement;
     this.value = target.value;
+    this._showClear = !!this.value;
     this.dispatchEvent(new CustomEvent("kds-input", {
       detail: { value: this.value },
       bubbles: true,
@@ -264,6 +277,7 @@ export class KdsInput extends LitElement {
   private handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement;
     this.value = target.value;
+    this._showClear = !!this.value;
     this.dispatchEvent(new CustomEvent("kds-change", {
       detail: { value: this.value },
       bubbles: true,
@@ -287,6 +301,42 @@ export class KdsInput extends LitElement {
     }));
   };
 
+  /**
+   * Clear control handler. Intended to be called by a clear-button click.
+   * Mirrors the example: mark user interaction, clear the value, focus the input,
+   * dispatch a QuietInputEvent (if present) and a native InputEvent so external
+   * listeners observe the change.
+   */
+  private handleClearClick() {
+    this.hadUserInteraction = true;
+    this.value = '';
+    if (this._native) this._native.value = '';
+    // focus the native input so keyboard users can continue typing
+    this._native?.focus();
+
+    // Dispatch a QuietInputEvent if the host environment provides one
+    try {
+      const Quiet = (window as any).QuietInputEvent;
+      if (typeof Quiet === 'function') {
+        this.dispatchEvent(new Quiet());
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // Dispatch a native InputEvent from the underlying input so form listeners see it
+    if (this._native) {
+      this._native.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, cancelable: false }));
+    }
+
+    // Emit component-level events as well so consumers using the web component API
+    // will receive the same signals as they would from typing.
+    this.dispatchEvent(new CustomEvent("kds-input", { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(new CustomEvent("kds-change", { detail: { value: this.value }, bubbles: true, composed: true }));
+  }
+
+
+
   // ─────────────────────────────────────────────────────────────────────────────
   // Slots bookkeeping (optional, used if layout depends on presence)
   // ─────────────────────────────────────────────────────────────────────────────
@@ -301,7 +351,10 @@ export class KdsInput extends LitElement {
   render() {
     const inputClasses = {
       input: true,
-      invalid: this.invalid
+      invalid: this.invalid,
+      'has-start': this._hasStart,
+      'has-end': this._hasEnd,
+      'user-interacted': this.hadUserInteraction
     };
 
     return html`
@@ -343,6 +396,15 @@ export class KdsInput extends LitElement {
           @slotchange=${(e: Event) =>
         this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasEnd = v))}
         ></slot>
+
+        ${this.clearable && this._showClear && !this.disabled && !this.readonly ? html`
+          <button
+            type="button"
+            class="clear-btn"
+            aria-label="Clear input"
+            @click=${() => this.handleClearClick()}
+          >✕</button>
+        ` : null}
       </div>
 
       ${this.invalid || this._hasErrorSlot ? html`
