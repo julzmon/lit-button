@@ -1,30 +1,6 @@
 import { css } from "lit";
 
 export const inputStyles = css`
-  .clear-btn {
-    appearance: none;
-    border: none;
-    background: transparent;
-    color: var(--input-color, currentColor);
-    width: var(--kds-button-input-height-sm);
-    height: var(--kds-button-input-height-sm);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.05em;
-    padding: 0;
-    margin-inline-start: 0.25rem;
-    transition: background 0.12s ease, box-shadow 0.12s ease;
-  }
-  .clear-btn:hover { background: rgba(0,0,0,0.04); }
-  .clear-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 var(--focus-ring-width, 3px) var(--focus-ring-color);
-  }
-
   :host {
     display: block;
     position: relative;
@@ -133,7 +109,7 @@ export const inputStyles = css`
   .input.invalid:focus-within,
   .input[aria-invalid="true"]:focus-within {
     border-color: var(--kds-border-negative-emphasis-base);
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color-invalid);
+    box-shadow: 0 0 0 var(--kds-border-width-xs) var(--focus-ring-color-invalid);
   }
 
   /* Native input */
@@ -228,5 +204,33 @@ export const inputStyles = css`
     :host([invalid]) .input,
     .input.invalid,
     .input[aria-invalid="true"] { border-color: Mark; }
+  }
+
+  .clear-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--input-color, currentColor);
+    width: var(--kds-button-input-height-sm);
+    height: var(--kds-button-input-height-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.05em;
+    padding: 0;
+    margin-inline-start: 0.25rem;
+    transition: background 0.12s ease, box-shadow 0.12s ease;
+
+    &:hover {
+      background-color: var(--kds-bg-neutral-muted-hover);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 var(--focus-ring-width, var(--kds-border-width-sm)) var(--focus-ring-color);
+    }
   }
 `;

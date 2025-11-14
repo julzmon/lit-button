@@ -6,262 +6,171 @@ import { live } from "lit/directives/live.js";
 import { inputStyles } from "./kds-input.styles.js";
 
 /**
- * @tag kds-input
- * @summary Accessible text input with validation and adornment slots.
+ * @summary A text input field with validation and adornment slots.
+ * @documentation URL
+ * @status beta
+ * @since 1.0
  *
- * @description
- * A text field that supports host-driven sizing (`size="sm|md"`), CSS-only
- * focus indication (border color via `:focus-within`), validation states,
- * and optional slotted start/end content. Emits high-level events for input,
- * change, focus, and blur. Designed for tokenized theming via CSS variables.
- *
- * @example
- * ```html
- * <kds-input
- *   label="Email"
- *   name="email"
- *   placeholder="you@example.com"
- *   autocomplete="email"
- *   size="md">
- *   <svg slot="start" aria-hidden="true" viewBox="0 0 16 16"><!-- icon --></svg>
- * </kds-input>
- * ```
- *
- * @fires kds-input  - Fires on each keystroke with `{ value: string }`.
- * @fires kds-change - Fires on commit/blur with `{ value: string }`.
- * @fires kds-focus  - Fires when the native input gains focus `{ originalEvent: FocusEvent }`.
- * @fires kds-blur   - Fires when the native input loses focus `{ originalEvent: FocusEvent }`.
+ * @event kds-blur - Emitted when the input loses focus.
+ * @event kds-focus - Emitted when the input gains focus.
+ * @event kds-input - Emitted on each keystroke with `{ value: string }`.
+ * @event kds-change - Emitted on commit/blur with `{ value: string }`.
  *
  * @slot start - Leading adornment (icon, text, etc.).
- * @slot end   - Trailing adornment (icon, button, etc.).
+ * @slot end - Trailing adornment (icon, button, etc.).
  * @slot error - Custom error content (used when `error-message` is absent).
  *
- * @csspart error - Wrapper around the error block.
+ * @cssprop --mod-input-height - Input height
+ * @cssprop --mod-input-padding-inline - Input horizontal padding
+ * @cssprop --mod-input-gap - Gap between adornments and field
+ * @cssprop --mod-input-color - Input text color
+ * @cssprop --mod-input-font-size - Input font size
+ * @cssprop --mod-input-line-height - Input line height
+ * @cssprop --mod-input-border-width - Input border width
+ * @cssprop --mod-input-border-radius - Input border radius
+ * @cssprop --mod-input-border-color - Input border color
+ * @cssprop --mod-input-border-color-hover - Input border hover color
+ * @cssprop --mod-input-border-color-focus - Input border focus color
+ * @cssprop --mod-input-background-color - Input background color
+ * @cssprop --mod-placeholder-color - Placeholder text color
+ * @cssprop --mod-placeholder-style - Placeholder font style
+ * @cssprop --mod-label-color - Label text color
+ * @cssprop --mod-label-font-size - Label font size
+ * @cssprop --mod-label-font-weight - Label font weight
+ * @cssprop --mod-label-margin-bottom - Label bottom margin
+ * @cssprop --mod-focus-ring-width - Focus ring width
+ * @cssprop --mod-focus-ring-color - Focus ring color
+ * @cssprop --mod-focus-ring-color-invalid - Focus ring color when invalid
  *
- * @cssprop --mod-input-height               - Input height (default: `var(--kds-button-input-height-md)`).
- * @cssprop --mod-input-padding-inline       - Horizontal padding (default: `var(--kds-spacing-md)`).
- * @cssprop --mod-input-gap                  - Gap between adornments and field (default: `var(--kds-space-xs)`).
- * @cssprop --mod-input-color                - Text color (default: `var(--kds-fg-base)`).
- * @cssprop --mod-input-font-size            - Font size (default: `var(--kds-font-size-md)`).
- * @cssprop --mod-input-line-height          - Line height (default: `1.5`).
- * @cssprop --mod-input-border-width         - Border width (default: `var(--kds-border-width-xs)`).
- * @cssprop --mod-input-border-radius        - Border radius (default: `var(--kds-border-radius-sm)`).
- * @cssprop --mod-input-border-color         - Border color (default: `var(--kds-border-neutral-emphasis-base)`).
- * @cssprop --mod-input-border-color-hover   - Hover border color (default: `var(--kds-border-neutral-emphasis-hover)`).
- * @cssprop --mod-input-border-color-focus   - Focus border color (default: `var(--kds-border-info-emphasis-base)`).
- * @cssprop --mod-input-background-color     - Background color (default: `var(--kds-bg-surface-base)`).
- * @cssprop --mod-placeholder-color          - Placeholder color (default: `var(--kds-fg-neutral-base)`).
- * @cssprop --mod-placeholder-style          - Placeholder font-style (default: `italic`).
- * @cssprop --mod-label-color                - Label color.
- * @cssprop --mod-label-font-size            - Label font size.
- * @cssprop --mod-label-font-weight          - Label font weight.
- * @cssprop --mod-label-margin-bottom        - Label bottom margin (default: `var(--kds-spacing-2xs)`).
- *
- * @accessibility
- * - The internal `<label>` is associated with `<input>` via `for`/`id`.
- * - When `invalid` is set, `aria-invalid="true"` is applied to the input and
- *   an error message can be provided via `error-message` or the `error` slot.
- * - Focus is indicated with border color (`:focus-within`). Ensure sufficient contrast.
+ * @csspart error - Wrapper around the error block
  */
 let uid = 0;
 
 @customElement("kds-input")
 export class KdsInput extends LitElement {
-  /** Component styles (CSS-only focus & host-driven sizes). */
   static styles = inputStyles;
-
-  /** Keep native focus behavior while focusing the first focusable descendant. */
-  static shadowRootOptions: ShadowRootInit = { mode: "open", delegatesFocus: true };
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Public properties / attributes
-  // ─────────────────────────────────────────────────────────────────────────────
+  static shadowRootOptions: ShadowRootInit = {
+    mode: "open" as ShadowRootMode,
+    delegatesFocus: true,
+  };
 
   /**
    * Current value of the input.
-   * @attr value
-   * @type {string}
-   * @default ""
    */
   @property({ type: String }) value: string = "";
 
   /**
    * Placeholder text displayed when the input is empty.
-   * @attr placeholder
-   * @type {string}
    */
   @property({ type: String }) placeholder?: string;
 
   /**
-   * Text label rendered above the field. Omit if you label externally.
-   * @attr label
-   * @type {string}
+   * Text label rendered above the field.
    */
   @property({ type: String }) label?: string;
 
   /**
-   * Visual size of the control. Controls height, padding, and font-size via CSS vars.
-   * @attr size
-   * @type {"sm"|"md"}
-   * @default "md"
-   * @reflect
+   * Controls the input size.
+   *
+   * - `sm`: Small
+   * - `md`: Medium (default)
    */
   @property({ reflect: true }) size: "sm" | "md" = "md";
 
   /**
    * Native input `type` (e.g., "text", "email", "number").
-   * @attr type
-   * @type {HTMLInputElement['type']}
-   * @default "text"
    */
   @property({ type: String }) type: HTMLInputElement["type"] = "text";
 
   /**
    * Native `name` for form submission.
-   * @attr name
-   * @type {string}
    */
   @property({ type: String }) name?: string;
 
   /**
    * Marks the field as required.
-   * @attr required
-   * @type {boolean}
-   * @default false
    */
-  @property({ type: Boolean }) required = false;
+  @property({ type: Boolean, reflect: true }) required = false;
 
   /**
    * Disables the control and prevents interaction.
-   * @attr disabled
-   * @type {boolean}
-   * @default false
    */
   @property({ type: Boolean }) disabled = false;
 
   /**
    * Makes the field read-only (non-editable).
-   * @attr readonly
-   * @type {boolean}
-   * @default false
    */
   @property({ type: Boolean }) readonly = false;
 
   /**
    * Sets the invalid state and updates `aria-invalid`.
-   * @attr invalid
-   * @type {boolean}
-   * @default false
-   * @reflect
    */
   @property({ type: Boolean, reflect: true }) invalid = false;
 
   /**
    * Error message shown below the field when invalid (if no `error` slot provided).
-   * @attr error-message
-   * @type {string}
    */
   @property({ type: String, attribute: "error-message" }) errorMessage?: string;
 
   /**
    * Native `autocomplete` hint.
-   * @attr autocomplete
-   * @type {HTMLInputElement['autocomplete']}
    */
   @property({ type: String }) autocomplete?: HTMLInputElement["autocomplete"];
 
   /**
    * Native numeric/date lower bound.
-   * @attr min
-   * @type {number}
    */
   @property({ type: Number }) min?: number;
 
   /**
    * Native numeric/date upper bound.
-   * @attr max
-   * @type {number}
    */
   @property({ type: Number }) max?: number;
 
   /**
    * Native numeric/date step increment.
-   * @attr step
-   * @type {number|string}
    */
   @property({ type: Number }) step?: any;
 
   /**
    * Native maximum length (characters).
-   * @attr maxlength
-   * @type {number}
    */
   @property({ attribute: "maxlength", type: Number }) maxlength?: number;
 
   /**
    * Native minimum length (characters).
-   * @attr minlength
-   * @type {number}
    */
   @property({ attribute: "minlength", type: Number }) minlength?: number;
 
   /**
    * Native validation pattern (regular expression string).
-   * @attr pattern
-   * @type {string}
    */
   @property({ type: String }) pattern?: string;
 
   /**
    * Enable the clear button when not blank.
-   * Use `clearable` for clarity.
    */
   @property({ attribute: 'clearable', type: Boolean, reflect: true }) clearable = false;
 
-  // ─────────────────────────────────────────────────────────────────────────────
   // Internal state / refs
-  // ─────────────────────────────────────────────────────────────────────────────
 
-  /** True if the `start` slot has content. */
   @state() private _hasStart = false;
-
-  /** True if the `end` slot has content. */
   @state() private _hasEnd = false;
-
-  /** True if the `error` slot has content. */
   @state() private _hasErrorSlot = false;
-
-  /** True when the field currently contains text and the clear button should show. */
   @state() private _showClear = false;
-
-  /** Unique id to associate `<label>` → `<input>`. */
   @state() private _inputId = `kds-input-${++uid}`;
 
-  /** Field wrapper used by CSS for `:focus-within` visuals. */
-  // NOTE: removed `_wrapper` query use to avoid unused variable lint warnings.
-
-  /** Native input element. */
   @query('.native-input') private _native!: HTMLInputElement;
 
-  /** Tracks whether the user performed an explicit interaction (e.g. cleared). */
   private hadUserInteraction = false;
 
-  // ─────────────────────────────────────────────────────────────────────────────
   // Public methods
-  // ─────────────────────────────────────────────────────────────────────────────
 
-  /** Programmatically focus the input. */
   focus() { this._native?.focus(); }
-
-  /** Programmatically blur the input. */
   blur() { this._native?.blur(); }
-
-  /** Select the input’s text. */
   select() { this._native?.select(); }
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Event emitters
-  // ─────────────────────────────────────────────────────────────────────────────
+  // Event handlers
 
   private handleInput = (event: Event) => {
     const target = event.target as HTMLInputElement;
@@ -301,20 +210,12 @@ export class KdsInput extends LitElement {
     }));
   };
 
-  /**
-   * Clear control handler. Intended to be called by a clear-button click.
-   * Mirrors the example: mark user interaction, clear the value, focus the input,
-   * dispatch a QuietInputEvent (if present) and a native InputEvent so external
-   * listeners observe the change.
-   */
   private handleClearClick() {
     this.hadUserInteraction = true;
     this.value = '';
     if (this._native) this._native.value = '';
-    // focus the native input so keyboard users can continue typing
     this._native?.focus();
 
-    // Dispatch a QuietInputEvent if the host environment provides one
     try {
       const Quiet = (window as any).QuietInputEvent;
       if (typeof Quiet === 'function') {
@@ -324,29 +225,16 @@ export class KdsInput extends LitElement {
       // ignore
     }
 
-    // Dispatch a native InputEvent from the underlying input so form listeners see it
     if (this._native) {
       this._native.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, cancelable: false }));
     }
 
-    // Emit component-level events as well so consumers using the web component API
-    // will receive the same signals as they would from typing.
     this.dispatchEvent(new CustomEvent("kds-input", { detail: { value: this.value }, bubbles: true, composed: true }));
     this.dispatchEvent(new CustomEvent("kds-change", { detail: { value: this.value }, bubbles: true, composed: true }));
   }
 
-
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Slots bookkeeping (optional, used if layout depends on presence)
-  // ─────────────────────────────────────────────────────────────────────────────
-
   private onSlotChange = (slot: HTMLSlotElement, setter: (v: boolean) => void) =>
     setter(slot.assignedElements().length > 0);
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // Render
-  // ─────────────────────────────────────────────────────────────────────────────
 
   render() {
     const inputClasses = {
@@ -391,20 +279,20 @@ export class KdsInput extends LitElement {
           @blur=${this.handleBlur}
         />
 
-        <slot
-          name="end"
-          @slotchange=${(e: Event) =>
-        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasEnd = v))}
-        ></slot>
-
         ${this.clearable && this._showClear && !this.disabled && !this.readonly ? html`
           <button
-            type="button"
-            class="clear-btn"
-            aria-label="Clear input"
-            @click=${() => this.handleClearClick()}
+          type="button"
+          class="clear-btn"
+          aria-label="Clear input"
+          @click=${() => this.handleClearClick()}
           >✕</button>
-        ` : null}
+          ` : null}
+
+                  <slot
+                    name="end"
+                    @slotchange=${(e: Event) =>
+        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasEnd = v))}
+                  ></slot>
       </div>
 
       ${this.invalid || this._hasErrorSlot ? html`
