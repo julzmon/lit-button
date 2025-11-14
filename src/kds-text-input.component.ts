@@ -3,7 +3,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
-import { inputStyles } from "./kds-input.styles.js";
+import { inputStyles } from "./kds-text-input.styles.js";
 
 /**
  * @summary A text input field with validation and adornment slots.
