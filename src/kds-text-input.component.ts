@@ -50,8 +50,8 @@ let uid = 0;
 
 @customElement("kds-input")
 export class KdsInput extends LitElement {
-  static styles = inputStyles;
-  static shadowRootOptions: ShadowRootInit = {
+  static override styles = inputStyles;
+  shadowRootOptions: ShadowRootInit = {
     mode: "open" as ShadowRootMode,
     delegatesFocus: true,
   };
