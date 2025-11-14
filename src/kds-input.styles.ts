@@ -233,4 +233,15 @@ export const inputStyles = css`
       box-shadow: 0 0 0 var(--focus-ring-width, var(--kds-border-width-sm)) var(--focus-ring-color);
     }
   }
+
+  .help-text {
+    margin-block-start: var(--kds-spacing-2xs);
+    font-size: var(--kds-font-size-sm);
+    color: var(--kds-fg-neutral-base);
+    line-height: 1.4;
+  }
+
+  .help-text:empty {
+    display: none;
+  }
 `;

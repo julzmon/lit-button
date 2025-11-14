@@ -19,6 +19,7 @@ import { inputStyles } from "./kds-input.styles.js";
  * @slot start - Leading adornment (icon, text, etc.).
  * @slot end - Trailing adornment (icon, button, etc.).
  * @slot error - Custom error content (used when `error-message` is absent).
+ * @slot help-text - Helper text displayed below the input for additional guidance.
  *
  * @cssprop --mod-input-height - Input height
  * @cssprop --mod-input-padding-inline - Input horizontal padding
@@ -43,6 +44,7 @@ import { inputStyles } from "./kds-input.styles.js";
  * @cssprop --mod-focus-ring-color-invalid - Focus ring color when invalid
  *
  * @csspart error - Wrapper around the error block
+ * @csspart help-text - Wrapper around the help text block
  */
 let uid = 0;
 
@@ -157,6 +159,7 @@ export class KdsInput extends LitElement {
   @state() private _hasStart = false;
   @state() private _hasEnd = false;
   @state() private _hasErrorSlot = false;
+  @state() private _hasHelpTextSlot = false;
   @state() private _showClear = false;
   @state() private _inputId = `kds-input-${++uid}`;
 
@@ -245,6 +248,16 @@ export class KdsInput extends LitElement {
       'user-interacted': this.hadUserInteraction
     };
 
+    // Build aria-describedby with all relevant IDs
+    const describedByIds: string[] = [];
+    if (this._hasHelpTextSlot) {
+      describedByIds.push(`${this._inputId}-help`);
+    }
+    if (this.invalid && (this.errorMessage || this._hasErrorSlot)) {
+      describedByIds.push(`${this._inputId}-error`);
+    }
+    const ariaDescribedBy = describedByIds.length > 0 ? describedByIds.join(' ') : undefined;
+
     return html`
       ${this.label ? html`<label for=${this._inputId}>${this.label}</label>` : null}
 
@@ -273,6 +286,7 @@ export class KdsInput extends LitElement {
           minLength=${ifDefined(this.minlength as any)}
           pattern=${ifDefined(this.pattern)}
           aria-invalid=${this.invalid ? "true" : "false"}
+          aria-describedby=${ifDefined(ariaDescribedBy)}
           @input=${this.handleInput}
           @change=${this.handleChange}
           @focus=${this.handleFocus}
@@ -284,8 +298,9 @@ export class KdsInput extends LitElement {
           type="button"
           class="clear-btn"
           aria-label="Clear input"
+          title="Clear input"
           @click=${() => this.handleClearClick()}
-          >✕</button>
+          ><span aria-hidden="true">✕</span></button>
           ` : null}
 
                   <slot
@@ -296,10 +311,10 @@ export class KdsInput extends LitElement {
       </div>
 
       ${this.invalid || this._hasErrorSlot ? html`
-        <div part="error" class="error">
+        <div id="${this._inputId}-error" role="alert" part="error" class="error">
           ${this.errorMessage ? html`
             <div class="error-message">
-              <span class="error-icon">⚠</span>
+              <span class="error-icon" aria-hidden="true">⚠</span>
               <span class="error-text">${this.errorMessage}</span>
             </div>
           ` : html`
@@ -309,6 +324,16 @@ export class KdsInput extends LitElement {
             this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasErrorSlot = v))}
             ></slot>
           `}
+        </div>
+      ` : null}
+
+      ${this._hasHelpTextSlot || true ? html`
+        <div id="${this._inputId}-help" part="help-text" class="help-text">
+          <slot
+            name="help-text"
+            @slotchange=${(e: Event) =>
+          this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasHelpTextSlot = v))}
+          ></slot>
         </div>
       ` : null}
     `;
