@@ -246,7 +246,7 @@ export class KdsInput extends LitElement {
   private onSlotChange = (slot: HTMLSlotElement, setter: (v: boolean) => void) =>
     setter(slot.assignedElements().length > 0);
 
-  render() {
+  override render() {
     const inputClasses = {
       input: true,
       invalid: this.invalid,
@@ -334,15 +334,13 @@ export class KdsInput extends LitElement {
         </div>
       ` : null}
 
-      ${this._hasHelpTextSlot || true ? html`
-        <div id="${this._inputId}-help" part="help-text" class="help-text">
-          <slot
-            name="help-text"
-            @slotchange=${(e: Event) =>
-          this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasHelpTextSlot = v))}
-          ></slot>
-        </div>
-      ` : null}
+      <div id="${this._inputId}-help" part="help-text" class="help-text">
+        <slot
+          name="help-text"
+          @slotchange=${(e: Event) =>
+        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasHelpTextSlot = v))}
+        ></slot>
+      </div>
     `;
   }
 }
