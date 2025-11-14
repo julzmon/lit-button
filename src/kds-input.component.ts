@@ -132,7 +132,7 @@ export class KdsInput extends LitElement {
   /**
    * Native numeric/date step increment.
    */
-  @property({ type: Number }) step?: any;
+  @property({ type: String }) step?: string | number;
 
   /**
    * Native maximum length (characters).
@@ -169,9 +169,18 @@ export class KdsInput extends LitElement {
 
   // Public methods
 
-  focus() { this._native?.focus(); }
-  blur() { this._native?.blur(); }
-  select() { this._native?.select(); }
+  override focus(options?: FocusOptions) {
+    if (this.disabled) return;
+    this._native?.focus(options);
+  }
+
+  override blur() {
+    this._native?.blur();
+  }
+
+  select() {
+    this._native?.select();
+  }
 
   // Event handlers
 
@@ -219,13 +228,11 @@ export class KdsInput extends LitElement {
     if (this._native) this._native.value = '';
     this._native?.focus();
 
-    try {
-      const Quiet = (window as any).QuietInputEvent;
-      if (typeof Quiet === 'function') {
-        this.dispatchEvent(new Quiet());
-      }
-    } catch (e) {
-      // ignore
+    // Optionally dispatch QuietInputEvent when available without using `any`
+    type QuietInputEventCtor = new () => Event;
+    const Quiet = (window as unknown as { QuietInputEvent?: QuietInputEventCtor }).QuietInputEvent;
+    if (Quiet) {
+      this.dispatchEvent(new Quiet());
     }
 
     if (this._native) {
@@ -271,20 +278,20 @@ export class KdsInput extends LitElement {
         <input
           class="native-input"
           id=${this._inputId}
-          type=${ifDefined(this.type as any)}
+          .type=${this.type}
           name=${ifDefined(this.name)}
           .value=${live(this.value)}
           placeholder=${ifDefined(this.placeholder)}
           ?required=${this.required}
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
-          autocomplete=${ifDefined(this.autocomplete as any)}
-          min=${ifDefined(this.min)}
-          max=${ifDefined(this.max)}
-          step=${ifDefined(this.step as any)}
-          maxLength=${ifDefined(this.maxlength as any)}
-          minLength=${ifDefined(this.minlength as any)}
-          pattern=${ifDefined(this.pattern)}
+          .autocomplete=${this.autocomplete ?? ''}
+          .min=${this.min?.toString() ?? ''}
+          .max=${this.max?.toString() ?? ''}
+          .step=${this.step?.toString() ?? ''}
+          .maxLength=${this.maxlength ?? -1}
+          .minLength=${this.minlength ?? -1}
+          .pattern=${this.pattern ?? ''}
           aria-invalid=${this.invalid ? "true" : "false"}
           aria-describedby=${ifDefined(ariaDescribedBy)}
           @input=${this.handleInput}
