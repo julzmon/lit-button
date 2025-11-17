@@ -82,8 +82,7 @@ export const inputStyles = css`
     }
 
     /* Invalid base state (attr, class, or ARIA) */
-    &.invalid,
-    &[aria-invalid="true"] {
+    &.invalid {
       --input-border-color: var(--kds-border-negative-emphasis-base);
       --input-border-color-hover: var(--kds-border-negative-emphasis-hover);
       --input-border-color-focus: var(--kds-border-negative-emphasis-base);
@@ -106,8 +105,7 @@ export const inputStyles = css`
   }
 
   /* Also cover class/ARIA invalid focus (if host[invalid] isn’t used) */
-  .input.invalid:focus-within,
-  .input[aria-invalid="true"]:focus-within {
+  .input.invalid:focus-within {
     border-color: var(--kds-border-negative-emphasis-base);
     box-shadow: 0 0 0 var(--kds-border-width-xs) var(--focus-ring-color-invalid);
   }
@@ -140,19 +138,6 @@ export const inputStyles = css`
     }
   }
 
-  /* Slots */
-  .start,
-  .end {
-    display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-    pointer-events: none;
-
-    &.start { margin-inline-end: var(--input-gap); }
-    &.end   { margin-inline-start: var(--input-gap); }
-  }
-  ::slotted(*) { pointer-events: auto; } /* allow interactive slotted content */
-
   /* Error text block */
   .error { margin-block-start: var(--kds-space-sm); }
   .error-message {
@@ -163,10 +148,8 @@ export const inputStyles = css`
     font-size: var(--kds-font-size-sm);
     font-family: var(--kds-font-family);
     font-weight: var(--kds-font-weight-bold);
-    line-height: 1.5;
-    letter-spacing: 0.04em;
 
-    .error-icon { flex: 0 0 auto; font-size: 14px; }
+    .error-icon { flex: 0 0 auto; font-size: var(--kds-font-size-sm); }
     .error-text { flex: 1; }
   }
 
@@ -202,8 +185,7 @@ export const inputStyles = css`
 
     /* Invalid colors in HCM */
     :host([invalid]) .input,
-    .input.invalid,
-    .input[aria-invalid="true"] { border-color: Mark; }
+    .input.invalid { border-color: Mark; }
   }
 
   .clear-btn {
