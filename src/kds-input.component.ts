@@ -98,7 +98,7 @@ export class KdsInput extends LitElement {
   /**
    * Disables the control and prevents interaction.
    */
-  @property({ type: Boolean }) disabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   /**
    * Helper text displayed below the field.
@@ -108,7 +108,7 @@ export class KdsInput extends LitElement {
   /**
    * Makes the field read-only (non-editable).
    */
-  @property({ type: Boolean }) readonly = false;
+  @property({ type: Boolean, reflect: true }) readonly = false;
 
   /**
    * Sets the invalid state and updates `aria-invalid`.
