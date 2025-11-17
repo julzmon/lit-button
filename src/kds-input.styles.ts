@@ -233,4 +233,10 @@ export const inputStyles = css`
       box-shadow: 0 0 0 var(--focus-ring-width, var(--kds-border-width-sm)) var(--focus-ring-color);
     }
   }
+
+  :host([required]) #label::after {
+    margin-inline-start: .125rem;
+    content: "*";
+    color: var(--kds-fg-negative-base);
+  }
 `;
