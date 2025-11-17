@@ -7,7 +7,7 @@ import { live } from "lit/directives/live.js";
 import { inputStyles } from "./kds-input.styles.js";
 
 /**
- * @summary A text input field with validation and adornment slots.
+ * @summary A text input field with validation, form integration, and adornment slots.
  * @documentation URL
  * @status beta
  * @since 1.0
@@ -46,9 +46,6 @@ import { inputStyles } from "./kds-input.styles.js";
  * @cssprop --mod-focus-ring-width - Focus ring width
  * @cssprop --mod-focus-ring-color - Focus ring color
  * @cssprop --mod-focus-ring-color-invalid - Focus ring color when invalid
- *
- * @csspart error - Wrapper around the error block
- * @csspart help-text - Wrapper around the help text block
  */
 let uid = 0;
 
@@ -108,21 +105,25 @@ export class KdsInput extends LitElement {
 
   /**
    * Disables the control and prevents interaction.
+   * Reflected to allow CSS styling with `:host([disabled])`.
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   /**
    * Helper text displayed below the field.
+   * Can also be provided via the `help-text` slot.
    */
   @property({ type: String }) helpText?: string;
 
   /**
    * Makes the field read-only (non-editable).
+   * Reflected to allow CSS styling with `:host([readonly])`.
    */
   @property({ type: Boolean, reflect: true }) readonly = false;
 
   /**
    * Sets the invalid state and updates `aria-invalid`.
+   * Reflected to allow CSS styling with `:host([invalid])`.
    */
   @property({ type: Boolean, reflect: true }) invalid = false;
 
@@ -169,7 +170,8 @@ export class KdsInput extends LitElement {
   @property({ type: String }) pattern?: string;
 
   /**
-   * Enable the clear button when not blank.
+   * Shows a clear button when the field has a value.
+   * Clicking the button or pressing Escape clears the input.
    */
   @property({ attribute: 'clearable', type: Boolean, reflect: true }) clearable = false;
 
@@ -209,10 +211,19 @@ export class KdsInput extends LitElement {
     this._helpTextSlot?.removeEventListener('slotchange', this.handleHelpTextSlotChange);
   }
 
-  // Public methods
-
+  /**
+   * Sets focus to the input element.
+   */
   focus() { this._native?.focus(); }
+
+  /**
+   * Removes focus from the input element.
+   */
   blur() { this._native?.blur(); }
+
+  /**
+   * Selects all text in the input element.
+   */
   select() { this._native?.select(); }
 
   // Event handlers
@@ -355,10 +366,18 @@ export class KdsInput extends LitElement {
     this.internals.setValidity(validity.valid ? {} : flags, validity.valid ? '' : message, this._native);
   }
 
+  /**
+   * Called when a containing fieldset is disabled.
+   * @internal
+   */
   formDisabledCallback(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
+  /**
+   * Called when the form is reset.
+   * @internal
+   */
   formResetCallback() {
     this.hadUserInteraction = false;
     this.value = this.getAttribute('value') ?? '';
@@ -366,11 +385,20 @@ export class KdsInput extends LitElement {
     this.updateValidity();
   }
 
+  /**
+   * Checks the input's validity and returns `true` if valid, `false` otherwise.
+   * Also updates the internal validity state.
+   */
   checkValidity() {
     this.updateValidity();
     return this.internals.checkValidity();
   }
 
+  /**
+   * Checks the input's validity and reports it to the user.
+   * Returns `true` if valid, `false` otherwise.
+   * When invalid, shows the browser's native validation UI.
+   */
   reportValidity() {
     this.updateValidity();
     return this.internals.reportValidity();
