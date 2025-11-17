@@ -12,6 +12,8 @@ import { inputStyles } from "./kds-input.styles.js";
  * @status beta
  * @since 1.0
  *
+ * @event input - Native input event. Emitted on each keystroke. Bubbles and composes.
+ * @event change - Native change event. Emitted on commit/blur. Bubbles and composes.
  * @event kds-blur - Emitted when the input loses focus.
  * @event kds-focus - Emitted when the input gains focus.
  * @event kds-input - Emitted on each keystroke with `{ value: string }`.
@@ -182,8 +184,30 @@ export class KdsInput extends LitElement {
   @state() private _showPassword = false;
 
   @query('.native-input') private _native!: HTMLInputElement;
+  @query('slot[name="start"]') private _startSlot!: HTMLSlotElement;
+  @query('slot[name="end"]') private _endSlot!: HTMLSlotElement;
+  @query('slot[name="error"]') private _errorSlot!: HTMLSlotElement;
+  @query('slot[name="help-text"]') private _helpTextSlot!: HTMLSlotElement;
 
   private hadUserInteraction = false;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.updateComplete.then(() => {
+      this._startSlot?.addEventListener('slotchange', this.handleStartSlotChange);
+      this._endSlot?.addEventListener('slotchange', this.handleEndSlotChange);
+      this._errorSlot?.addEventListener('slotchange', this.handleErrorSlotChange);
+      this._helpTextSlot?.addEventListener('slotchange', this.handleHelpTextSlotChange);
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._startSlot?.removeEventListener('slotchange', this.handleStartSlotChange);
+    this._endSlot?.removeEventListener('slotchange', this.handleEndSlotChange);
+    this._errorSlot?.removeEventListener('slotchange', this.handleErrorSlotChange);
+    this._helpTextSlot?.removeEventListener('slotchange', this.handleHelpTextSlotChange);
+  }
 
   // Public methods
 
@@ -204,7 +228,6 @@ export class KdsInput extends LitElement {
       bubbles: true,
       composed: true
     }));
-    this.updateValidity();
   };
 
   private handleChange = (event: Event) => {
@@ -260,17 +283,36 @@ export class KdsInput extends LitElement {
     this.dispatchEvent(new CustomEvent("kds-change", { detail: { value: this.value }, bubbles: true, composed: true }));
   }
 
-  private onSlotChange = (slot: HTMLSlotElement, setter: (v: boolean) => void) =>
-    setter(slot.assignedElements().length > 0);
+  private handleStartSlotChange = () => {
+    this._hasStart = this._startSlot?.assignedElements().length > 0;
+  };
+
+  private handleEndSlotChange = () => {
+    this._hasEnd = this._endSlot?.assignedElements().length > 0;
+  };
+
+  private handleErrorSlotChange = () => {
+    this._hasErrorSlot = this._errorSlot?.assignedElements().length > 0;
+  };
+
+  private handleHelpTextSlotChange = () => {
+    this._hasHelpTextSlot = this._helpTextSlot?.assignedElements().length > 0;
+  };
 
   private handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Enter' && this.internals?.form) {
+    // Submit form on Enter
+    if (event.key === 'Enter' && this.internals.form) {
       try {
-        this.internals.form!.requestSubmit();
+        this.internals.form.requestSubmit();
       } catch {
         // Fallback: dispatch a submit event if requestSubmit isn't supported
-        this.internals.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        this.internals.form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
       }
+    }
+    // Clear on Escape when clearable
+    if (event.key === 'Escape' && this.clearable && this.value) {
+      event.preventDefault();
+      this.handleClearClick();
     }
   };
 
@@ -368,11 +410,7 @@ export class KdsInput extends LitElement {
       <label id="label" for=${this._inputId}><slot name="label">${this.label}</slot></label>
 
       <div class=${classMap(inputClasses)}>
-        <slot
-          name="start"
-          @slotchange=${(e: Event) =>
-        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasStart = v))}
-        ></slot>
+        <slot name="start"></slot>
 
         <input
           class="native-input"
@@ -426,8 +464,7 @@ export class KdsInput extends LitElement {
           >✕</button>
           ` : null}
 
-        <slot name="end" @slotchange=${(e: Event) =>
-        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasEnd = v))} ></slot>
+        <slot name="end"></slot>
 
       </div>
 
@@ -439,19 +476,13 @@ export class KdsInput extends LitElement {
               <span class="error-text">${this.errorMessage}</span>
             </div>
           ` : html`
-            <slot
-              name="error"
-              @slotchange=${(e: Event) =>
-            this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasErrorSlot = v))}
-            ></slot>
+            <slot name="error"></slot>
           `}
         </div>
       ` : null}
 
       <div id="${this._inputId}-help" part="help-text" class="help-text-wrapper">
-        <slot name="help-text" @slotchange=${(e: Event) =>
-        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasHelpTextSlot = v))}
-        >${this.helpText}</slot>
+        <slot name="help-text">${this.helpText}</slot>
       </div>
     `;
   }
