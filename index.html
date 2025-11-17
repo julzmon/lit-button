@@ -259,6 +259,22 @@
         <kds-input label="Readonly" value="Read-only text" readonly></kds-input>
       </div>
 
+      <h3>With Help Text</h3>
+      <div class="button-grid">
+        <kds-input label="Email Address" placeholder="you@example.com" type="email">
+          <span slot="help-text">We'll never share your email with anyone else.</span>
+        </kds-input>
+        <kds-input label="Password" placeholder="Enter password" type="password" required>
+          <span slot="help-text">Must be at least 8 characters long with a number and special character.</span>
+        </kds-input>
+        <kds-input label="Username" placeholder="Choose username" clearable>
+          <span slot="help-text">This will be visible to other users.</span>
+        </kds-input>
+        <kds-input label="Invalid with Help" placeholder="Enter value" invalid error-message="This field is required">
+          <span slot="help-text">This helper text is still visible even when there's an error.</span>
+        </kds-input>
+      </div>
+
       <h3>Input Types</h3>
       <div class="button-grid">
         <kds-input type="email" label="Email" placeholder="email@example.com"></kds-input>
