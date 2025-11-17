@@ -188,7 +188,7 @@ export const inputStyles = css`
     .input.invalid { border-color: Mark; }
   }
 
-  .clear-btn {
+  .input-action-btn {
     appearance: none;
     border: none;
     background: transparent;

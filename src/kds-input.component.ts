@@ -168,6 +168,7 @@ export class KdsInput extends LitElement {
   @state() private _hasHelpTextSlot = false;
   @state() private _showClear = false;
   @state() private _inputId = `kds-input-${++uid}`;
+  @state() private _showPassword = false;
 
   @query('.native-input') private _native!: HTMLInputElement;
 
@@ -264,6 +265,8 @@ export class KdsInput extends LitElement {
     }
     const ariaDescribedBy = describedByIds.length > 0 ? describedByIds.join(' ') : undefined;
 
+    const inputType = this.type === 'password' && this._showPassword ? 'text' : this.type;
+
     return html`
       <label id="label" for=${this._inputId}><slot name="label">${this.label}</slot></label>
 
@@ -277,7 +280,7 @@ export class KdsInput extends LitElement {
         <input
           class="native-input"
           id=${this._inputId}
-          type=${ifDefined(this.type as any)}
+          type=${ifDefined(inputType as any)}
           name=${ifDefined(this.name)}
           .value=${live(this.value)}
           placeholder=${ifDefined(this.placeholder)}
@@ -299,10 +302,20 @@ export class KdsInput extends LitElement {
           @blur=${this.handleBlur}
         />
 
+        ${this.type === 'password' && !this.disabled && !this.readonly ? html`
+          <button
+            type="button"
+            class="input-action-btn"
+            aria-label=${this._showPassword ? 'Hide password' : 'Show password'}
+            aria-pressed=${this._showPassword ? 'true' : 'false'}
+            @click=${() => { this._showPassword = !this._showPassword; this._native?.focus(); }}
+          >${this._showPassword ? '👁' : '🙈'}</button>
+        ` : null}
+
         ${this.clearable && this._showClear && !this.disabled && !this.readonly ? html`
           <button
           type="button"
-          class="clear-btn"
+          class="input-action-btn"
           aria-label="Clear input"
           @click=${() => this.handleClearClick()}
           >✕</button>
