@@ -16,6 +16,7 @@ import { inputStyles } from "./kds-input.styles.js";
  * @event kds-input - Emitted on each keystroke with `{ value: string }`.
  * @event kds-change - Emitted on commit/blur with `{ value: string }`.
  *
+ * @slot label - Custom label content (used when `label` property is absent).
  * @slot start - Leading adornment (icon, text, etc.).
  * @slot end - Trailing adornment (icon, button, etc.).
  * @slot error - Custom error content (used when `error-message` is absent).
@@ -246,7 +247,7 @@ export class KdsInput extends LitElement {
     };
 
     return html`
-      <label id="label" for=${this._inputId}>${this.label}</label>
+      <label id="label" for=${this._inputId}><slot name="label">${this.label}</slot></label>
 
       <div class=${classMap(inputClasses)}>
         <slot
