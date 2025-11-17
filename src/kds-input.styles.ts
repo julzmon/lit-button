@@ -234,22 +234,18 @@ export const inputStyles = css`
     }
   }
 
-  /* Help text wrapper and slot */
   .help-text-wrapper {
-    display: block;
     margin-block-start: var(--kds-space-sm);
+
+    &:empty {
+      display: none;
+    }
+    ::slotted(*) {
+      font-size: var(--kds-font-size-xs);
+      color: var(--kds-fg-neutral-base);
+    }
   }
 
-  .help-text-wrapper:empty {
-    display: none;
-  }
-
-  .help-text-wrapper ::slotted(*) {
-    font-size: var(--kds-font-size-sm);
-    color: var(--kds-fg-neutral-base);
-    line-height: 1.4;
-    margin: 0;
-  }
 
   :host([required]) #label::after {
     margin-inline-start: .125rem;

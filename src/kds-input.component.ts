@@ -308,11 +308,9 @@ export class KdsInput extends LitElement {
           >✕</button>
           ` : null}
 
-                  <slot
-                    name="end"
-                    @slotchange=${(e: Event) =>
-        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasEnd = v))}
-                  ></slot>
+        <slot name="end" @slotchange=${(e: Event) =>
+        this.onSlotChange(e.target as HTMLSlotElement, v => (this._hasEnd = v))} ></slot>
+
       </div>
 
       ${this.invalid || this._hasErrorSlot ? html`
