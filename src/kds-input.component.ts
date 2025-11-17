@@ -246,7 +246,7 @@ export class KdsInput extends LitElement {
     };
 
     return html`
-      ${this.label ? html`<label for=${this._inputId}>${this.label}</label>` : null}
+      <label id="label" for=${this._inputId}>${this.label}</label>
 
       <div class=${classMap(inputClasses)}>
         <slot

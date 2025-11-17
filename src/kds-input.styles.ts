@@ -7,8 +7,8 @@ export const inputStyles = css`
     inline-size: 100%;
 
     --input-height: var(--mod-input-height, var(--kds-button-input-height-md));
-    --input-padding-inline: var(--mod-input-padding-inline, var(--kds-spacing-md));
-    --input-gap: var(--mod-input-gap, var(--kds-spacing-xs));
+    --input-padding-inline: var(--mod-input-padding-inline, var(--kds-space-xl));
+    --input-gap: var(--mod-input-gap, var(--kds-space-md));
     --input-color: var(--mod-input-color, var(--kds-fg-base));
     --input-font-size: var(--mod-input-font-size, var(--kds-font-size-md));
     --input-line-height: var(--mod-input-line-height, 1.5);
@@ -25,7 +25,7 @@ export const inputStyles = css`
     --label-color: var(--mod-label-color);
     --label-font-size: var(--mod-label-font-size);
     --label-font-weight: var(--mod-label-font-weight);
-    --label-margin-bottom: var(--mod-label-margin-bottom, var(--kds-spacing-2xs));
+    --label-margin-bottom: var(--mod-label-margin-bottom, var(--kds-space-md));
 
     --focus-ring-width: var(--mod-focus-ring-width, var(--kds-border-width-sm, 2px));
     --focus-ring-color: var(--mod-focus-ring-color, var(--input-border-color-focus));
@@ -36,12 +36,12 @@ export const inputStyles = css`
   :host([size="sm"]) {
     --input-height: var(--kds-button-input-height-sm);
     --input-font-size: var(--kds-font-size-sm);
-    --input-padding-inline: var(--kds-spacing-xs);
+    --input-padding-inline: var(--kds-space-md);
   }
   :host([size="md"]) {
     --input-height: var(--kds-button-input-height-md);
     --input-font-size: var(--kds-font-size-md);
-    --input-padding-inline: var(--kds-spacing-md);
+    --input-padding-inline: var(--kds-space-xl);
   }
 
   /* Label */
@@ -154,11 +154,11 @@ export const inputStyles = css`
   ::slotted(*) { pointer-events: auto; } /* allow interactive slotted content */
 
   /* Error text block */
-  .error { margin-block-start: var(--kds-spacing-2xs); }
+  .error { margin-block-start: var(--kds-space-sm); }
   .error-message {
     display: flex;
     align-items: center;
-    gap: var(--kds-spacing-2xs);
+    gap: var(--kds-space-sm);
     color: var(--kds-fg-negative-base);
     font-size: var(--kds-font-size-sm);
     font-family: var(--kds-font-family);
