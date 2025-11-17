@@ -1,4 +1,5 @@
 import { LitElement, html } from "lit";
+import type { PropertyValues } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -51,11 +52,19 @@ let uid = 0;
 
 @customElement("kds-input")
 export class KdsInput extends LitElement {
+  static formAssociated = true;
   static styles = inputStyles;
   static shadowRootOptions: ShadowRootInit = {
     mode: "open" as ShadowRootMode,
     delegatesFocus: true,
   };
+
+  private internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.internals = this.attachInternals();
+  }
 
   /**
    * Current value of the input.
@@ -125,6 +134,8 @@ export class KdsInput extends LitElement {
    */
   @property({ type: String }) autocomplete?: HTMLInputElement["autocomplete"];
 
+  // Typing hint attributes will be read directly from host attributes at render time
+
   /**
    * Native numeric/date lower bound.
    */
@@ -186,22 +197,28 @@ export class KdsInput extends LitElement {
     const target = event.target as HTMLInputElement;
     this.value = target.value;
     this._showClear = !!this.value;
+    // Re-dispatch native input for framework ergonomics
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.dispatchEvent(new CustomEvent("kds-input", {
       detail: { value: this.value },
       bubbles: true,
       composed: true
     }));
+    this.updateValidity();
   };
 
   private handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement;
     this.value = target.value;
     this._showClear = !!this.value;
+    // Re-dispatch native change for framework ergonomics
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     this.dispatchEvent(new CustomEvent("kds-change", {
       detail: { value: this.value },
       bubbles: true,
       composed: true
     }));
+    this.updateValidity();
   };
 
   private handleFocus = (event: FocusEvent) => {
@@ -246,6 +263,86 @@ export class KdsInput extends LitElement {
   private onSlotChange = (slot: HTMLSlotElement, setter: (v: boolean) => void) =>
     setter(slot.assignedElements().length > 0);
 
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' && this.internals?.form) {
+      try {
+        this.internals.form!.requestSubmit();
+      } catch {
+        // Fallback: dispatch a submit event if requestSubmit isn't supported
+        this.internals.form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+      }
+    }
+  };
+
+  private buildValidityFlags(validity: ValidityState): Partial<Record<keyof ValidityState, boolean>> {
+    const flags: any = {};
+    const keys: (keyof ValidityState)[] = [
+      'badInput', 'customError', 'patternMismatch', 'rangeOverflow', 'rangeUnderflow',
+      'stepMismatch', 'tooLong', 'tooShort', 'typeMismatch', 'valueMissing'
+    ];
+    for (const key of keys) {
+      if (validity[key]) flags[key] = true;
+    }
+    return flags;
+  }
+
+  private updateValidity() {
+    // Disabled controls are never invalid
+    if (this.disabled) {
+      this._native?.setCustomValidity('');
+      this.internals.setValidity({}, '');
+      return;
+    }
+
+    // Respect explicit invalid flag as a custom error
+    if (this.invalid) {
+      const message = this.errorMessage ?? '';
+      this._native?.setCustomValidity(message);
+      this.internals.setValidity({ customError: true }, message, this._native);
+      return;
+    } else {
+      this._native?.setCustomValidity('');
+    }
+
+    if (!this._native) return;
+
+    const validity = this._native.validity;
+    const flags = this.buildValidityFlags(validity);
+    const message = this._native.validationMessage || '';
+    // When valid, pass empty flags to mark valid
+    this.internals.setValidity(validity.valid ? {} : flags, validity.valid ? '' : message, this._native);
+  }
+
+  formDisabledCallback(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  formResetCallback() {
+    this.hadUserInteraction = false;
+    this.value = this.getAttribute('value') ?? '';
+    this._showClear = !!this.value;
+    this.updateValidity();
+  }
+
+  checkValidity() {
+    this.updateValidity();
+    return this.internals.checkValidity();
+  }
+
+  reportValidity() {
+    this.updateValidity();
+    return this.internals.reportValidity();
+  }
+
+  updated(changed: PropertyValues<this>) {
+    const validityAffecting = [
+      'value','invalid','required','pattern','maxlength','minlength','min','max','step','type','readonly','disabled'
+    ] as const;
+    if (validityAffecting.some(prop => changed.has(prop as any))) {
+      this.updateValidity();
+    }
+  }
+
   render() {
     const inputClasses = {
       input: true,
@@ -287,7 +384,13 @@ export class KdsInput extends LitElement {
           ?required=${this.required}
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
+          ?autofocus=${this.hasAttribute('autofocus')}
           autocomplete=${ifDefined(this.autocomplete as any)}
+          autocapitalize=${ifDefined(this.getAttribute('autocapitalize') as any)}
+          autocorrect=${ifDefined(this.getAttribute('autocorrect') as any)}
+          enterkeyhint=${ifDefined(this.getAttribute('enterkeyhint') as any)}
+          inputmode=${ifDefined(this.getAttribute('inputmode') as any)}
+          spellcheck=${ifDefined(this.getAttribute('spellcheck') as any)}
           min=${ifDefined(this.min)}
           max=${ifDefined(this.max)}
           step=${ifDefined(this.step as any)}
@@ -300,6 +403,7 @@ export class KdsInput extends LitElement {
           @change=${this.handleChange}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}
+          @keydown=${this.handleKeyDown}
         />
 
         ${this.type === 'password' && !this.disabled && !this.readonly ? html`
@@ -308,6 +412,7 @@ export class KdsInput extends LitElement {
             class="input-action-btn"
             aria-label=${this._showPassword ? 'Hide password' : 'Show password'}
             aria-pressed=${this._showPassword ? 'true' : 'false'}
+            aria-controls=${this._inputId}
             @click=${() => { this._showPassword = !this._showPassword; this._native?.focus(); }}
           >${this._showPassword ? '👁' : '🙈'}</button>
         ` : null}
