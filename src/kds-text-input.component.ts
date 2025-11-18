@@ -4,7 +4,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
-import { inputStyles } from "./kds-input.styles.js";
+import { inputStyles } from "./kds-text-input.styles.js";
 
 /**
  * @summary A text input field with validation, form integration, and adornment slots.
@@ -16,7 +16,7 @@ import { inputStyles } from "./kds-input.styles.js";
  * @event change - Native change event. Emitted on commit/blur. Bubbles and composes.
  * @event kds-blur - Emitted when the input loses focus.
  * @event kds-focus - Emitted when the input gains focus.
- * @event kds-input - Emitted on each keystroke with `{ value: string }`.
+ * @event kds-text-input - Emitted on each keystroke with `{ value: string }`.
  * @event kds-change - Emitted on commit/blur with `{ value: string }`.
  *
  * @slot label - Custom label content (used when `label` property is absent).
@@ -49,8 +49,8 @@ import { inputStyles } from "./kds-input.styles.js";
  */
 let uid = 0;
 
-@customElement("kds-input")
-export class KdsInput extends LitElement {
+@customElement("kds-text-input")
+export class KdsTextInput extends LitElement {
   static formAssociated = true;
   static styles = inputStyles;
   static shadowRootOptions: ShadowRootInit = {
@@ -182,7 +182,7 @@ export class KdsInput extends LitElement {
   @state() private _hasErrorSlot = false;
   @state() private _hasHelpTextSlot = false;
   @state() private _showClear = false;
-  @state() private _inputId = `kds-input-${++uid}`;
+  @state() private _inputId = `kds-text-input-${++uid}`;
   @state() private _showPassword = false;
 
   @query('.native-input') private _native!: HTMLInputElement;
@@ -234,7 +234,7 @@ export class KdsInput extends LitElement {
     this._showClear = !!this.value;
     // Re-dispatch native input for framework ergonomics
     this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-    this.dispatchEvent(new CustomEvent("kds-input", {
+    this.dispatchEvent(new CustomEvent("kds-text-input", {
       detail: { value: this.value },
       bubbles: true,
       composed: true
@@ -290,7 +290,7 @@ export class KdsInput extends LitElement {
       this._native.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true, cancelable: false }));
     }
 
-    this.dispatchEvent(new CustomEvent("kds-input", { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(new CustomEvent("kds-text-input", { detail: { value: this.value }, bubbles: true, composed: true }));
     this.dispatchEvent(new CustomEvent("kds-change", { detail: { value: this.value }, bubbles: true, composed: true }));
   }
 
@@ -518,6 +518,6 @@ export class KdsInput extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "kds-input": KdsInput;
+    "kds-text-input": KdsTextInput;
   }
 }

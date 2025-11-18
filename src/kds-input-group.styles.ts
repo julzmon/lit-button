@@ -134,7 +134,7 @@ export const inputGroupStyles = css`
   }
 
   /* Input-specific overrides when used in input groups */
-  .input-wrapper ::slotted(kds-input) {
+  .input-wrapper ::slotted(kds-text-input) {
     --mod-input-border-radius: inherit;
     --mod-input-height: 100%;
   }
