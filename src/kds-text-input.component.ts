@@ -212,6 +212,14 @@ export class KdsTextInput extends LitElement {
   }
 
   /**
+   * Initialize internal state based on initial value/attributes so
+   * the clear button appears immediately when appropriate.
+   */
+  protected firstUpdated() {
+    this._showClear = !!this.value;
+  }
+
+  /**
    * Sets focus to the input element.
    */
   focus() { this._native?.focus(); }
@@ -410,6 +418,11 @@ export class KdsTextInput extends LitElement {
     ] as const;
     if (validityAffecting.some(prop => changed.has(prop as any))) {
       this.updateValidity();
+    }
+
+    // Keep clear-button visibility in sync with external value changes
+    if (changed.has('value')) {
+      this._showClear = !!this.value;
     }
   }
 
