@@ -45,7 +45,27 @@ export const textInputStyles = css`
     --input-padding-inline: var(--kds-space-xl);
   }
 
-  /* Label */
+  :host([required]) #label::after {
+    margin-inline-start: .125rem;
+    content: "*";
+    color: var(--kds-fg-negative-base);
+  }
+
+  /* Host-level invalid also updates the inner .input custom props */
+  :host([invalid]) {
+    .input {
+      --input-border-color: var(--kds-border-negative-emphasis-base);
+      --input-border-color-hover: var(--kds-border-negative-emphasis-hover);
+      --input-border-color-focus: var(--kds-border-negative-emphasis-base);
+
+      /* Invalid + focus (same outer ring, red) */
+      &:focus-within {
+        border-color: var(--kds-border-negative-emphasis-base);
+        box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color-invalid);
+      }
+    }
+  }
+
   label {
     color: var(--label-color);
     font-size: var(--label-font-size);
@@ -53,12 +73,6 @@ export const textInputStyles = css`
     font-family: var(--font-family);
     margin-block-end: var(--label-margin-bottom);
     display: block;
-  }
-
-  :host([required]) #label::after {
-    margin-inline-start: .125rem;
-    content: "*";
-    color: var(--kds-fg-negative-base);
   }
 
   /* Field wrapper */
@@ -93,28 +107,12 @@ export const textInputStyles = css`
       --input-border-color: var(--kds-border-negative-emphasis-base);
       --input-border-color-hover: var(--kds-border-negative-emphasis-hover);
       --input-border-color-focus: var(--kds-border-negative-emphasis-base);
-    }
-  }
 
-  /* Host-level invalid also updates the inner .input custom props */
-  :host([invalid]) {
-    .input {
-      --input-border-color: var(--kds-border-negative-emphasis-base);
-      --input-border-color-hover: var(--kds-border-negative-emphasis-hover);
-      --input-border-color-focus: var(--kds-border-negative-emphasis-base);
-
-      /* Invalid + focus (same outer ring, red) */
       &:focus-within {
         border-color: var(--kds-border-negative-emphasis-base);
-        box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color-invalid);
+        box-shadow: 0 0 0 var(--kds-border-width-xs) var(--focus-ring-color-invalid);
       }
     }
-  }
-
-  /* Also cover class/ARIA invalid focus (if host[invalid] isn’t used) */
-  .input.invalid:focus-within {
-    border-color: var(--kds-border-negative-emphasis-base);
-    box-shadow: 0 0 0 var(--kds-border-width-xs) var(--focus-ring-color-invalid);
   }
 
   /* Native input */
@@ -175,26 +173,6 @@ export const textInputStyles = css`
     .end { opacity: var(--kds-base-opacity-disabled, 0.5); }
   }
 
-  /* Accessibility preferences */
-  @media (prefers-reduced-motion: reduce) {
-    .input { transition: none; }
-  }
-
-  @media (forced-colors: active) {
-    .input { border-color: ButtonBorder; }
-    .input:focus-within {
-      /* Outline is most reliable in HCM */
-      outline: var(--focus-ring-width) solid Highlight;
-      outline-offset: 0;
-      box-shadow: none;
-      border-color: Highlight;
-    }
-
-    /* Invalid colors in HCM */
-    :host([invalid]) .input,
-    .input.invalid { border-color: Mark; }
-  }
-
   .input-action-btn {
     appearance: none;
     border: none;
@@ -221,7 +199,12 @@ export const textInputStyles = css`
       outline: none;
       box-shadow: 0 0 0 var(--kds-border-width-sm) var(--focus-ring-color);
     }
+
+    &:last-of-type {
+      margin-inline-end: calc(var(--input-padding-inline) / -2);
+    }
   }
+
 
   .help-text-wrapper {
     margin-block-start: var(--kds-space-sm);
@@ -235,11 +218,23 @@ export const textInputStyles = css`
     }
   }
 
-  ::slotted([slot="start"]) {
-    margin-inline-start: calc(var(--padding-inline) / 2);
+  /* Accessibility preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .input { transition: none; }
   }
 
-  ::slotted([slot="end"]) {
-    margin-inline-end: calc(var(--padding-inline) / 2);
+  @media (forced-colors: active) {
+    .input { border-color: ButtonBorder; }
+    .input:focus-within {
+      /* Outline is most reliable in HCM */
+      outline: var(--focus-ring-width) solid Highlight;
+      outline-offset: 0;
+      box-shadow: none;
+      border-color: Highlight;
+    }
+
+    /* Invalid colors in HCM */
+    :host([invalid]) .input,
+    .input.invalid { border-color: Mark; }
   }
 `;
