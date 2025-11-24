@@ -4,7 +4,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
-import { inputStyles } from "./kds-text-input.styles.js";
+import { textInputStyles } from "./kds-text-input.styles.js";
 
 /**
  * @summary A text input field with validation, form integration, and adornment slots.
@@ -52,7 +52,7 @@ let uid = 0;
 @customElement("kds-text-input")
 export class KdsTextInput extends LitElement {
   static formAssociated = true;
-  static styles = inputStyles;
+  static styles = textInputStyles;
   static shadowRootOptions: ShadowRootInit = {
     mode: "open" as ShadowRootMode,
     delegatesFocus: true,
@@ -193,7 +193,7 @@ export class KdsTextInput extends LitElement {
 
   private hadUserInteraction = false;
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.updateComplete.then(() => {
       this._startSlot?.addEventListener('slotchange', this.handleStartSlotChange);
@@ -203,7 +203,7 @@ export class KdsTextInput extends LitElement {
     });
   }
 
-  disconnectedCallback() {
+  overridedisconnectedCallback() {
     super.disconnectedCallback();
     this._startSlot?.removeEventListener('slotchange', this.handleStartSlotChange);
     this._endSlot?.removeEventListener('slotchange', this.handleEndSlotChange);
@@ -215,19 +215,19 @@ export class KdsTextInput extends LitElement {
    * Initialize internal state based on initial value/attributes so
    * the clear button appears immediately when appropriate.
    */
-  protected firstUpdated() {
+  protected override firstUpdated() {
     this._showClear = !!this.value;
   }
 
   /**
    * Sets focus to the input element.
    */
-  focus() { this._native?.focus(); }
+  override focus() { this._native?.focus(); }
 
   /**
    * Removes focus from the input element.
    */
-  blur() { this._native?.blur(); }
+  override blur() { this._native?.blur(); }
 
   /**
    * Selects all text in the input element.
@@ -412,7 +412,7 @@ export class KdsTextInput extends LitElement {
     return this.internals.reportValidity();
   }
 
-  updated(changed: PropertyValues<this>) {
+  override updated(changed: PropertyValues<this>) {
     const validityAffecting = [
       'value','invalid','required','pattern','maxlength','minlength','min','max','step','type','readonly','disabled'
     ] as const;

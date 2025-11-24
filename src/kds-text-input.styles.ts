@@ -1,6 +1,6 @@
 import { css } from "lit";
 
-export const inputStyles = css`
+export const textInputStyles = css`
   :host {
     display: block;
     position: relative;
