@@ -6,18 +6,18 @@ export const inputStyles = css`
     position: relative;
     inline-size: 100%;
 
-    --input-height: var(--mod-input-height, var(--kds-button-input-height-md));
-    --input-padding-inline: var(--mod-input-padding-inline, var(--kds-space-xl));
-    --input-gap: var(--mod-input-gap, var(--kds-space-md));
-    --input-color: var(--mod-input-color, var(--kds-fg-base));
-    --input-font-size: var(--mod-input-font-size, var(--kds-font-size-md));
-    --input-line-height: var(--mod-input-line-height, 1.5);
-    --input-border-width: var(--mod-input-border-width, var(--kds-border-width-xs));
-    --input-border-radius: var(--mod-input-border-radius, var(--kds-border-radius-sm));
-    --input-border-color: var(--mod-input-border-color, var(--kds-border-neutral-emphasis-base));
-    --input-border-color-hover: var(--mod-input-border-color-hover, var(--kds-border-neutral-emphasis-hover));
-    --input-border-color-focus: var(--mod-input-border-color-focus, var(--kds-border-info-emphasis-base));
-    --input-background-color: var(--mod-input-background-color, var(--kds-bg-surface-base));
+    --height: var(--mod-input-height, var(--kds-button-input-height-md));
+    --padding-inline: var(--mod-input-padding-inline, var(--kds-space-xl));
+    --gap: var(--mod-input-gap, var(--kds-space-md));
+    --color: var(--mod-input-color, var(--kds-fg-base));
+    --font-size: var(--mod-input-font-size, var(--kds-font-size-md));
+    --line-height: var(--mod-input-line-height, 1.5);
+    --border-width: var(--mod-input-border-width, var(--kds-border-width-xs));
+    --border-radius: var(--mod-input-border-radius, var(--kds-border-radius-sm));
+    --border-color: var(--mod-input-border-color, var(--kds-border-neutral-emphasis-base));
+    --border-color-hover: var(--mod-input-border-color-hover, var(--kds-border-neutral-emphasis-hover));
+    --border-color-focus: var(--mod-input-border-color-focus, var(--kds-border-info-emphasis-base));
+    --background-color: var(--mod-input-background-color, var(--kds-bg-surface-base));
 
     --placeholder-color: var(--mod-placeholder-color, var(--kds-fg-neutral-base));
     --placeholder-style: var(--mod-placeholder-style, italic);
@@ -27,21 +27,21 @@ export const inputStyles = css`
     --label-font-weight: var(--mod-label-font-weight);
     --label-margin-bottom: var(--mod-label-margin-bottom, var(--kds-space-md));
 
-    --focus-ring-width: var(--mod-focus-ring-width, var(--kds-border-width-sm, 2px));
-    --focus-ring-color: var(--mod-focus-ring-color, var(--input-border-color-focus));
+    --focus-ring-width: var(--mod-focus-ring-width, var(--kds-border-width-xs));
+    --focus-ring-color: var(--mod-focus-ring-color, var(--border-color-focus));
     --focus-ring-color-invalid: var(--mod-focus-ring-color-invalid, var(--kds-border-negative-emphasis-base));
   }
 
   /* Host size variants */
   :host([size="sm"]) {
-    --input-height: var(--kds-button-input-height-sm);
-    --input-font-size: var(--kds-font-size-sm);
-    --input-padding-inline: var(--kds-space-md);
+    --height: var(--kds-button-input-height-sm);
+    --font-size: var(--kds-font-size-sm);
+    --padding-inline: var(--kds-space-md);
   }
   :host([size="md"]) {
-    --input-height: var(--kds-button-input-height-md);
-    --input-font-size: var(--kds-font-size-md);
-    --input-padding-inline: var(--kds-space-xl);
+    --height: var(--kds-button-input-height-md);
+    --font-size: var(--kds-font-size-md);
+    --padding-inline: var(--kds-space-xl);
   }
 
   /* Label */
@@ -60,41 +60,41 @@ export const inputStyles = css`
     display: flex;
     align-items: center;
     inline-size: 100%;
-    block-size: var(--input-height);
+    block-size: var(--height);
     box-sizing: border-box;
-    border: var(--input-border-width) solid var(--input-border-color);
-    border-radius: var(--input-border-radius);
-    background-color: var(--input-background-color);
-    padding-inline: var(--input-padding-inline);
-    gap: var(--input-gap);
-    outline: none; /* we drive focus visuals with border + shadow */
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--background-color);
+    /* gap: var(--gap); */
+    outline: none;
+    padding-inline: calc(var(--padding-inline) / 2);
     transition: border-color var(--animation-duration-normal, 120ms) ease-out;
 
     /* Hover (only when not focused and not invalid) */
     &:hover:not(:focus-within):not(.invalid) {
-      border-color: var(--input-border-color-hover);
+      border-color: var(--border-color-hover);
     }
 
     /* Focus: border color + OUTER ring (no layout shift) */
     &:focus-within {
-      border-color: var(--input-border-color-focus);
+      border-color: var(--border-color-focus);
       box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
     }
 
     /* Invalid base state (attr, class, or ARIA) */
     &.invalid {
-      --input-border-color: var(--kds-border-negative-emphasis-base);
-      --input-border-color-hover: var(--kds-border-negative-emphasis-hover);
-      --input-border-color-focus: var(--kds-border-negative-emphasis-base);
+      --border-color: var(--kds-border-negative-emphasis-base);
+      --border-color-hover: var(--kds-border-negative-emphasis-hover);
+      --border-color-focus: var(--kds-border-negative-emphasis-base);
     }
   }
 
   /* Host-level invalid also updates the inner .input custom props */
   :host([invalid]) {
     .input {
-      --input-border-color: var(--kds-border-negative-emphasis-base);
-      --input-border-color-hover: var(--kds-border-negative-emphasis-hover);
-      --input-border-color-focus: var(--kds-border-negative-emphasis-base);
+      --border-color: var(--kds-border-negative-emphasis-base);
+      --border-color-hover: var(--kds-border-negative-emphasis-hover);
+      --border-color-focus: var(--kds-border-negative-emphasis-base);
 
       /* Invalid + focus (same outer ring, red) */
       &:focus-within {
@@ -118,14 +118,15 @@ export const inputStyles = css`
     border: none;
     outline: none;
     background: transparent;
-    color: var(--input-color);
-    font-size: var(--input-font-size);
+    color: var(--color);
+    font-size: var(--font-size);
     font-family: var(--font-family);
     font-weight: var(--font-weight-regular);
-    line-height: var(--input-line-height);
+    line-height: var(--line-height);
     letter-spacing: 0.022em;
     margin: auto 0px;
-    padding: 0;
+    padding-block: 0;
+    padding-inline: calc(var(--padding-inline) / 2);
 
     &::placeholder {
       color: var(--placeholder-color);
@@ -160,7 +161,7 @@ export const inputStyles = css`
       opacity: var(--kds-base-opacity-disabled, 0.5);
 
       &:focus-within {
-        border-color: var(--input-border-color);
+        border-color: var(--border-color);
         box-shadow: none;
       }
     }
@@ -192,7 +193,7 @@ export const inputStyles = css`
     appearance: none;
     border: none;
     background: transparent;
-    color: var(--input-color, currentColor);
+    color: var(--color, currentColor);
     width: var(--kds-button-input-height-sm);
     height: var(--kds-button-input-height-sm);
     display: inline-flex;
@@ -203,7 +204,7 @@ export const inputStyles = css`
     cursor: pointer;
     font-size: 1.05em;
     padding: 0;
-    margin-inline-start: 0.25rem;
+    /* margin-inline-end: var(--kds-space-md); */
     transition: background 0.12s ease, box-shadow 0.12s ease;
 
     &:hover {

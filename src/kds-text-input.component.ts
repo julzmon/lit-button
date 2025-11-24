@@ -485,6 +485,15 @@ export class KdsTextInput extends LitElement {
           @keydown=${this.handleKeyDown}
         />
 
+        ${this.clearable && this._showClear && !this.disabled && !this.readonly ? html`
+          <button
+          type="button"
+          class="input-action-btn"
+          aria-label="Clear input"
+          @click=${() => this.handleClearClick()}
+          >✕</button>
+          ` : null}
+
         ${this.type === 'password' && !this.disabled && !this.readonly ? html`
           <button
             type="button"
@@ -495,15 +504,6 @@ export class KdsTextInput extends LitElement {
             @click=${() => { this._showPassword = !this._showPassword; this._native?.focus(); }}
           >${this._showPassword ? '👁' : '🙈'}</button>
         ` : null}
-
-        ${this.clearable && this._showClear && !this.disabled && !this.readonly ? html`
-          <button
-          type="button"
-          class="input-action-btn"
-          aria-label="Clear input"
-          @click=${() => this.handleClearClick()}
-          >✕</button>
-          ` : null}
 
         <slot name="end"></slot>
 
