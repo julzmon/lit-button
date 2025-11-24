@@ -8,7 +8,6 @@ export const inputStyles = css`
 
     --height: var(--mod-input-height, var(--kds-button-input-height-md));
     --padding-inline: var(--mod-input-padding-inline, var(--kds-space-xl));
-    --gap: var(--mod-input-gap, var(--kds-space-md));
     --color: var(--mod-input-color, var(--kds-fg-base));
     --font-size: var(--mod-input-font-size, var(--kds-font-size-md));
     --line-height: var(--mod-input-line-height, 1.5);
@@ -25,19 +24,19 @@ export const inputStyles = css`
     --label-color: var(--mod-label-color);
     --label-font-size: var(--mod-label-font-size);
     --label-font-weight: var(--mod-label-font-weight);
-    --label-margin-bottom: var(--mod-label-margin-bottom, var(--kds-space-md));
+    --label-margin-bottom: var(--mod-label-margin-bottom, var(--kds-space-sm));
 
     --focus-ring-width: var(--mod-focus-ring-width, var(--kds-border-width-xs));
     --focus-ring-color: var(--mod-focus-ring-color, var(--border-color-focus));
     --focus-ring-color-invalid: var(--mod-focus-ring-color-invalid, var(--kds-border-negative-emphasis-base));
   }
 
-  /* Host size variants */
   :host([size="sm"]) {
     --height: var(--kds-button-input-height-sm);
     --font-size: var(--kds-font-size-sm);
     --padding-inline: var(--kds-space-md);
   }
+
   :host([size="md"]) {
     --height: var(--kds-button-input-height-md);
     --font-size: var(--kds-font-size-md);
@@ -65,7 +64,6 @@ export const inputStyles = css`
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     background-color: var(--background-color);
-    /* gap: var(--gap); */
     outline: none;
     padding-inline: calc(var(--padding-inline) / 2);
     transition: border-color var(--animation-duration-normal, 120ms) ease-out;
@@ -86,6 +84,10 @@ export const inputStyles = css`
       --border-color: var(--kds-border-negative-emphasis-base);
       --border-color-hover: var(--kds-border-negative-emphasis-hover);
       --border-color-focus: var(--kds-border-negative-emphasis-base);
+
+      &:focus-within {
+        border-color: var(--kds-border-negative-emphasis-base);
+        box-shadow: 0 0 0 var(--kds-border-width-xs) var(--focus-ring-color-invalid);
     }
   }
 
@@ -105,10 +107,10 @@ export const inputStyles = css`
   }
 
   /* Also cover class/ARIA invalid focus (if host[invalid] isn’t used) */
-  .input.invalid:focus-within {
+  /* .input.invalid:focus-within {
     border-color: var(--kds-border-negative-emphasis-base);
     box-shadow: 0 0 0 var(--kds-border-width-xs) var(--focus-ring-color-invalid);
-  }
+  } */
 
   /* Native input */
   .native-input {
@@ -124,7 +126,7 @@ export const inputStyles = css`
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height);
     letter-spacing: 0.022em;
-    margin: auto 0px;
+    margin: auto 0;
     padding-block: 0;
     padding-inline: calc(var(--padding-inline) / 2);
 
@@ -204,7 +206,6 @@ export const inputStyles = css`
     cursor: pointer;
     font-size: 1.05em;
     padding: 0;
-    /* margin-inline-end: var(--kds-space-md); */
     transition: background 0.12s ease, box-shadow 0.12s ease;
 
     &:hover {
@@ -213,7 +214,7 @@ export const inputStyles = css`
 
     &:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 var(--focus-ring-width, var(--kds-border-width-sm)) var(--focus-ring-color);
+      box-shadow: 0 0 0 var(--kds-border-width-sm) var(--focus-ring-color);
     }
   }
 
@@ -229,9 +230,16 @@ export const inputStyles = css`
     }
   }
 
+  ::slotted([slot="start"]) {
+    margin-inline-start: calc(var(--padding-inline) / 2);
+  }
+
+  ::slotted([slot="end"]) {
+    margin-inline-end: calc(var(--padding-inline) / 2);
+  }
 
   :host([required]) #label::after {
-    margin-inline-start: .125rem;
+    margin-inline-start: 0.125rem;
     content: "*";
     color: var(--kds-fg-negative-base);
   }
