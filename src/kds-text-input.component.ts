@@ -448,7 +448,7 @@ export class KdsTextInput extends LitElement {
     const inputType = this.type === 'password' && this._showPassword ? 'text' : this.type;
 
     return html`
-      <label id="label" for=${this._inputId}><slot name="label">${this.label}</slot></label>
+      <label id="label" part="label" for=${this._inputId}><slot name="label">${this.label}</slot></label>
 
       <div class=${classMap(inputClasses)}>
         <slot name="start"></slot>
