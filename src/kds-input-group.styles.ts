@@ -25,6 +25,12 @@ export const inputGroupStyles = css`
     min-inline-size: 0;
     display: block;
     inline-size: 100%;
+
+    /* Disabled state */
+    &:disabled .group {
+      cursor: not-allowed;
+      opacity: var(--kds-base-opacity-disabled, 0.5);
+    }
   }
 
   /* Style legend to match text-input label */
@@ -37,19 +43,19 @@ export const inputGroupStyles = css`
     padding: 0;
     display: block;
     inline-size: 100%;
-  }
 
-  /* Screen reader only utility - visually hides legend while keeping it accessible */
-  .legend.sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border-width: 0 !important;
+    /* Screen reader only utility - visually hides legend while keeping it accessible */
+    &.sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border-width: 0 !important;
+    }
   }
 
   /* Required indicator (red asterisk) */
@@ -66,6 +72,15 @@ export const inputGroupStyles = css`
     align-items: stretch;
     inline-size: 100%;
     isolation: isolate;
+
+    /* Size variants */
+    &.sm {
+      block-size: var(--kds-button-input-height-sm);
+    }
+
+    &.md {
+      block-size: var(--kds-button-input-height-md);
+    }
   }
 
   .start,
@@ -73,10 +88,50 @@ export const inputGroupStyles = css`
   .end {
     display: flex;
     align-items: stretch;
+
+    /* Ensure all slotted elements match the group height */
+    ::slotted(*) {
+      block-size: 100%;
+      box-sizing: border-box;
+
+      /* Focus management - bring focused element to top */
+      &:focus-within {
+        z-index: 10 !important;
+      }
+    }
+
+    /* Text input overrides */
+    ::slotted(kds-text-input) {
+      --label-margin-bottom: 0;
+      --input-height: 100%;
+    }
   }
 
   .start {
     flex: 0 0 auto;
+
+    ::slotted(*:first-child) {
+      border-start-end-radius: 0 !important;
+      border-end-end-radius: 0 !important;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Main slot adjustments when start exists */
+    ~ .main ::slotted(*) {
+      border-start-start-radius: 0 !important;
+      border-end-start-radius: 0 !important;
+      margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+      position: relative;
+      z-index: 2;
+    }
+
+    /* When start is empty, restore main's left radius */
+    &:empty ~ .main ::slotted(*) {
+      border-start-start-radius: var(--kds-input-group-border-radius) !important;
+      border-end-start-radius: var(--kds-input-group-border-radius) !important;
+      margin-inline-start: 0;
+    }
   }
 
   .main {
@@ -86,154 +141,63 @@ export const inputGroupStyles = css`
 
   .end {
     flex: 0 0 auto;
-  }
 
-  /* Size variants */
-  .group.sm {
-    block-size: var(--kds-button-input-height-sm);
-  }
+    ::slotted(*) {
+      border-start-start-radius: 0 !important;
+      border-end-start-radius: 0 !important;
+      margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+      position: relative;
+      z-index: 1;
+    }
 
-  .group.md {
-    block-size: var(--kds-button-input-height-md);
-  }
-
-  /* Ensure all slotted elements match the group height */
-  .start ::slotted(*),
-  .main ::slotted(*),
-  .end ::slotted(*) {
-    block-size: 100%;
-    box-sizing: border-box;
-  }
-
-  /* Hide labels in slotted text-inputs for screen reader only access */
-  .start ::slotted(kds-text-input),
-  .main ::slotted(kds-text-input),
-  .end ::slotted(kds-text-input) {
-    --label-margin-bottom: 0;
-  }
-
-  .start ::slotted(kds-text-input)::part(label),
-  .main ::slotted(kds-text-input)::part(label),
-  .end ::slotted(kds-text-input)::part(label) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  /* Connected borders: First element keeps left radius */
-  .start ::slotted(*:first-child) {
-    border-start-end-radius: 0 !important;
-    border-end-end-radius: 0 !important;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Main slot: Remove both radii and left border when start exists */
-  .start ~ .main ::slotted(*) {
-    border-start-start-radius: 0 !important;
-    border-end-start-radius: 0 !important;
-    margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Main slot: Remove right radius when end exists */
-  .main:has(~ .end:not(:empty)) ::slotted(*) {
-    border-start-end-radius: 0 !important;
-    border-end-end-radius: 0 !important;
-  }
-
-  /* End slot: Remove left radius and overlap left border */
-  .end ::slotted(*) {
-    border-start-start-radius: 0 !important;
-    border-end-start-radius: 0 !important;
-    margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
-    position: relative;
-    z-index: 1;
-  }
-
-  /* When main has no start sibling, keep left radius */
-  .start:empty ~ .main ::slotted(*) {
-    border-start-start-radius: var(--kds-input-group-border-radius) !important;
-    border-end-start-radius: var(--kds-input-group-border-radius) !important;
-    margin-inline-start: 0;
-  }
-
-  /* Focus management - bring focused element to top */
-  .start ::slotted(*:focus-within),
-  .main ::slotted(*:focus-within),
-  .end ::slotted(*:focus-within) {
-    z-index: 10 !important;
-  }
-
-  /* Invalid state - propagate border color to all slotted elements */
-  .group.invalid .start ::slotted(*),
-  .group.invalid .main ::slotted(*),
-  .group.invalid .end ::slotted(*) {
-    --input-border-color: var(--kds-input-group-border-color-invalid) !important;
-    --mod-btn-border-color: var(--kds-input-group-border-color-invalid) !important;
-  }
-
-  /* Component-specific overrides */
-
-  /* Button overrides */
-  .start ::slotted(kds-button),
-  .main ::slotted(kds-button),
-  .end ::slotted(kds-button) {
-    --mod-btn-height: 100%;
-    --mod-btn-min-width: auto;
-    --mod-btn-background-color: transparent;
-    --mod-btn-background-color-hover: var(--kds-bg-neutral-muted-hover);
-  }
-
-  /* Text input overrides */
-  .start ::slotted(kds-text-input),
-  .main ::slotted(kds-text-input),
-  .end ::slotted(kds-text-input) {
-    --input-height: 100%;
+    /* Remove right radius from main when end is not empty */
+    &:not(:empty) ~ .main ::slotted(*),
+    ~ .main ::slotted(*) {
+      border-start-end-radius: 0 !important;
+      border-end-end-radius: 0 !important;
+    }
   }
 
   /* Error text block (matching text-input) */
   .error {
     margin-block-start: var(--kds-space-sm);
-  }
 
-  .error-message {
-    display: flex;
-    align-items: center;
-    gap: var(--kds-space-sm);
-    color: var(--kds-fg-negative-base);
-    font-size: var(--kds-font-size-sm);
-    font-family: var(--kds-font-family);
-    font-weight: var(--kds-font-weight-bold);
-  }
+    &-message {
+      display: flex;
+      align-items: center;
+      gap: var(--kds-space-sm);
+      color: var(--kds-fg-negative-base);
+      font-size: var(--kds-font-size-sm);
+      font-family: var(--kds-font-family);
+      font-weight: var(--kds-font-weight-bold);
+    }
 
-  .error-icon {
-    flex: 0 0 auto;
-    font-size: var(--kds-font-size-sm);
-  }
+    &-icon {
+      flex: 0 0 auto;
+      font-size: var(--kds-font-size-sm);
+    }
 
-  .error-text {
-    flex: 1;
-  }
-
-  /* Help text (matching text-input) */
-  .help-text-wrapper {
-    margin-block-start: var(--kds-space-sm);
-
-    &:empty {
-      display: none;
+    &-text {
+      flex: 1;
     }
   }
 
-  .help-text,
-  .help-text-wrapper ::slotted(*) {
+  /* Help text (matching text-input) */
+  .help-text {
+    &-wrapper {
+      margin-block-start: var(--kds-space-sm);
+
+      &:empty {
+        display: none;
+      }
+
+      ::slotted(*) {
+        font-size: var(--kds-font-size-xs);
+        color: var(--kds-fg-neutral-base);
+        font-family: var(--kds-font-family);
+      }
+    }
+
     font-size: var(--kds-font-size-xs);
     color: var(--kds-fg-neutral-base);
     font-family: var(--kds-font-family);
@@ -247,18 +211,12 @@ export const inputGroupStyles = css`
 
   /* Accessibility preferences */
   @media (prefers-reduced-motion: reduce) {
-    .start ::slotted(*),
-    .main ::slotted(*),
-    .end ::slotted(*) {
-      transition: none !important;
-    }
-  }
-
-  @media (forced-colors: active) {
-    .group.invalid .start ::slotted(*),
-    .group.invalid .main ::slotted(*),
-    .group.invalid .end ::slotted(*) {
-      border-color: Mark !important;
+    .start,
+    .main,
+    .end {
+      ::slotted(*) {
+        transition: none !important;
+      }
     }
   }
 `;

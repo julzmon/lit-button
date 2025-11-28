@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import type { PropertyValues } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { inputGroupStyles } from "./kds-input-group.styles.js";
@@ -18,7 +18,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * inputs with prefix/suffix selects, or any scenario where multiple controls should act as a unified group.
  *
  * The legend element is always rendered for accessibility (fieldset requires legend), but can be visually hidden
- * using the `hide-legend` attribute while remaining accessible to screen readers.
+ * using the `hide-label` attribute while remaining accessible to screen readers.
  *
  * Key features:
  * - Automatic state propagation to child components (size, invalid, disabled)
@@ -27,8 +27,6 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * - Native fieldset disabled support cascades to all child controls
  * - Responsive to slot content changes with automatic updates
  * - Required legend for semantic HTML with optional visual hiding
- *
- * @event kds-input-group-change - Emitted when any slotted form control value changes
  *
  * @slot legend - Custom legend content (used when `legend` property is absent)
  * @slot start - Slot for components at the start (left side) of the group
@@ -80,7 +78,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @example
  * ```html
  * <!-- Visually hidden legend (accessible to screen readers) -->
- * <kds-input-group legend="Search" hide-legend>
+ * <kds-input-group legend="Search" hide-label>
  *   <kds-text-input placeholder="Search..."></kds-text-input>
  *   <kds-button slot="end" variant="primary">Go</kds-button>
  * </kds-input-group>
@@ -123,7 +121,7 @@ export class KdsInputGroup extends LitElement {
    * Visually hides the legend while keeping it accessible to screen readers.
    * Uses the sr-only pattern (position: absolute with 1px dimensions).
    */
-  @property({ type: Boolean, attribute: 'hide-legend' }) hideLegend = false;
+  @property({ type: Boolean, attribute: 'hide-label' }) hideLabel = false;
 
   /**
    * Controls the size of the group, affecting all child components.
@@ -149,48 +147,14 @@ export class KdsInputGroup extends LitElement {
 
   // Internal state
 
-  /** @internal Tracks whether the error slot has content */
-  @state() private _hasErrorSlot = false;
-
-  /** @internal Tracks whether the help-text slot has content */
-  @state() private _hasHelpTextSlot = false;
-
   /** @internal Unique ID for the legend element, used for accessibility */
-  @state() private _legendId = `kds-input-group-legend-${++uid}`;
+  private _legendId = `kds-input-group-legend-${++uid}`;
 
   /** @internal Unique ID for the help text element, used for aria-describedby */
-  @state() private _helpTextId = `kds-input-group-help-${++uid}`;
+  private _helpTextId = `kds-input-group-help-${++uid}`;
 
   /** @internal Unique ID for the error element, used for aria-describedby */
-  @state() private _errorId = `kds-input-group-error-${++uid}`;
-
-  /** @internal Reference to the error slot for change detection */
-  @query('slot[name="error"]') private _errorSlot!: HTMLSlotElement;
-
-  /** @internal Reference to the help-text slot for change detection */
-  @query('slot[name="help-text"]') private _helpTextSlot!: HTMLSlotElement;
-
-  /**
-   * Lifecycle: Called when the component is added to the DOM.
-   * Sets up slot change listeners to detect when slotted content changes.
-   */
-  override connectedCallback() {
-    super.connectedCallback();
-    this.updateComplete.then(() => {
-      this._errorSlot?.addEventListener('slotchange', this.handleErrorSlotChange);
-      this._helpTextSlot?.addEventListener('slotchange', this.handleHelpTextSlotChange);
-    });
-  }
-
-  /**
-   * Lifecycle: Called when the component is removed from the DOM.
-   * Cleans up slot change listeners to prevent memory leaks.
-   */
-  override disconnectedCallback() {
-    super.disconnectedCallback();
-    this._errorSlot?.removeEventListener('slotchange', this.handleErrorSlotChange);
-    this._helpTextSlot?.removeEventListener('slotchange', this.handleHelpTextSlotChange);
-  }
+  private _errorId = `kds-input-group-error-${++uid}`;
 
   /**
    * Lifecycle: Called after the component renders for the first time.
@@ -211,24 +175,6 @@ export class KdsInputGroup extends LitElement {
       this.updateSlottedElements();
     }
   }
-
-  /**
-   * Handles changes to the error slot.
-   * Updates internal state to track whether the error slot has meaningful content.
-   */
-  private handleErrorSlotChange = () => {
-    const nodes = this._errorSlot?.assignedNodes({ flatten: true }) || [];
-    this._hasErrorSlot = nodes.some(n => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim()));
-  };
-
-  /**
-   * Handles changes to the help-text slot.
-   * Updates internal state to track whether the help-text slot has meaningful content.
-   */
-  private handleHelpTextSlotChange = () => {
-    const nodes = this._helpTextSlot?.assignedNodes({ flatten: true }) || [];
-    this._hasHelpTextSlot = nodes.some(n => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim()));
-  };
 
   /**
    * Propagates the group's size, invalid, and disabled state to all slotted elements.
@@ -255,16 +201,38 @@ export class KdsInputGroup extends LitElement {
         if ('disabled' in element && this.disabled) {
           (element as any).disabled = this.disabled;
         }
+
+        // Hide labels on text inputs inside group (legend provides the label context)
+        if (element.tagName === 'KDS-TEXT-INPUT') {
+          (element as any).hideLabel = true;
+        }
       });
     });
   }
 
   /**
-   * Generic slot change handler that triggers property propagation.
-   * Called when any slot's content changes (start, main, end slots).
+   * Handles slot content changes.
+   * Propagates properties to newly slotted elements.
    */
-  private handleSlotChange = () => {
-    this.updateSlottedElements();
+  private handleSlotChange = (e: Event) => {
+    const slot = e.target as HTMLSlotElement;
+    const assignedElements = slot.assignedElements();
+
+    assignedElements.forEach(element => {
+      if ('size' in element && this.size) {
+        (element as any).size = this.size;
+      }
+      if ('invalid' in element) {
+        (element as any).invalid = this.invalid;
+      }
+      if ('disabled' in element && this.disabled) {
+        (element as any).disabled = this.disabled;
+      }
+      // Hide labels on text inputs inside group (legend provides the label context)
+      if (element.tagName === 'KDS-TEXT-INPUT') {
+        (element as any).hideLabel = true;
+      }
+    });
   };
 
   /**
@@ -284,8 +252,8 @@ export class KdsInputGroup extends LitElement {
    * - unique IDs generated for legend, help text, and error elements
    */
   render() {
-    const hasError = this.invalid && (this.errorMessage || this._hasErrorSlot);
-    const hasHelpText = this.helpText || this._hasHelpTextSlot;
+    const hasError = this.invalid && this.errorMessage;
+    const hasHelpText = !!this.helpText;
 
     const groupClasses = {
       group: true,
@@ -295,7 +263,7 @@ export class KdsInputGroup extends LitElement {
 
     const legendClasses = {
       legend: true,
-      'sr-only': this.hideLegend
+      'sr-only': this.hideLabel
     };
 
     // Build aria-describedby from available help/error text
@@ -330,22 +298,20 @@ export class KdsInputGroup extends LitElement {
           </div>
         </div>
 
-        ${hasError ? html`
+        ${this.invalid ? html`
           <div part="error" class="error" id=${this._errorId}>
-            <div class="error-message">
-              <span class="error-icon" aria-hidden="true">⚠</span>
-              <span class="error-text">
-                ${this.errorMessage ? this.errorMessage : html`<slot name="error"></slot>`}
-              </span>
-            </div>
+            ${this.errorMessage ? html`
+              <div class="error-message">
+                <span class="error-icon" aria-hidden="true">⚠</span>
+                <span class="error-text">${this.errorMessage}</span>
+              </div>
+            ` : html`<slot name="error"></slot>`}
           </div>
         ` : ''}
 
-        ${hasHelpText ? html`
-          <div part="help-text" class="help-text-wrapper" id=${this._helpTextId}>
-            ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text"></slot>`}
-          </div>
-        ` : ''}
+        <div part="help-text" class="help-text-wrapper" id=${this._helpTextId}>
+          ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text"></slot>`}
+        </div>
       </fieldset>
     `;
   }
