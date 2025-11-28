@@ -257,6 +257,7 @@
         <kds-text-input label="Invalid" placeholder="Invalid state" invalid error-message="This field is required"></kds-text-input>
         <kds-text-input label="Disabled" placeholder="Disabled state" disabled></kds-text-input>
         <kds-text-input label="Readonly" value="Read-only text" readonly></kds-text-input>
+        <kds-text-input label="Hidden Label (SR-only)" placeholder="Label is visually hidden" hide-label></kds-text-input>
       </div>
 
       <h3>With Help Text</h3>
@@ -373,6 +374,19 @@
         <kds-input-group legend="Invalid Category" invalid error-message="Please select a valid category">
           <kds-button slot="start">Category ▼</kds-button>
           <kds-text-input placeholder="Filter..." label="Filter" invalid></kds-text-input>
+        </kds-input-group>
+      </div>
+
+      <h3>Hidden Legend (Screen Reader Only)</h3>
+      <div class="button-grid">
+        <kds-input-group legend="Search" hide-legend>
+          <kds-text-input placeholder="Search products..." label="Search"></kds-text-input>
+          <kds-button slot="end">🔍</kds-button>
+        </kds-input-group>
+
+        <kds-input-group legend="Email Newsletter" hide-legend help-text="Join our mailing list">
+          <kds-text-input type="email" placeholder="Enter your email" label="Email"></kds-text-input>
+          <kds-button slot="end" priority="primary">Subscribe</kds-button>
         </kds-input-group>
       </div>
 

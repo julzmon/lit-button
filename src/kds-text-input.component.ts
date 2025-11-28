@@ -81,6 +81,11 @@ export class KdsTextInput extends LitElement {
   @property({ type: String }) label?: string;
 
   /**
+   * Visually hides the label while keeping it accessible to screen readers.
+   */
+  @property({ type: Boolean, attribute: 'hide-label' }) hideLabel = false;
+
+  /**
    * Controls the input size.
    *
    * - `sm`: Small
@@ -203,7 +208,7 @@ export class KdsTextInput extends LitElement {
     });
   }
 
-  overridedisconnectedCallback() {
+  override disconnectedCallback() {
     super.disconnectedCallback();
     this._startSlot?.removeEventListener('slotchange', this.handleStartSlotChange);
     this._endSlot?.removeEventListener('slotchange', this.handleEndSlotChange);
@@ -447,8 +452,12 @@ export class KdsTextInput extends LitElement {
 
     const inputType = this.type === 'password' && this._showPassword ? 'text' : this.type;
 
+    const labelClasses = {
+      'sr-only': this.hideLabel
+    };
+
     return html`
-      <label id="label" part="label" for=${this._inputId}><slot name="label">${this.label}</slot></label>
+      <label id="label" class=${classMap(labelClasses)} for=${this._inputId}><slot name="label">${this.label}</slot></label>
 
       <div class=${classMap(inputClasses)}>
         <slot name="start"></slot>

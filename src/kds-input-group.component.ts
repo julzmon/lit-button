@@ -11,6 +11,23 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @status beta
  * @since 1.0
  *
+ * @description
+ * `kds-input-group` is a composite component that wraps multiple form controls into a cohesive unit.
+ * It uses a native `<fieldset>` for semantic grouping and automatically propagates state (size, invalid, disabled)
+ * to all slotted child components. This makes it ideal for building input combos like search boxes with buttons,
+ * inputs with prefix/suffix selects, or any scenario where multiple controls should act as a unified group.
+ *
+ * The legend element is always rendered for accessibility (fieldset requires legend), but can be visually hidden
+ * using the `hide-legend` attribute while remaining accessible to screen readers.
+ *
+ * Key features:
+ * - Automatic state propagation to child components (size, invalid, disabled)
+ * - Flexible layout with start/main/end slots for custom arrangements
+ * - Built-in error and help text with proper ARIA associations
+ * - Native fieldset disabled support cascades to all child controls
+ * - Responsive to slot content changes with automatic updates
+ * - Required legend for semantic HTML with optional visual hiding
+ *
  * @event kds-input-group-change - Emitted when any slotted form control value changes
  *
  * @slot legend - Custom legend content (used when `legend` property is absent)
@@ -37,8 +54,40 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @csspart end - Container for end slot content
  * @csspart error - Container for error message
  * @csspart help-text - Container for help text
+ *
+ * @example
+ * ```html
+ * <!-- Search input with button -->
+ * <kds-input-group legend="Search" size="md">
+ *   <kds-text-input placeholder="Enter search term"></kds-text-input>
+ *   <kds-button slot="end" variant="primary">Search</kds-button>
+ * </kds-input-group>
+ * ```
+ *
+ * @example
+ * ```html
+ * <!-- Input with prefix select and suffix button -->
+ * <kds-input-group legend="Phone Number" required>
+ *   <select slot="start">
+ *     <option>+1</option>
+ *     <option>+44</option>
+ *   </select>
+ *   <kds-text-input type="tel"></kds-text-input>
+ *   <kds-button slot="end" variant="secondary">Verify</kds-button>
+ * </kds-input-group>
+ * ```
+ *
+ * @example
+ * ```html
+ * <!-- Visually hidden legend (accessible to screen readers) -->
+ * <kds-input-group legend="Search" hide-legend>
+ *   <kds-text-input placeholder="Search..."></kds-text-input>
+ *   <kds-button slot="end" variant="primary">Go</kds-button>
+ * </kds-input-group>
+ * ```
  */
 
+/** @internal Global counter for generating unique IDs */
 let uid = 0;
 
 @customElement("kds-input-group")
@@ -71,6 +120,12 @@ export class KdsInputGroup extends LitElement {
   @property({ type: Boolean, reflect: true }) required = false;
 
   /**
+   * Visually hides the legend while keeping it accessible to screen readers.
+   * Uses the sr-only pattern (position: absolute with 1px dimensions).
+   */
+  @property({ type: Boolean, attribute: 'hide-legend' }) hideLegend = false;
+
+  /**
    * Controls the size of the group, affecting all child components.
    *
    * - `sm`: Small
@@ -93,58 +148,94 @@ export class KdsInputGroup extends LitElement {
   disabled = false;
 
   // Internal state
-  @state() private _hasLegendSlot = false;
+
+  /** @internal Tracks whether the error slot has content */
   @state() private _hasErrorSlot = false;
+
+  /** @internal Tracks whether the help-text slot has content */
   @state() private _hasHelpTextSlot = false;
+
+  /** @internal Unique ID for the legend element, used for accessibility */
   @state() private _legendId = `kds-input-group-legend-${++uid}`;
+
+  /** @internal Unique ID for the help text element, used for aria-describedby */
   @state() private _helpTextId = `kds-input-group-help-${++uid}`;
+
+  /** @internal Unique ID for the error element, used for aria-describedby */
   @state() private _errorId = `kds-input-group-error-${++uid}`;
 
-  @query('slot[name="legend"]') private _legendSlot!: HTMLSlotElement;
+  /** @internal Reference to the error slot for change detection */
   @query('slot[name="error"]') private _errorSlot!: HTMLSlotElement;
+
+  /** @internal Reference to the help-text slot for change detection */
   @query('slot[name="help-text"]') private _helpTextSlot!: HTMLSlotElement;
 
+  /**
+   * Lifecycle: Called when the component is added to the DOM.
+   * Sets up slot change listeners to detect when slotted content changes.
+   */
   override connectedCallback() {
     super.connectedCallback();
     this.updateComplete.then(() => {
-      this._legendSlot?.addEventListener('slotchange', this.handleLegendSlotChange);
       this._errorSlot?.addEventListener('slotchange', this.handleErrorSlotChange);
       this._helpTextSlot?.addEventListener('slotchange', this.handleHelpTextSlotChange);
     });
   }
 
+  /**
+   * Lifecycle: Called when the component is removed from the DOM.
+   * Cleans up slot change listeners to prevent memory leaks.
+   */
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this._legendSlot?.removeEventListener('slotchange', this.handleLegendSlotChange);
     this._errorSlot?.removeEventListener('slotchange', this.handleErrorSlotChange);
     this._helpTextSlot?.removeEventListener('slotchange', this.handleHelpTextSlotChange);
   }
 
+  /**
+   * Lifecycle: Called after the component renders for the first time.
+   * Ensures slotted elements receive initial property values (size, invalid, disabled).
+   */
   protected firstUpdated() {
     this.updateSlottedElements();
   }
 
+  /**
+   * Lifecycle: Called after any property changes and re-render.
+   * Propagates size, invalid, and disabled state to slotted child components.
+   *
+   * @param changedProperties - Map of changed properties and their previous values
+   */
   protected updated(changedProperties: PropertyValues) {
     if (changedProperties.has('size') || changedProperties.has('invalid') || changedProperties.has('disabled')) {
       this.updateSlottedElements();
     }
   }
 
-  private handleLegendSlotChange = () => {
-    const nodes = this._legendSlot?.assignedNodes({ flatten: true }) || [];
-    this._hasLegendSlot = nodes.some(n => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim()));
-  };
-
+  /**
+   * Handles changes to the error slot.
+   * Updates internal state to track whether the error slot has meaningful content.
+   */
   private handleErrorSlotChange = () => {
     const nodes = this._errorSlot?.assignedNodes({ flatten: true }) || [];
     this._hasErrorSlot = nodes.some(n => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim()));
   };
 
+  /**
+   * Handles changes to the help-text slot.
+   * Updates internal state to track whether the help-text slot has meaningful content.
+   */
   private handleHelpTextSlotChange = () => {
     const nodes = this._helpTextSlot?.assignedNodes({ flatten: true }) || [];
     this._hasHelpTextSlot = nodes.some(n => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim()));
   };
 
+  /**
+   * Propagates the group's size, invalid, and disabled state to all slotted elements.
+   * This ensures child components (like inputs, buttons, selects) inherit the group's state.
+   *
+   * Only updates properties that exist on each slotted element (duck typing approach).
+   */
   private updateSlottedElements() {
     const slots = this.shadowRoot?.querySelectorAll('slot');
     slots?.forEach(slot => {
@@ -154,7 +245,7 @@ export class KdsInputGroup extends LitElement {
         if ('size' in element && this.size) {
           (element as any).size = this.size;
         }
-        
+
         // Apply invalid state to form control elements
         if ('invalid' in element) {
           (element as any).invalid = this.invalid;
@@ -168,12 +259,31 @@ export class KdsInputGroup extends LitElement {
     });
   }
 
+  /**
+   * Generic slot change handler that triggers property propagation.
+   * Called when any slot's content changes (start, main, end slots).
+   */
   private handleSlotChange = () => {
     this.updateSlottedElements();
   };
 
+  /**
+   * Renders the input group component.
+   *
+   * Structure:
+   * - fieldset wrapper for semantic grouping and native disabled support
+   * - legend (if provided via property or slot)
+   * - group container with start/main/end slots for flexible layouts
+   * - error message (if invalid and error content provided)
+   * - help text (if provided)
+   *
+   * Accessibility features:
+   * - aria-invalid reflects invalid state
+   * - aria-describedby links to help text and/or error message
+   * - native fieldset disabled attribute cascades to all form controls
+   * - unique IDs generated for legend, help text, and error elements
+   */
   render() {
-    const hasLegend = this.legend || this._hasLegendSlot;
     const hasError = this.invalid && (this.errorMessage || this._hasErrorSlot);
     const hasHelpText = this.helpText || this._hasHelpTextSlot;
 
@@ -181,6 +291,11 @@ export class KdsInputGroup extends LitElement {
       group: true,
       [this.size]: true,
       'invalid': this.invalid
+    };
+
+    const legendClasses = {
+      legend: true,
+      'sr-only': this.hideLegend
     };
 
     // Build aria-describedby from available help/error text
@@ -197,21 +312,19 @@ export class KdsInputGroup extends LitElement {
         aria-invalid=${this.invalid ? 'true' : 'false'}
         aria-describedby=${ifDefined(ariaDescribedBy)}
       >
-        ${hasLegend ? html`
-          <legend part="legend" id=${this._legendId} class="legend">
-            ${this.legend ? this.legend : html`<slot name="legend"></slot>`}
-          </legend>
-        ` : ''}
+        <legend part="legend" id=${this._legendId} class=${classMap(legendClasses)}>
+          ${this.legend ? this.legend : html`<slot name="legend"></slot>`}
+        </legend>
 
         <div part="group" class=${classMap(groupClasses)}>
           <div part="start" class="start">
             <slot name="start" @slotchange=${this.handleSlotChange}></slot>
           </div>
-          
+
           <div part="main" class="main">
             <slot @slotchange=${this.handleSlotChange}></slot>
           </div>
-          
+
           <div part="end" class="end">
             <slot name="end" @slotchange=${this.handleSlotChange}></slot>
           </div>
