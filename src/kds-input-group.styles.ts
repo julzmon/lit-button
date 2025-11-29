@@ -101,14 +101,14 @@ export const inputGroupStyles = css`
 
       /* Main slot adjustments when start has content */
       &:not(:empty) ~ .main ::slotted(*) {
-        margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+        margin-inline-start: 0;
         position: relative;
         z-index: 2;
       }
 
       /* When start is empty, restore main's left radius */
       &:empty ~ .main ::slotted(*) {
-        margin-inline-start: 0;
+        /* margin-inline-start: 0; */
       }
     }
 
@@ -128,7 +128,7 @@ export const inputGroupStyles = css`
       ::slotted(*) {
         border-start-start-radius: 0 !important;
         border-end-start-radius: 0 !important;
-        margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+        margin-inline-start: 0;
         position: relative;
         z-index: 1;
       }
@@ -137,16 +137,40 @@ export const inputGroupStyles = css`
     /* Border radius adjustments for default slot content based on start/end slots */
     &.has-start .main ::slotted(kds-text-input) {
       --mod-input-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
-      --mod-input-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs)  var(--kds-border-width-xs) 0;
+      /* --mod-input-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs)  var(--kds-border-width-xs) 0; */
     }
 
     &.has-end .main ::slotted(kds-text-input) {
       --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-      --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
+      /* --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs); */
     }
 
     &.has-start.has-end .main ::slotted(kds-text-input) {
       --mod-input-border-radius: 0;
+    }
+
+    /* Button radius/width when in start slot */
+    &.has-start .start ::slotted(kds-button) {
+      --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+      --mod-btn-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
+    }
+
+    /* Text input radius when in start slot */
+    .start ::slotted(kds-text-input) {
+      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+      --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
+    }
+
+    /* Text input radius when in end slot */
+    .end ::slotted(kds-text-input) {
+      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+      --mod-input-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs) var(--kds-border-width-xs) 0;
+    }
+
+    /* Button radius/width when in end slot */
+    &.has-end .end ::slotted(kds-button) {
+      --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+      --mod-btn-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs) var(--kds-border-width-xs) 0;
     }
   }
 
