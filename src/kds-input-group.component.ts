@@ -28,7 +28,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * - Responsive to slot content changes with automatic updates
  * - Required legend for semantic HTML with optional visual hiding
  *
- * @slot legend - Custom legend content (used when `legend` property is absent)
+ * @slot legend - Custom legend content (used when `label` property is absent)
  * @slot start - Slot for components at the start (left side) of the group
  * @slot - Default slot for the main input component(s)
  * @slot end - Slot for components at the end (right side) of the group
@@ -56,7 +56,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @example
  * ```html
  * <!-- Search input with button -->
- * <kds-input-group legend="Search" size="md">
+ * <kds-input-group label="Search" size="md">
  *   <kds-text-input placeholder="Enter search term"></kds-text-input>
  *   <kds-button slot="end" variant="primary">Search</kds-button>
  * </kds-input-group>
@@ -65,7 +65,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @example
  * ```html
  * <!-- Input with prefix select and suffix button -->
- * <kds-input-group legend="Phone Number" required>
+ * <kds-input-group label="Phone Number" required>
  *   <select slot="start">
  *     <option>+1</option>
  *     <option>+44</option>
@@ -78,7 +78,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @example
  * ```html
  * <!-- Visually hidden legend (accessible to screen readers) -->
- * <kds-input-group legend="Search" hide-label>
+ * <kds-input-group label="Search" hide-label>
  *   <kds-text-input placeholder="Search..."></kds-text-input>
  *   <kds-button slot="end" variant="primary">Go</kds-button>
  * </kds-input-group>
@@ -99,7 +99,7 @@ export class KdsInputGroup extends LitElement {
   /**
    * Text label rendered as the fieldset legend.
    */
-  @property({ type: String }) legend?: string;
+  @property({ type: String }) label?: string;
 
   /**
    * Helper text displayed below the group.
@@ -299,7 +299,7 @@ export class KdsInputGroup extends LitElement {
         aria-describedby=${ifDefined(ariaDescribedBy)}
       >
         <legend part="legend" id=${this._legendId} class=${classMap(legendClasses)}>
-          ${this.legend ? this.legend : html`<slot name="legend"></slot>`}
+          ${this.label ? this.label : html`<slot name="legend"></slot>`}
         </legend>
 
         <div part="group" class=${classMap(groupClasses)}>

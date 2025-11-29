@@ -178,6 +178,8 @@ export const inputGroupStyles = css`
   .error {
     margin-block-start: var(--kds-space-sm);
 
+      color: var(--kds-fg-neutral-base);
+
     &-message {
       display: flex;
       align-items: center;
