@@ -73,88 +73,80 @@ export const inputGroupStyles = css`
     inline-size: 100%;
     isolation: isolate;
 
-    /* Size variants */
-    &.sm {
-      block-size: var(--kds-button-input-height-sm);
-    }
+    .start,
+    .main,
+    .end {
+      display: flex;
+      align-items: stretch;
 
-    &.md {
-      block-size: var(--kds-button-input-height-md);
-    }
-  }
+      /* Ensure all slotted elements match the group height */
+      ::slotted(*) {
+        block-size: 100%;
+        box-sizing: border-box;
 
-  .start,
-  .main,
-  .end {
-    display: flex;
-    align-items: stretch;
-
-    /* Ensure all slotted elements match the group height */
-    ::slotted(*) {
-      block-size: 100%;
-      box-sizing: border-box;
-
-      /* Focus management - bring focused element to top */
-      &:focus-within {
-        z-index: 10 !important;
+        /* Focus management - bring focused element to top */
+        &:focus-within {
+          z-index: 10 !important;
+        }
       }
     }
 
-    /* Text input overrides */
-    ::slotted(kds-text-input) {
-      --label-margin-bottom: 0;
-      --input-height: 100%;
-    }
-  }
+    .start {
+      flex: 0 0 auto;
 
-  .start {
-    flex: 0 0 auto;
+      ::slotted(*:first-child) {
+        position: relative;
+        z-index: 1;
+      }
 
-    ::slotted(*:first-child) {
-      border-start-end-radius: 0 !important;
-      border-end-end-radius: 0 !important;
-      position: relative;
-      z-index: 1;
-    }
+      /* Main slot adjustments when start has content */
+      &:not(:empty) ~ .main ::slotted(*) {
+        margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+        position: relative;
+        z-index: 2;
+      }
 
-    /* Main slot adjustments when start exists */
-    ~ .main ::slotted(*) {
-      border-start-start-radius: 0 !important;
-      border-end-start-radius: 0 !important;
-      margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
-      position: relative;
-      z-index: 2;
+      /* When start is empty, restore main's left radius */
+      &:empty ~ .main ::slotted(*) {
+        margin-inline-start: 0;
+      }
     }
 
-    /* When start is empty, restore main's left radius */
-    &:empty ~ .main ::slotted(*) {
-      border-start-start-radius: var(--kds-input-group-border-radius) !important;
-      border-end-start-radius: var(--kds-input-group-border-radius) !important;
-      margin-inline-start: 0;
-    }
-  }
-
-  .main {
-    flex: 1 1 auto;
-    min-inline-size: 0;
-  }
-
-  .end {
-    flex: 0 0 auto;
-
-    ::slotted(*) {
-      border-start-start-radius: 0 !important;
-      border-end-start-radius: 0 !important;
-      margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
-      position: relative;
-      z-index: 1;
+    .main {
+      flex: 1 1 auto;
+      min-inline-size: 0;
     }
 
-    /* Remove right radius from main when end is not empty */
-    &:not(:empty) ~ .main ::slotted(*),
-    ~ .main ::slotted(*) {
-      border-start-end-radius: 0 !important;
-      border-end-end-radius: 0 !important;
+    .end {
+      flex: 0 0 auto;
+
+      /* Hide end slot elements when empty to not affect layout */
+      &:empty {
+        display: none;
+      }
+
+      ::slotted(*) {
+        border-start-start-radius: 0 !important;
+        border-end-start-radius: 0 !important;
+        margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    /* Border radius adjustments for default slot content based on start/end slots */
+    &.has-start .main ::slotted(kds-text-input) {
+      --mod-input-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+      --mod-input-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs)  var(--kds-border-width-xs) 0;
+    }
+
+    &.has-end .main ::slotted(kds-text-input) {
+      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+      --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
+    }
+
+    &.has-start.has-end .main ::slotted(kds-text-input) {
+      --mod-input-border-radius: 0;
     }
   }
 

@@ -95,7 +95,9 @@ export const textInputStyles = css`
     inline-size: 100%;
     block-size: var(--input-height);
     box-sizing: border-box;
-    border: var(--input-border-width) solid var(--input-border-color);
+    border-width: var(--input-border-width);
+    border-style: solid;
+    border-color: var(--input-border-color);
     border-radius: var(--input-border-radius);
     background-color: var(--input-background-color);
     padding-inline: var(--input-padding-inline);

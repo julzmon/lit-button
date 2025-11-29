@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import type { PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { inputGroupStyles } from "./kds-input-group.styles.js";
@@ -147,6 +147,12 @@ export class KdsInputGroup extends LitElement {
 
   // Internal state
 
+  /** @internal Tracks whether start slot has content */
+  @state() private _hasStartContent = false;
+
+  /** @internal Tracks whether end slot has content */
+  @state() private _hasEndContent = false;
+
   /** @internal Unique ID for the legend element, used for accessibility */
   private _legendId = `kds-input-group-legend-${++uid}`;
 
@@ -212,11 +218,19 @@ export class KdsInputGroup extends LitElement {
 
   /**
    * Handles slot content changes.
-   * Propagates properties to newly slotted elements.
+   * Propagates properties to newly slotted elements and updates border radius.
    */
   private handleSlotChange = (e: Event) => {
     const slot = e.target as HTMLSlotElement;
+    const slotName = slot.name;
     const assignedElements = slot.assignedElements();
+
+    // Track slot content state
+    if (slotName === 'start') {
+      this._hasStartContent = assignedElements.length > 0;
+    } else if (slotName === 'end') {
+      this._hasEndContent = assignedElements.length > 0;
+    }
 
     assignedElements.forEach(element => {
       if ('size' in element && this.size) {
@@ -234,6 +248,8 @@ export class KdsInputGroup extends LitElement {
       }
     });
   };
+
+
 
   /**
    * Renders the input group component.
@@ -258,7 +274,9 @@ export class KdsInputGroup extends LitElement {
     const groupClasses = {
       group: true,
       [this.size]: true,
-      'invalid': this.invalid
+      'invalid': this.invalid,
+      'has-start': this._hasStartContent,
+      'has-end': this._hasEndContent
     };
 
     const legendClasses = {
