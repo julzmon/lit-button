@@ -22,7 +22,7 @@ export const inputGroupStyles = css`
     border: none;
     margin: 0;
     padding: 0;
-    min-inline-size: 0;
+    /* min-inline-size: 0; */
     display: block;
     inline-size: 100%;
 
@@ -108,7 +108,7 @@ export const inputGroupStyles = css`
 
       /* When start is empty, restore main's left radius */
       &:empty ~ .main ::slotted(*) {
-        /* margin-inline-start: 0; */
+        margin-inline-start: 0;
       }
     }
 
@@ -126,8 +126,8 @@ export const inputGroupStyles = css`
       }
 
       ::slotted(*) {
-        border-start-start-radius: 0 !important;
-        border-end-start-radius: 0 !important;
+        /* border-start-start-radius: 0 !important;
+        border-end-start-radius: 0 !important; */
         margin-inline-start: 0;
         position: relative;
         z-index: 1;
@@ -142,7 +142,7 @@ export const inputGroupStyles = css`
 
     &.has-end .main ::slotted(kds-text-input) {
       --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-      /* --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs); */
+      --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
     }
 
     &.has-start.has-end .main ::slotted(kds-text-input) {
@@ -170,7 +170,7 @@ export const inputGroupStyles = css`
     /* Button radius/width when in end slot */
     &.has-end .end ::slotted(kds-button) {
       --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
-      --mod-btn-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs) var(--kds-border-width-xs) 0;
+      /* --mod-btn-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs) var(--kds-border-width-xs) 0; */
     }
   }
 

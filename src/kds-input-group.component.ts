@@ -153,6 +153,9 @@ export class KdsInputGroup extends LitElement {
   /** @internal Tracks whether end slot has content */
   @state() private _hasEndContent = false;
 
+  /** @internal Tracks whether help-text slot has assigned content */
+  @state() private _hasHelpContent = false;
+
   /** @internal Unique ID for the legend element, used for accessibility */
   private _legendId = `kds-input-group-legend-${++uid}`;
 
@@ -230,6 +233,8 @@ export class KdsInputGroup extends LitElement {
       this._hasStartContent = assignedElements.length > 0;
     } else if (slotName === 'end') {
       this._hasEndContent = assignedElements.length > 0;
+    } else if (slotName === 'help-text') {
+      this._hasHelpContent = assignedElements.length > 0;
     }
 
     assignedElements.forEach(element => {
@@ -327,9 +332,11 @@ export class KdsInputGroup extends LitElement {
           </div>
         ` : ''}
 
-        <div part="help-text" class="help-text-wrapper" id=${this._helpTextId}>
-          ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text"></slot>`}
-        </div>
+        ${ (hasHelpText || this._hasHelpContent) ? html`
+          <div part="help-text" class="help-text-wrapper" id=${this._helpTextId}>
+            ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text" @slotchange=${this.handleSlotChange}></slot>`}
+          </div>
+        ` : '' }
       </fieldset>
     `;
   }
