@@ -72,84 +72,72 @@ export const inputGroupStyles = css`
     align-items: stretch;
     inline-size: 100%;
     isolation: isolate;
-  }
-
-  /* Base slotted element layout */
-  .group ::slotted(*) {
-    block-size: 100%;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 0;
-  }
-
-  /* Collapse adjoining borders using negative margin (except first) */
-  .group ::slotted(*:not(:first-child)) {
-    margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
-  }
-
-  /* Focus stacking: raise focused control above neighbors */
-  .group ::slotted(*:focus),
-  .group ::slotted(*:focus-within) {
-    z-index: 5;
-  }
-
-  /* Text input corner shaping */
-  .group ::slotted(kds-text-input:first-child:last-child) {
-    --mod-input-border-radius: var(--kds-border-radius-sm);
-  }
-  .group ::slotted(kds-text-input:first-child:not(:last-child)) {
-    --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-  }
-  .group ::slotted(kds-text-input:last-child:not(:first-child)) {
-    --mod-input-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
-  }
-  .group ::slotted(kds-text-input:not(:first-child):not(:last-child)) {
-    --mod-input-border-radius: 0;
-  }
-
-  /* Button corner shaping mirrors text inputs */
-  .group ::slotted(kds-button:first-child:last-child) {
-    --mod-btn-border-radius: var(--kds-border-radius-sm);
-  }
-  .group ::slotted(kds-button:first-child:not(:last-child)) {
-    --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-  }
-  .group ::slotted(kds-button:last-child:not(:first-child)) {
-    --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
-  }
-  .group ::slotted(kds-button:not(:first-child):not(:last-child)) {
-    --mod-btn-border-radius: 0;
-  }
-
-  /* Interior elements (any except first/last) no corner rounding for other custom controls */
-  .group ::slotted(*:not(kds-text-input):not(kds-button):not(:first-child):not(:last-child)) {
-    border-radius: 0;
-  }
-
-  /* Error text block (matching text-input) */
-  .error {
-    margin-block-start: var(--kds-space-sm);
-
-      color: var(--kds-fg-neutral-base);
-
-    &-message {
-      display: flex;
-      align-items: center;
-      gap: var(--kds-space-sm);
-      color: var(--kds-fg-negative-base);
-      font-size: var(--kds-font-size-sm);
-      font-family: var(--kds-font-family);
-      font-weight: var(--kds-font-weight-bold);
+    /* Base slotted element layout */
+    & ::slotted(*) {
+      block-size: 100%;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 0;
     }
 
-    &-icon {
-      flex: 0 0 auto;
-      font-size: var(--kds-font-size-sm);
+    /* Collapse adjoining borders using negative margin (except first) */
+    & ::slotted(*:not(:first-child)) {
+      margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
     }
 
-    &-text {
-      flex: 1;
+    /* Focus stacking: raise focused control above neighbors */
+    & ::slotted(*:focus),
+    & ::slotted(*:focus-within) {
+      z-index: 5;
     }
+
+    /* Text input corner shaping */
+    & ::slotted(kds-text-input:first-child:last-child) {
+      --mod-input-border-radius: var(--kds-border-radius-sm);
+    }
+    & ::slotted(kds-text-input:first-child:not(:last-child)) {
+      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+    }
+    & ::slotted(kds-text-input:last-child:not(:first-child)) {
+      --mod-input-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+    }
+    & ::slotted(kds-text-input:not(:first-child):not(:last-child)) {
+      --mod-input-border-radius: 0;
+    }
+
+    /* Button corner shaping mirrors text inputs */
+    & ::slotted(kds-button:first-child:last-child) {
+      --mod-btn-border-radius: var(--kds-border-radius-sm);
+    }
+    & ::slotted(kds-button:first-child:not(:last-child)) {
+      --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+    }
+    & ::slotted(kds-button:last-child:not(:first-child)) {
+      --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+    }
+    & ::slotted(kds-button:not(:first-child):not(:last-child)) {
+      --mod-btn-border-radius: 0;
+    }
+
+    /* Interior elements (any except first/last) no corner rounding for other custom controls */
+    & ::slotted(*:not(kds-text-input):not(kds-button):not(:first-child):not(:last-child)) {
+      border-radius: 0;
+    }
+  }
+
+  /* Error text block (mirror kds-text-input) */
+  .error { margin-block-start: var(--kds-space-sm); }
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: var(--kds-space-sm);
+    color: var(--kds-fg-negative-base);
+    font-size: var(--kds-font-size-sm);
+    font-family: var(--kds-font-family);
+    font-weight: var(--kds-font-weight-bold);
+
+    .error-icon { flex: 0 0 auto; font-size: var(--kds-font-size-sm); }
+    .error-text { flex: 1; }
   }
 
   /* Help text (matching text-input) */
@@ -161,7 +149,7 @@ export const inputGroupStyles = css`
         display: none;
       }
 
-      ::slotted(*) {
+      & ::slotted(*) {
         font-size: var(--kds-font-size-xs);
         color: var(--kds-fg-neutral-base);
         font-family: var(--kds-font-family);
@@ -171,12 +159,6 @@ export const inputGroupStyles = css`
     font-size: var(--kds-font-size-xs);
     color: var(--kds-fg-neutral-base);
     font-family: var(--kds-font-family);
-  }
-
-  /* Disabled state */
-  .fieldset:disabled .group {
-    cursor: not-allowed;
-    opacity: var(--kds-base-opacity-disabled, 0.5);
   }
 
   /* Accessibility preferences */
