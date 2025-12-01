@@ -311,24 +311,24 @@
       <div class="button-grid">
         <kds-input-group label="Search">
           <kds-text-input placeholder="Search..." label="Search"></kds-text-input>
-          <kds-button priority="secondary" slot="end">🔍</kds-button>
+          <kds-button priority="secondary">🔍</kds-button>
         </kds-input-group>
 
         <kds-input-group label="Email Signup" size="sm">
           <kds-text-input type="email" placeholder="your@email.com" label="Email"></kds-text-input>
-          <kds-button priority="secondary" slot="end" priority="primary">Subscribe</kds-button>
+          <kds-button priority="primary">Subscribe</kds-button>
         </kds-input-group>
       </div>
 
       <h3>Button at Start</h3>
       <div class="button-grid">
         <kds-input-group label="Category Filter">
-          <kds-button priority="secondary" priority="secondary" slot="start">Category ▼</kds-button>
+          <kds-button priority="secondary">Category ▼</kds-button>
           <kds-text-input placeholder="Filter items..." label="Filter"></kds-text-input>
         </kds-input-group>
 
         <kds-input-group label="Currency Input" size="sm">
-          <kds-button priority="secondary" slot="start">USD ▼</kds-button>
+          <kds-button priority="secondary">USD ▼</kds-button>
           <kds-text-input type="number" placeholder="0.00" label="Amount"></kds-text-input>
         </kds-input-group>
       </div>
@@ -336,23 +336,23 @@
       <h3>Both Sides</h3>
       <div class="button-grid">
         <kds-input-group label="Advanced Search">
-          <kds-button priority="secondary" slot="start">Options ▼</kds-button>
+          <kds-button priority="secondary">Options ▼</kds-button>
           <kds-text-input placeholder="Search with filters..." label="Search"></kds-text-input>
-          <kds-button slot="end" color="neutral">Go</kds-button>
+          <kds-button color="neutral">Go</kds-button>
         </kds-input-group>
       </div>
 
       <h3>Multiple Inputs</h3>
       <div class="button-grid">
         <kds-input-group label="Date Range">
-          <kds-text-input slot="start" type="date" label="Start Date" placeholder="Start"></kds-text-input>
-          <kds-text-input slot="end" type="date" label="End Date"></kds-text-input>
+          <kds-text-input type="date" label="Start Date" placeholder="Start"></kds-text-input>
+          <kds-text-input type="date" label="End Date"></kds-text-input>
         </kds-input-group>
 
         <kds-input-group label="Price Range">
-          <kds-text-input slot="start" type="number" label="Min" placeholder="Min"></kds-text-input>
+          <kds-text-input type="number" label="Min" placeholder="Min"></kds-text-input>
           <kds-text-input type="number" label="Max" placeholder="Max"></kds-text-input>
-          <kds-button color="neutral" slot="end">Apply</kds-button>
+          <kds-button color="neutral">Apply</kds-button>
         </kds-input-group>
       </div>
 
@@ -360,7 +360,7 @@
       <div class="button-grid">
         <kds-input-group label="Newsletter" help-text="We'll send you updates about new features.">
           <kds-text-input type="email" placeholder="your@email.com" label="Email"></kds-text-input>
-          <kds-button slot="end" priority="primary">Sign Up</kds-button>
+          <kds-button priority="primary">Sign Up</kds-button>
         </kds-input-group>
       </div>
 
@@ -368,11 +368,11 @@
       <div class="button-grid">
         <kds-input-group label="Required Search" required invalid error-message="Please enter a search term">
           <kds-text-input placeholder="Search..." label="Search" invalid></kds-text-input>
-          <kds-button priority="secondary" slot="end">🔍</kds-button>
+          <kds-button priority="secondary">🔍</kds-button>
         </kds-input-group>
 
         <kds-input-group label="Invalid Category" invalid error-message="Please select a valid category">
-          <kds-button priority="secondary" slot="start">Category ▼</kds-button>
+          <kds-button priority="secondary">Category ▼</kds-button>
           <kds-text-input placeholder="Filter..." label="Filter" invalid></kds-text-input>
         </kds-input-group>
       </div>
@@ -381,12 +381,12 @@
       <div class="button-grid">
         <kds-input-group label="Search" hide-label>
           <kds-text-input placeholder="Search products..." label="Search"></kds-text-input>
-          <kds-button priority="secondary" slot="end">🔍</kds-button>
+          <kds-button priority="secondary">🔍</kds-button>
         </kds-input-group>
 
         <kds-input-group label="Email Newsletter" hide-label help-text="Join our mailing list">
           <kds-text-input type="email" placeholder="Enter your email" label="Email"></kds-text-input>
-          <kds-button slot="end" priority="primary">Subscribe</kds-button>
+          <kds-button priority="primary">Subscribe</kds-button>
         </kds-input-group>
       </div>
 
@@ -394,12 +394,12 @@
       <div class="button-grid">
         <kds-input-group label="Quick Action">
           <kds-text-input placeholder="Type something..." label="Input"></kds-text-input>
-          <kds-button slot="end" priority="primary">Submit</kds-button>
+          <kds-button priority="primary">Submit</kds-button>
         </kds-input-group>
 
         <kds-input-group label="Dangerous Action">
           <kds-text-input placeholder="Confirm deletion..." label="Confirmation"></kds-text-input>
-          <kds-button slot="end" color="negative">Delete</kds-button>
+          <kds-button color="negative">Delete</kds-button>
         </kds-input-group>
       </div>
 
@@ -407,7 +407,7 @@
       <div class="button-grid">
         <kds-input-group label="Disabled Group" disabled>
           <kds-text-input placeholder="Can't edit..." label="Input"></kds-text-input>
-          <kds-button slot="end">Submit</kds-button>
+          <kds-button>Submit</kds-button>
         </kds-input-group>
       </div>
     </div>

@@ -22,16 +22,14 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  *
  * Key features:
  * - Automatic state propagation to child components (size, invalid, disabled)
- * - Flexible layout with start/main/end slots for custom arrangements
+ * - Flexible layout: place any number of controls in the default slot in sequence
  * - Built-in error and help text with proper ARIA associations
  * - Native fieldset disabled support cascades to all child controls
  * - Responsive to slot content changes with automatic updates
  * - Required legend for semantic HTML with optional visual hiding
  *
  * @slot legend - Custom legend content (used when `label` property is absent)
- * @slot start - Slot for components at the start (left side) of the group
- * @slot - Default slot for the main input component(s)
- * @slot end - Slot for components at the end (right side) of the group
+ * @slot - Default slot for grouped form controls (order determines visual shaping)
  * @slot error - Custom error content (used when `error-message` is absent)
  * @slot help-text - Helper text displayed below the group for additional guidance
  *
@@ -47,9 +45,7 @@ import { inputGroupStyles } from "./kds-input-group.styles.js";
  * @csspart fieldset - The fieldset element wrapper
  * @csspart legend - The legend element
  * @csspart group - The container holding all grouped elements
- * @csspart start - Container for start slot content
- * @csspart main - Container for the main input element(s)
- * @csspart end - Container for end slot content
+ * @csspart group - The flex row wrapper for all controls (unchanged)
  * @csspart error - Container for error message
  * @csspart help-text - Container for help text
  *
@@ -147,11 +143,7 @@ export class KdsInputGroup extends LitElement {
 
   // Internal state
 
-  /** @internal Tracks whether start slot has content */
-  @state() private _hasStartContent = false;
-
-  /** @internal Tracks whether end slot has content */
-  @state() private _hasEndContent = false;
+  /* Removed start/end slot tracking in refactor: single default slot now */
 
   /** @internal Tracks whether help-text slot has assigned content */
   @state() private _hasHelpContent = false;
@@ -225,32 +217,15 @@ export class KdsInputGroup extends LitElement {
    */
   private handleSlotChange = (e: Event) => {
     const slot = e.target as HTMLSlotElement;
-    const slotName = slot.name;
     const assignedElements = slot.assignedElements();
-
-    // Track slot content state
-    if (slotName === 'start') {
-      this._hasStartContent = assignedElements.length > 0;
-    } else if (slotName === 'end') {
-      this._hasEndContent = assignedElements.length > 0;
-    } else if (slotName === 'help-text') {
+    if (slot.name === 'help-text') {
       this._hasHelpContent = assignedElements.length > 0;
     }
-
     assignedElements.forEach(element => {
-      if ('size' in element && this.size) {
-        (element as any).size = this.size;
-      }
-      if ('invalid' in element) {
-        (element as any).invalid = this.invalid;
-      }
-      if ('disabled' in element && this.disabled) {
-        (element as any).disabled = this.disabled;
-      }
-      // Hide labels on text inputs inside group (legend provides the label context)
-      if (element.tagName === 'KDS-TEXT-INPUT') {
-        (element as any).hideLabel = true;
-      }
+      if ('size' in element && this.size) (element as any).size = this.size;
+      if ('invalid' in element) (element as any).invalid = this.invalid;
+      if ('disabled' in element && this.disabled) (element as any).disabled = this.disabled;
+      if (element.tagName === 'KDS-TEXT-INPUT') (element as any).hideLabel = true;
     });
   };
 
@@ -279,9 +254,7 @@ export class KdsInputGroup extends LitElement {
     const groupClasses = {
       group: true,
       [this.size]: true,
-      'invalid': this.invalid,
-      'has-start': this._hasStartContent,
-      'has-end': this._hasEndContent
+      invalid: this.invalid
     };
 
     const legendClasses = {
@@ -308,17 +281,7 @@ export class KdsInputGroup extends LitElement {
         </legend>
 
         <div part="group" class=${classMap(groupClasses)}>
-          <div part="start" class="start">
-            <slot name="start" @slotchange=${this.handleSlotChange}></slot>
-          </div>
-
-          <div part="main" class="main">
-            <slot @slotchange=${this.handleSlotChange}></slot>
-          </div>
-
-          <div part="end" class="end">
-            <slot name="end" @slotchange=${this.handleSlotChange}></slot>
-          </div>
+          <slot @slotchange=${this.handleSlotChange}></slot>
         </div>
 
         ${this.invalid ? html`

@@ -65,113 +65,65 @@ export const inputGroupStyles = css`
     color: var(--kds-fg-negative-base);
   }
 
-  /* Group container - holds all slotted elements */
+  /* Group container with unified default slot */
   .group {
     position: relative;
     display: flex;
     align-items: stretch;
     inline-size: 100%;
     isolation: isolate;
+  }
 
-    .start,
-    .main,
-    .end {
-      display: flex;
-      align-items: stretch;
+  /* Base slotted element layout */
+  .group ::slotted(*) {
+    block-size: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+  }
 
-      /* Ensure all slotted elements match the group height */
-      ::slotted(*) {
-        block-size: 100%;
-        box-sizing: border-box;
+  /* Collapse adjoining borders using negative margin (except first) */
+  .group ::slotted(*:not(:first-child)) {
+    margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
+  }
 
-        /* Focus management - bring focused element to top */
-        &:focus-within {
-          z-index: 10 !important;
-        }
-      }
-    }
+  /* Focus stacking: raise focused control above neighbors */
+  .group ::slotted(*:focus),
+  .group ::slotted(*:focus-within) {
+    z-index: 5;
+  }
 
-    .start {
-      flex: 0 0 auto;
+  /* Text input corner shaping */
+  .group ::slotted(kds-text-input:first-child:last-child) {
+    --mod-input-border-radius: var(--kds-border-radius-sm);
+  }
+  .group ::slotted(kds-text-input:first-child:not(:last-child)) {
+    --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+  }
+  .group ::slotted(kds-text-input:last-child:not(:first-child)) {
+    --mod-input-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+  }
+  .group ::slotted(kds-text-input:not(:first-child):not(:last-child)) {
+    --mod-input-border-radius: 0;
+  }
 
-      ::slotted(*:first-child) {
-        position: relative;
-        z-index: 1;
-      }
+  /* Button corner shaping mirrors text inputs */
+  .group ::slotted(kds-button:first-child:last-child) {
+    --mod-btn-border-radius: var(--kds-border-radius-sm);
+  }
+  .group ::slotted(kds-button:first-child:not(:last-child)) {
+    --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+  }
+  .group ::slotted(kds-button:last-child:not(:first-child)) {
+    --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+  }
+  .group ::slotted(kds-button:not(:first-child):not(:last-child)) {
+    --mod-btn-border-radius: 0;
+  }
 
-      /* Main slot adjustments when start has content */
-      &:not(:empty) ~ .main ::slotted(*) {
-        margin-inline-start: 0;
-        position: relative;
-        z-index: 2;
-      }
-
-      /* When start is empty, restore main's left radius */
-      &:empty ~ .main ::slotted(*) {
-        margin-inline-start: 0;
-      }
-    }
-
-    .main {
-      flex: 1 1 auto;
-      min-inline-size: 0;
-    }
-
-    .end {
-      flex: 0 0 auto;
-
-      /* Hide end slot elements when empty to not affect layout */
-      &:empty {
-        display: none;
-      }
-
-      ::slotted(*) {
-        /* border-start-start-radius: 0 !important;
-        border-end-start-radius: 0 !important; */
-        margin-inline-start: 0;
-        position: relative;
-        z-index: 1;
-      }
-    }
-
-    /* Border radius adjustments for default slot content based on start/end slots */
-    &.has-start .main ::slotted(kds-text-input) {
-      --mod-input-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
-      /* --mod-input-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs)  var(--kds-border-width-xs) 0; */
-    }
-
-    &.has-end .main ::slotted(kds-text-input) {
-      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-      --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
-    }
-
-    &.has-start.has-end .main ::slotted(kds-text-input) {
-      --mod-input-border-radius: 0;
-    }
-
-    /* Button radius/width when in start slot */
-    &.has-start .start ::slotted(kds-button) {
-      --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-      --mod-btn-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
-    }
-
-    /* Text input radius when in start slot */
-    .start ::slotted(kds-text-input) {
-      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-      --mod-input-border-width: var(--kds-border-width-xs) 0 var(--kds-border-width-xs) var(--kds-border-width-xs);
-    }
-
-    /* Text input radius when in end slot */
-    .end ::slotted(kds-text-input) {
-      --mod-input-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
-      --mod-input-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs) var(--kds-border-width-xs) 0;
-    }
-
-    /* Button radius/width when in end slot */
-    &.has-end .end ::slotted(kds-button) {
-      --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
-      /* --mod-btn-border-width: var(--kds-border-width-xs) var(--kds-border-width-xs) var(--kds-border-width-xs) 0; */
-    }
+  /* Interior elements (any except first/last) no corner rounding for other custom controls */
+  .group ::slotted(*:not(kds-text-input):not(kds-button):not(:first-child):not(:last-child)) {
+    border-radius: 0;
   }
 
   /* Error text block (matching text-input) */
@@ -229,12 +181,6 @@ export const inputGroupStyles = css`
 
   /* Accessibility preferences */
   @media (prefers-reduced-motion: reduce) {
-    .start,
-    .main,
-    .end {
-      ::slotted(*) {
-        transition: none !important;
-      }
-    }
+    .group ::slotted(*) { transition: none !important; }
   }
 `;
