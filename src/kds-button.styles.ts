@@ -13,9 +13,9 @@ export const buttonStyles = css`
     --kds-btn-min-width: var(--mod-btn-min-width, auto);
     --kds-btn-padding-inline: var(
       --mod-btn-padding-inline,
-      var(--kds-spacing-md)
+      var(--kds-space-xl)
     );
-    --kds-btn-gap: var(--mod-btn-gap, var(--kds-spacing-sm));
+    --kds-btn-gap: var(--mod-btn-gap, var(--kds-space-lg));
     --kds-btn-color: var(--mod-btn-color, var(--kds-fg-on-emphasis));
     --kds-btn-color-hover: var(
       --mod-btn-color-hover,
@@ -247,25 +247,25 @@ export const buttonStyles = css`
     &.xs {
       --kds-btn-height: var(--kds-button-input-height-xs);
       --kds-btn-font-size: var(--kds-font-size-xs);
-      --kds-btn-padding-inline: var(--kds-spacing-xs);
+      --kds-btn-padding-inline: var(--kds-space-md);
     }
 
     &.sm {
       --kds-btn-height: var(--kds-button-input-height-sm);
       --kds-btn-font-size: var(--kds-font-size-sm);
-      --kds-btn-padding-inline: var(--kds-spacing-sm);
+      --kds-btn-padding-inline: var(--kds-space-lg);
     }
 
     &.md {
       --kds-btn-height: var(--kds-button-input-height-md);
       --kds-btn-font-size: var(--kds-font-size-md);
-      --kds-btn-padding-inline: var(--kds-spacing-md);
+      --kds-btn-padding-inline: var(--kds-space-xl);
     }
 
     &.lg {
       --kds-btn-height: var(--kds-button-input-height-lg);
       --kds-btn-font-size: var(--kds-font-size-lg);
-      --kds-btn-padding-inline: var(--kds-spacing-lg);
+      --kds-btn-padding-inline: var(--kds-space-2xl);
     }
 
     /* Link */
