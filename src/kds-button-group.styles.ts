@@ -132,19 +132,25 @@ export const buttonGroupStyles = css`
   :host([fill-width]) {
     container-type: inline-size;
     inline-size: 100%;
+    display: flex;
+    flex-direction: row;
 
     & ::slotted(*) {
       flex: 1 1 0;
+      min-inline-size: 0;
+    }
+  }
+
+  /* Responsive breakpoint: switch to column when container is narrow */
+  /* Uses custom property for breakpoint with 30rem fallback */
+  @container (inline-size < 30rem) {
+    :host([fill-width]) {
+      flex-direction: column;
     }
 
-    /* Responsive breakpoint: switch to column when container is narrow */
-    /* Uses custom property for breakpoint with 30rem fallback */
-    @container (inline-size < var(--mod-button-group-fill-breakpoint, 30rem)) {
-      flex-direction: column;
-
-      & ::slotted(*) {
-        inline-size: 100%;
-      }
+    :host([fill-width]) ::slotted(*) {
+      inline-size: 100%;
+      flex: 0 0 auto;
     }
   }
 
