@@ -62,7 +62,7 @@ import { buttonGroupStyles } from "./kds-button-group.styles.js";
  * @example
  * ```html
  * <!-- Equal width responsive buttons -->
- * <kds-button-group fillWidth>
+ * <kds-button-group stretch>
  *   <kds-button>First</kds-button>
  *   <kds-button>Second</kds-button>
  *   <kds-button>Third</kds-button>
@@ -101,7 +101,7 @@ export class KdsButtonGroup extends LitElement {
    * on smaller containers via container query (30rem breakpoint).
    */
   @property({ reflect: true, type: Boolean } as PropertyDeclaration)
-  fillWidth = false;
+  stretch = false;
 
   render() {
     return html`<slot></slot>`;

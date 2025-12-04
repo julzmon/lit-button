@@ -123,8 +123,8 @@ export const buttonGroupStyles = css`
     --mod-btn-border-radius: 0 !important;
   }
 
-  /* FillWidth mode: equal-width buttons with container queries */
-  :host([fill-width]) {
+  /* Stretch mode: equal-width buttons with container queries */
+  :host([stretch]) {
     container-type: inline-size;
     inline-size: 100%;
     display: flex;
@@ -139,13 +139,12 @@ export const buttonGroupStyles = css`
   /* Responsive breakpoint: switch to column when container is narrow */
   /* Uses custom property for breakpoint with 30rem fallback */
   @container (inline-size < 30rem) {
-    :host([fill-width]) {
+    :host([stretch]) {
       flex-direction: column;
-    }
-
-    :host([fill-width]) ::slotted(*) {
-      inline-size: 100%;
-      flex: 0 0 auto;
+      & ::slotted(*) {
+        inline-size: 100%;
+        flex: 0 0 auto;
+      }
     }
   }
 
