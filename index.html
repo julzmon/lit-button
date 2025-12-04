@@ -8,6 +8,7 @@
     <script type="module" src="/src/kds-progress-circle.component.ts"></script>
     <script type="module" src="/src/kds-text-input.component.ts"></script>
     <script type="module" src="/src/kds-input-group.component.ts"></script>
+    <script type="module" src="/src/kds-button-group.component.ts"></script>
     <style>
       body {
         font-family: system-ui, -apple-system, sans-serif;
@@ -409,6 +410,314 @@
           <kds-text-input placeholder="Can't edit..." label="Input"></kds-text-input>
           <kds-button>Submit</kds-button>
         </kds-input-group>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Button Group Component</h2>
+
+      <h3>Default Spaced Buttons (Row)</h3>
+      <div class="button-grid">
+        <kds-button-group>
+          <kds-button>First</kds-button>
+          <kds-button>Second</kds-button>
+          <kds-button>Third</kds-button>
+        </kds-button-group>
+
+        <kds-button-group>
+          <kds-button priority="secondary">First</kds-button>
+          <kds-button priority="secondary">Second</kds-button>
+          <kds-button priority="secondary">Third</kds-button>
+        </kds-button-group>
+      </div>
+
+      <h3>Gap Variants</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <p><strong>None (Connected)</strong></p>
+          <kds-button-group gap="none">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="none">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Small</strong></p>
+          <kds-button-group gap="sm">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="sm">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Medium (Default)</strong></p>
+          <kds-button-group gap="md">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="md">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Large</strong></p>
+          <kds-button-group gap="lg">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="lg">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Extra Large</strong></p>
+          <kds-button-group gap="xl">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="xl">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+      </div>
+
+      <h3>Vertical Direction</h3>
+      <div class="button-grid">
+        <kds-button-group direction="column" gap="sm">
+          <kds-button>First</kds-button>
+          <kds-button>Second</kds-button>
+          <kds-button>Third</kds-button>
+        </kds-button-group>
+
+        <kds-button-group direction="column" gap="sm">
+          <kds-button priority="secondary">First</kds-button>
+          <kds-button priority="secondary">Second</kds-button>
+          <kds-button priority="secondary">Third</kds-button>
+        </kds-button-group>
+
+        <kds-button-group direction="column" gap="none">
+          <kds-button>First</kds-button>
+          <kds-button>Second</kds-button>
+          <kds-button>Third</kds-button>
+        </kds-button-group>
+
+        <kds-button-group direction="column" gap="none">
+          <kds-button priority="secondary">First</kds-button>
+          <kds-button priority="secondary">Second</kds-button>
+          <kds-button priority="secondary">Third</kds-button>
+        </kds-button-group>
+      </div>
+
+      <h3>Alignment (Justify)</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem; width: 100%;">
+        <div>
+          <p><strong>Start (Default)</strong></p>
+          <kds-button-group justify="start">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group justify="start">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Center</strong></p>
+          <kds-button-group justify="center">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group justify="center">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>End</strong></p>
+          <kds-button-group justify="end">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group justify="end">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+      </div>
+
+      <h3>Fill Width (Equal Width Responsive)</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="max-width: 600px;">
+          <p><strong>Default Breakpoint (30rem)</strong></p>
+          <kds-button-group fill-width>
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group fill-width>
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div style="max-width: 400px;">
+          <p><strong>Narrow Container (Shows Column)</strong></p>
+          <kds-button-group fill-width>
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group fill-width>
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div style="max-width: 800px;">
+          <p><strong>Custom Breakpoint (40rem)</strong></p>
+          <kds-button-group fill-width="40rem">
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group fill-width="40rem">
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+      </div>
+
+      <h3>Button Variants in Group</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <p><strong>Different Priorities</strong></p>
+          <kds-button-group gap="none">
+            <kds-button priority="primary">Save</kds-button>
+            <kds-button priority="secondary">Cancel</kds-button>
+            <kds-button priority="tertiary">More</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Different Colors</strong></p>
+          <kds-button-group gap="sm">
+            <kds-button color="neutral">Neutral</kds-button>
+            <kds-button color="positive">Positive</kds-button>
+            <kds-button color="negative">Negative</kds-button>
+            <kds-button color="warning">Warning</kds-button>
+            <kds-button color="info">Info</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Outline Variants Connected</strong></p>
+          <kds-button-group gap="none">
+            <kds-button variant="outline">First</kds-button>
+            <kds-button variant="outline">Second</kds-button>
+            <kds-button variant="outline">Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="none">
+            <kds-button priority="secondary" variant="outline">First</kds-button>
+            <kds-button priority="secondary" variant="outline">Second</kds-button>
+            <kds-button priority="secondary" variant="outline">Third</kds-button>
+          </kds-button-group>
+        </div>
+      </div>
+
+      <h3>Different Sizes</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <p><strong>Extra Small</strong></p>
+          <kds-button-group gap="none">
+            <kds-button size="xs">First</kds-button>
+            <kds-button size="xs">Second</kds-button>
+            <kds-button size="xs">Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="none">
+            <kds-button priority="secondary" size="xs">First</kds-button>
+            <kds-button priority="secondary" size="xs">Second</kds-button>
+            <kds-button priority="secondary" size="xs">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Small</strong></p>
+          <kds-button-group gap="none">
+            <kds-button size="sm">First</kds-button>
+            <kds-button size="sm">Second</kds-button>
+            <kds-button size="sm">Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="none">
+            <kds-button priority="secondary" size="sm">First</kds-button>
+            <kds-button priority="secondary" size="sm">Second</kds-button>
+            <kds-button priority="secondary" size="sm">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Medium</strong></p>
+          <kds-button-group gap="none">
+            <kds-button size="md">First</kds-button>
+            <kds-button size="md">Second</kds-button>
+            <kds-button size="md">Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="none">
+            <kds-button priority="secondary" size="md">First</kds-button>
+            <kds-button priority="secondary" size="md">Second</kds-button>
+            <kds-button priority="secondary" size="md">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Large</strong></p>
+          <kds-button-group gap="none">
+            <kds-button size="lg">First</kds-button>
+            <kds-button size="lg">Second</kds-button>
+            <kds-button size="lg">Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group gap="none">
+            <kds-button priority="secondary" size="lg">First</kds-button>
+            <kds-button priority="secondary" size="lg">Second</kds-button>
+            <kds-button priority="secondary" size="lg">Third</kds-button>
+          </kds-button-group>
+        </div>
       </div>
     </div>
     <script>
