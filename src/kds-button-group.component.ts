@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, PropertyDeclaration } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { styleMap } from "lit/directives/style-map.js";
 import { buttonGroupStyles } from "./kds-button-group.styles.js";
@@ -79,8 +79,8 @@ import { buttonGroupStyles } from "./kds-button-group.styles.js";
  */
 @customElement("kds-button-group")
 export class KdsButtonGroup extends LitElement {
-  static styles = buttonGroupStyles;
-  static shadowRootOptions: ShadowRootInit = {
+  static override styles = buttonGroupStyles;
+  shadowRootOptions: ShadowRootInit = {
     mode: "open" as ShadowRootMode,
     delegatesFocus: true,
   };
@@ -89,75 +89,26 @@ export class KdsButtonGroup extends LitElement {
    * Controls spacing between buttons. When set to "none", buttons are visually
    * connected with shared borders and proper corner radius management.
    */
-  @property({
-    reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => {
-        return value || "md";
-      },
-      toAttribute: (value: string) => {
-        // Only reflect if not default
-        return value === "md" ? null : value;
-      },
-    },
-  })
+  @property({ reflect: true, useDefault: true } as PropertyDeclaration)
   gap: "none" | "sm" | "md" | "lg" | "xl" = "md";
 
   /**
    * Controls button orientation (horizontal or vertical layout).
    */
-  @property({
-    reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => {
-        return value || "row";
-      },
-      toAttribute: (value: string) => {
-        // Only reflect if not default
-        return value === "row" ? null : value;
-      },
-    },
-  })
+  @property({ reflect: true, useDefault: true } as PropertyDeclaration)
   direction: "row" | "column" = "row";
 
   /**
    * Controls alignment along the main axis using CSS justify-content.
    */
-  @property({
-    reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => {
-        return value || "start";
-      },
-      toAttribute: (value: string) => {
-        // Only reflect if not default
-        return value === "start" ? null : value;
-      },
-    },
-  })
+  @property({ reflect: true, useDefault: true } as PropertyDeclaration)
   justify: "start" | "center" | "end" = "start";
 
   /**
    * When true or a custom CSS length (e.g., "30rem"), buttons distribute at equal widths
    * and stack vertically on smaller containers via container query.
    */
-  @property({
-    type: String,
-    attribute: "fill-width",
-    reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => {
-        if (value === null) return false;
-        if (value === "") return true;
-        return value;
-      },
-      toAttribute: (value: boolean | string) => {
-        if (value === false) return null;
-        if (value === true) return "";
-        return value;
-      },
-    },
-  })
+  @property({ reflect: true, type: Boolean } as PropertyDeclaration)
   fillWidth: boolean | string = false;
 
   render() {
