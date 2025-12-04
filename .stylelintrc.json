@@ -5,26 +5,11 @@
   "customSyntax": "postcss-lit",
   "overrides": [
     {
-      "files": ["*.css", "**/*.css"],
-      "customSyntax": "postcss"
+      "files": ["*.ts", "**/*.css"],
+      "customSyntax": "postcss-lit"
     }
   ],
   "rules": {
-    "no-descending-specificity": null,
-    "no-duplicate-selectors": null,
-    "selector-type-no-unknown": [
-      true,
-      {
-        "ignoreTypes": ["kds-button", "kds-text-input", "kds-button-group", "kds-input-group", "kds-progress-circle"]
-      }
-    ],
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["host"]
-      }
-    ],
-    "property-no-vendor-prefix": null,
-    "value-no-vendor-prefix": null
+    "no-empty-source": null
   }
 }
