@@ -2,7 +2,7 @@ import { css } from "lit";
 
 export const buttonGroupStyles = css`
   :host {
-    display: inline-flex;
+    display: flex;
     position: relative;
     flex-direction: row;
     justify-content: flex-start;
