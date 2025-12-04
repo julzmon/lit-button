@@ -1,6 +1,5 @@
 import { LitElement, html, PropertyDeclaration } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { styleMap } from "lit/directives/style-map.js";
 import { buttonGroupStyles } from "./kds-button-group.styles.js";
 
 /**
@@ -26,7 +25,6 @@ import { buttonGroupStyles } from "./kds-button-group.styles.js";
  * @slot - Default slot for button children (kds-button components)
  *
  * @cssprop --mod-button-group-gap - Custom gap value (overrides gap property)
- * @cssprop --mod-button-group-fill-breakpoint - Container width threshold for fillWidth mode (default: 30rem)
  * @cssprop --mod-btn-border-radius - Applied to button children to control corner radius (used in gap="none" mode)
  *
  * @csspart base - The host element (no internal container)
@@ -69,12 +67,6 @@ import { buttonGroupStyles } from "./kds-button-group.styles.js";
  *   <kds-button>Second</kds-button>
  *   <kds-button>Third</kds-button>
  * </kds-button-group>
- *
- * <!-- Custom breakpoint -->
- * <kds-button-group fillWidth="40rem">
- *   <kds-button>First</kds-button>
- *   <kds-button>Second</kds-button>
- * </kds-button-group>
  * ```
  */
 @customElement("kds-button-group")
@@ -105,21 +97,14 @@ export class KdsButtonGroup extends LitElement {
   justify: "start" | "center" | "end" = "start";
 
   /**
-   * When true or a custom CSS length (e.g., "30rem"), buttons distribute at equal widths
-   * and stack vertically on smaller containers via container query.
+   * When true, buttons distribute at equal widths and stack vertically
+   * on smaller containers via container query (30rem breakpoint).
    */
   @property({ reflect: true, type: Boolean } as PropertyDeclaration)
-  fillWidth: boolean | string = false;
+  fillWidth = false;
 
   render() {
-    const styles: Record<string, string> = {};
-
-    // Apply custom breakpoint if fillWidth is a string value
-    if (typeof this.fillWidth === "string" && this.fillWidth !== "") {
-      styles["--mod-button-group-fill-breakpoint"] = this.fillWidth;
-    }
-
-    return html`<slot style=${styleMap(styles)}></slot>`;
+    return html`<slot></slot>`;
   }
 }
 
