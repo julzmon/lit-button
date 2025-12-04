@@ -2,13 +2,20 @@
   "extends": [
     "stylelint-config-recommended"
   ],
-  "ignoreFiles": ["**/*.ts"],
+  "customSyntax": "postcss-lit",
+  "overrides": [
+    {
+      "files": ["*.css", "**/*.css"],
+      "customSyntax": "postcss"
+    }
+  ],
   "rules": {
     "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
     "selector-type-no-unknown": [
       true,
       {
-        "ignoreTypes": ["/^lit-/"]
+        "ignoreTypes": ["kds-button", "kds-text-input", "kds-button-group", "kds-input-group", "kds-progress-circle"]
       }
     ],
     "selector-pseudo-class-no-unknown": [
