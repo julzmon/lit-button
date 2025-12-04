@@ -25,11 +25,6 @@ export const buttonGroupStyles = css`
     justify-content: flex-end;
   }
 
-  /* Gap variants */
-  :host([gap="none"]) {
-    gap: 0;
-  }
-
   :host([gap="sm"]) {
     gap: var(--mod-button-group-gap, var(--kds-space-sm));
   }
