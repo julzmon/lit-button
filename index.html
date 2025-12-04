@@ -578,10 +578,24 @@
         </div>
       </div>
 
-      <h3>Stretch (Equal Width Responsive)</h3>
+      <h3>Stretch & Stack</h3>
       <div style="display: flex; flex-direction: column; gap: 1rem;">
         <div>
-          <p><strong>Default Breakpoint (30rem)</strong></p>
+          <p><strong>Stack (30rem)</strong></p>
+          <kds-button-group auto-stack>
+            <kds-button>First</kds-button>
+            <kds-button>Second</kds-button>
+            <kds-button>Third</kds-button>
+          </kds-button-group>
+          <br>
+          <kds-button-group auto-stack>
+            <kds-button priority="secondary">First</kds-button>
+            <kds-button priority="secondary">Second</kds-button>
+            <kds-button priority="secondary">Third</kds-button>
+          </kds-button-group>
+        </div>
+        <div>
+          <p><strong>Stretch</strong></p>
           <kds-button-group stretch>
             <kds-button>First</kds-button>
             <kds-button>Second</kds-button>
@@ -595,7 +609,7 @@
           </kds-button-group>
         </div>
         <div style="max-width: 400px;">
-          <p><strong>Narrow Container (Shows Column)</strong></p>
+          <p><strong>Narrow Container stretch</strong></p>
           <kds-button-group stretch>
             <kds-button>First</kds-button>
             <kds-button>Second</kds-button>

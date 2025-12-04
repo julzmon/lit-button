@@ -136,14 +136,29 @@ export const buttonGroupStyles = css`
     }
   }
 
+  /* Auto-stack mode: stack buttons at 30rem breakpoint with natural width */
+  :host([auto-stack]) {
+    container-type: inline-size;
+    inline-size: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
   /* Responsive breakpoint: switch to column when container is narrow */
-  /* Uses custom property for breakpoint with 30rem fallback */
+  /* Applies to both stretch (equal-width) and auto-stack (natural width) modes */
   @container (inline-size < 30rem) {
     :host([stretch]) {
       flex-direction: column;
       & ::slotted(*) {
         inline-size: 100%;
         flex: 0 0 auto;
+      }
+    }
+
+    :host([auto-stack]) {
+      flex-direction: column;
+      & ::slotted(*) {
+        inline-size: 100%;
       }
     }
   }

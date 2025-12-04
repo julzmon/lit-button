@@ -103,6 +103,13 @@ export class KdsButtonGroup extends LitElement {
   @property({ reflect: true, type: Boolean } as PropertyDeclaration)
   stretch = false;
 
+  /**
+   * When true, buttons stack vertically at the 30rem container breakpoint
+   * without equal-width distribution. Buttons maintain their natural width.
+   */
+  @property({ reflect: true, type: Boolean } as PropertyDeclaration)
+  autoStack = false;
+
   render() {
     return html`<slot></slot>`;
   }
