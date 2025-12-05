@@ -31,15 +31,32 @@ import { buttonStyles } from './kds-button.styles.js';
  * @cssprop --mod-btn-min-width - Minimum width.
  * @cssprop --mod-btn-padding-inline - Horizontal padding.
  * @cssprop --mod-btn-gap - Gap between label and start/end slots.
+ * @cssprop --mod-btn-margin-block - External block margin (top/bottom).
+ * @cssprop --mod-btn-margin-left - External left margin.
+ * @cssprop --mod-btn-margin-right - External right margin.
  * @cssprop --mod-btn-text-color - Text color.
  * @cssprop --mod-btn-text-color-hover - Text color on hover.
  * @cssprop --mod-btn-font-size - Font size.
  * @cssprop --mod-btn-font-weight - Font weight.
  * @cssprop --mod-btn-line-height - Line height (unitless recommended).
- * @cssprop --mod-btn-border-width - Border width.
- * @cssprop --mod-btn-border-radius - Border radius.
- * @cssprop --mod-btn-border-color - Border color.
- * @cssprop --mod-btn-border-color-hover - Border color on hover.
+ * @cssprop --mod-btn-border-width-block-start - Border width for block-start (top).
+ * @cssprop --mod-btn-border-width-block-end - Border width for block-end (bottom).
+ * @cssprop --mod-btn-border-width-inline-start - Border width for inline-start (left in LTR).
+ * @cssprop --mod-btn-border-width-inline-end - Border width for inline-end (right in LTR).
+ * @cssprop --mod-btn-border-radius-top-left - Border radius for top-left corner.
+ * @cssprop --mod-btn-border-radius-top-right - Border radius for top-right corner.
+ * @cssprop --mod-btn-border-radius-bottom-right - Border radius for bottom-right corner.
+ * @cssprop --mod-btn-border-radius-bottom-left - Border radius for bottom-left corner.
+ * @cssprop --mod-btn-border-color - Global border color fallback.
+ * @cssprop --mod-btn-border-color-block-start - Border color for block-start (top).
+ * @cssprop --mod-btn-border-color-block-end - Border color for block-end (bottom).
+ * @cssprop --mod-btn-border-color-inline-start - Border color for inline-start (left in LTR).
+ * @cssprop --mod-btn-border-color-inline-end - Border color for inline-end (right in LTR).
+ * @cssprop --mod-btn-border-color-hover - Global border color on hover.
+ * @cssprop --mod-btn-border-color-block-start-hover - Border color for block-start on hover.
+ * @cssprop --mod-btn-border-color-block-end-hover - Border color for block-end on hover.
+ * @cssprop --mod-btn-border-color-inline-start-hover - Border color for inline-start on hover.
+ * @cssprop --mod-btn-border-color-inline-end-hover - Border color for inline-end on hover.
  * @cssprop --mod-btn-background-color - Background color (wins over attributes/layers).
  * @cssprop --mod-btn-background-color-hover - Background color on hover.
  * @cssprop --mod-btn-text-decoration-hover - Text decoration on hover.

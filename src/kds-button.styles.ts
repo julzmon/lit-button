@@ -88,9 +88,18 @@ export const buttonStyles = css`
       font-size: var(--mod-btn-font-size, var(--kds-btn-font-size));
       font-family: var(--kds-btn-font-family);
 
-      border-width: var(--mod-btn-border-width, var(--kds-btn-border-width));
-      border-radius: var(--mod-btn-border-radius, var(--kds-btn-border-radius));
-      border-color: var(--mod-btn-border-color, var(--kds-btn-border-color));
+      border-block-start-width: var(--mod-btn-border-width-block-start, var(--kds-btn-border-width));
+      border-block-end-width: var(--mod-btn-border-width-block-end, var(--kds-btn-border-width));
+      border-inline-start-width: var(--mod-btn-border-width-inline-start, var(--kds-btn-border-width));
+      border-inline-end-width: var(--mod-btn-border-width-inline-end, var(--kds-btn-border-width));
+      border-top-left-radius: var(--mod-btn-border-radius-top-left, var(--kds-btn-border-radius));
+      border-top-right-radius: var(--mod-btn-border-radius-top-right, var(--kds-btn-border-radius));
+      border-bottom-right-radius: var(--mod-btn-border-radius-bottom-right, var(--kds-btn-border-radius));
+      border-bottom-left-radius: var(--mod-btn-border-radius-bottom-left, var(--kds-btn-border-radius));
+      border-block-start-color: var(--mod-btn-border-color-block-start, var(--kds-btn-border-color));
+      border-block-end-color: var(--mod-btn-border-color-block-end, var(--kds-btn-border-color));
+      border-inline-start-color: var(--mod-btn-border-color-inline-start, var(--kds-btn-border-color));
+      border-inline-end-color: var(--mod-btn-border-color-inline-end, var(--kds-btn-border-color));
 
       opacity: var(--kds-btn-opacity, 1);
 
@@ -98,7 +107,10 @@ export const buttonStyles = css`
       &:hover:not(:disabled):not([aria-disabled="true"]) {
         color: var(--mod-btn-text-color-hover, var(--kds-btn-text-color-hover));
         background-color: var(--mod-btn-background-color-hover, var(--kds-btn-bg-color-hover));
-        border-color: var(--mod-btn-border-color-hover, var(--kds-btn-border-color-hover));
+        border-block-start-color: var(--mod-btn-border-color-block-start-hover, var(--kds-btn-border-color-hover));
+        border-block-end-color: var(--mod-btn-border-color-block-end-hover, var(--kds-btn-border-color-hover));
+        border-inline-start-color: var(--mod-btn-border-color-inline-start-hover, var(--kds-btn-border-color-hover));
+        border-inline-end-color: var(--mod-btn-border-color-inline-end-hover, var(--kds-btn-border-color-hover));
         text-decoration: var(--mod-btn-text-decoration-hover, var(--kds-btn-text-decoration-hover));
       }
 
