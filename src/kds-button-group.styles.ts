@@ -9,11 +9,17 @@ export const buttonGroupStyles = css`
     align-items: stretch;
     flex-wrap: wrap;
     gap: var(--kds-space-md);
+
+    /* Internal CSS variables for button border separation */
+    --separator: rgba(255, 255, 255, 0.3);
+    --separator-hover: rgba(255, 255, 255, 0.3);
   }
 
   /* Direction variants */
   :host([direction="column"]) {
     flex-direction: column;
+    /* No inline-start borders in column mode */
+    --separator: transparent;
   }
 
   /* Justify variants */
@@ -59,8 +65,8 @@ export const buttonGroupStyles = css`
       margin-inline-start: calc(-1 * var(--kds-button-group-border-width, var(--kds-border-width-xs)));
 
       /* Add white border on inline-start (left) side for visual separation */
-      --mod-btn-border-color-inline-start: var(--kds-border-neutral-muted-base, white);
-      --mod-btn-border-color-inline-start-hover: var(--kds-border-neutral-muted-base, white);
+      --mod-btn-border-color-inline-start: var(--separator);
+      --mod-btn-border-color-inline-start-hover: var(--separator);
     }
 
     /* Secondary outlined buttons: keep collapsed margins, no border override */
@@ -115,9 +121,6 @@ export const buttonGroupStyles = css`
       margin-inline-start: 0;
       margin-inline-end: 0;
       margin-block-end: 0;
-      --mod-btn-border-color-inline-start: unset;
-      --mod-btn-border-color-block-start: unset;
-      --mod-btn-border-color-inline-start-hover: unset;
     }
 
     /* Apply -1px margin collapse to all non-first buttons */
@@ -126,10 +129,10 @@ export const buttonGroupStyles = css`
         -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
       );
       /* Add white border on block-start (top) side for visual separation */
-      --mod-btn-border-color-block-start: var(--kds-border-neutral-muted-base);
-      --mod-btn-border-color-block-start-hover: var(--kds-border-neutral-muted-base);
-      --mod-btn-border-color-inline-start: unset;
-      --mod-btn-border-color-inline-start-hover: unset;
+      --mod-btn-border-color-block-start: var(--separator-hover);
+      --mod-btn-border-color-block-start-hover: var(--separator-hover);
+      --mod-btn-border-color-inline-start: transparent;
+      --mod-btn-border-color-inline-start-hover: transparent;
       margin-inline-start: 0;
       margin-inline-end: 0;
     }
