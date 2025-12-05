@@ -1,290 +1,296 @@
-import { css } from "lit";
+/* kds-button.styles.ts */
+import { css } from 'lit';
 
 export const buttonStyles = css`
-  :host {
-    display: inline-block;
-    position: relative;
-    width: auto;
-    cursor: pointer;
-  }
+  /* Layers: base < variant < priority */
+  @layer base, variant, priority;
 
-  .button {
-    --kds-btn-height: var(--mod-btn-height, var(--kds-button-input-height-md));
-    --kds-btn-min-width: var(--mod-btn-min-width, auto);
-    --kds-btn-padding-inline: var(
-      --mod-btn-padding-inline,
-      var(--kds-space-xl)
-    );
-    --kds-btn-gap: var(--mod-btn-gap, var(--kds-space-lg));
-    --kds-btn-color: var(--mod-btn-color, var(--kds-fg-on-emphasis));
-    --kds-btn-color-hover: var(
-      --mod-btn-color-hover,
-      var(--kds-fg-on-emphasis)
-    );
-    --kds-btn-font-weight: var(--kds-font-weight-regular);
-    --kds-btn-font-size: var(--mod-btn-font-size, var(--kds-font-size-md));
-    --kds-btn-line-height: var(--mod-btn-line-height, 1.2);
-    --kds-btn-border-width: var(
-      --mod-btn-border-width,
-      var(--kds-border-width-xs)
-    );
-    --kds-btn-border-radius: var(
-      --mod-btn-border-radius,
-      var(--kds-border-radius-sm)
-    );
-    --kds-btn-border-color: var(--mod-btn-border-color, transparent);
-    --kds-btn-border-color-hover: var(
-      --mod-btn-border-color-hover,
-      transparent
-    );
-    --kds-btn-bg-color: var(
-      --mod-btn-background-color,
-      var(--kds-bg-neutral-emphasis-base)
-    );
-    --kds-btn-bg-color-hover: var(
-      --mod-btn-background-color-hover,
-      var(--kds-bg-neutral-emphasis-hover)
-    );
-    --kds-btn-text-decoration-hover: var(--kds-btn-text-decoration-hover, none);
-    --kds-btn-opacity-disabled: 1;
+  /* ============================
+   * BASE
+   * ============================ */
+  @layer base {
+    :host {
+      display: inline-block;
+      position: relative;
+      width: auto;
+      cursor: pointer;
 
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    overflow: visible;
-    display: inline-flex;
-    gap: var(--kds-btn-gap);
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    margin: 0;
-    width: 100%;
-    white-space: nowrap;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: var(--kds-btn-line-height);
-    text-decoration: none;
-    text-transform: none;
-    vertical-align: middle;
-    -webkit-appearance: button;
-    border-style: solid;
-    transition: var(--kds-animation-duration-normal) background-color,
-      var(--kds-animation-duration-normal) color, var(--kds-animation-duration-normal) border,
-      var(--kds-animation-duration-normal) box-shadow;
+      /* ---- Component defaults (no mod fallbacks here) ---- */
+      --kds-btn-height: var(--kds-button-input-height-md);
+      --kds-btn-min-width: auto;
+      --kds-btn-padding-inline: var(--kds-space-2xl);
+      --kds-btn-gap: var(--kds-space-lg);
 
-    background-color: var(--kds-btn-bg-color);
-    min-width: var(--kds-btn-min-width);
-    height: var(--kds-btn-height);
-    padding-block: 0;
-    padding-inline: var(--kds-btn-padding-inline);
-    margin-block: var(--mod-btn-margin-block);
-    margin-inline-end: var(--mod-btn-margin-right);
-    margin-inline-start: var(--mod-btn-margin-left);
-    color: var(--kds-btn-color);
-    font-weight: var(--kds-btn-font-weight);
-    font-size: var(--kds-btn-font-size);
-    font-family: var(--kds-font-family);
-    border-width: var(--kds-btn-border-width);
-    border-radius: var(--kds-btn-border-radius);
-    border-color: var(--kds-btn-border-color);
-    user-select: none;
-    -webkit-user-select: none;
-    opacity: var(--kds-btn-opacity-disabled, 1);
+      --kds-btn-text-color: var(--kds-fg-on-emphasis);
+      --kds-btn-text-color-hover: var(--kds-fg-on-emphasis);
 
-    &:hover:not(:disabled) {
-      color: var(--kds-btn-color-hover);
-      background-color: var(--kds-btn-bg-color-hover);
-      border-color: var(--kds-btn-border-color-hover);
-      text-decoration: var(--kds-btn-text-decoration-hover);
+      --kds-btn-font-weight: var(--kds-font-weight-regular);
+      --kds-btn-font-size: var(--kds-font-size-md);
+      --kds-btn-line-height: 1.2;
+      --kds-btn-font-family: var(--kds-font-family);
+
+      --kds-btn-border-width: var(--kds-border-width-xs);
+      --kds-btn-border-radius: var(--kds-border-radius-sm);
+      --kds-btn-border-color: transparent;
+      --kds-btn-border-color-hover: transparent;
+
+      --kds-btn-bg-color: var(--kds-bg-neutral-emphasis-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-neutral-emphasis-hover);
+
+      --kds-btn-text-decoration-hover: none;
+
+      /* Default opacity (enabled) */
+      --kds-btn-opacity: 1;
     }
 
-    &:focus {
-      outline: none;
+    .button {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      overflow: visible;
+      display: inline-flex;
+
+      /* ---- Read mod-first, then kds ---- */
+      gap: var(--mod-btn-gap, var(--kds-btn-gap));
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      margin: 0;
+      width: 100%;
+      white-space: nowrap;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: var(--mod-btn-line-height, var(--kds-btn-line-height));
+      text-decoration: none;
+      text-transform: none;
+      vertical-align: middle;
+      -webkit-appearance: button;
+      border-style: solid;
+      transition:
+        var(--kds-animation-duration-normal) background-color,
+        var(--kds-animation-duration-normal) color,
+        var(--kds-animation-duration-normal) border-color,
+        var(--kds-animation-duration-normal) box-shadow;
+
+      background-color: var(--mod-btn-background-color, var(--kds-btn-bg-color));
+      min-width: var(--mod-btn-min-width, var(--kds-btn-min-width));
+      height: var(--mod-btn-height, var(--kds-btn-height));
+      padding-block: 0;
+      padding-inline: var(--mod-btn-padding-inline, var(--kds-btn-padding-inline));
+
+      /* external margins: consume mod directly (no kds passthrough vars) */
+      margin-block: var(--mod-btn-margin-block, 0);
+      margin-inline-start: var(--mod-btn-margin-left, 0);
+      margin-inline-end: var(--mod-btn-margin-right, 0);
+
+      color: var(--mod-btn-text-color, var(--kds-btn-text-color));
+      font-weight: var(--mod-btn-font-weight, var(--kds-btn-font-weight));
+      font-size: var(--mod-btn-font-size, var(--kds-btn-font-size));
+      font-family: var(--kds-btn-font-family);
+
+      border-width: var(--mod-btn-border-width, var(--kds-btn-border-width));
+      border-radius: var(--mod-btn-border-radius, var(--kds-btn-border-radius));
+      border-color: var(--mod-btn-border-color, var(--kds-btn-border-color));
+
+      opacity: var(--kds-btn-opacity, 1);
+
+      /* states */
+      &:hover:not(:disabled):not([aria-disabled="true"]) {
+        color: var(--mod-btn-text-color-hover, var(--kds-btn-text-color-hover));
+        background-color: var(--mod-btn-background-color-hover, var(--kds-btn-bg-color-hover));
+        border-color: var(--mod-btn-border-color-hover, var(--kds-btn-border-color-hover));
+        text-decoration: var(--mod-btn-text-decoration-hover, var(--kds-btn-text-decoration-hover));
+      }
+
+      &:focus { outline: none; }
+
+      &:focus-visible {
+        outline: var(--kds-border-width-sm) solid var(--kds-border-info-emphasis-base);
+        outline-offset: var(--kds-border-width-sm);
+      }
+
+      &:is(:disabled, [aria-disabled="true"]) {
+        cursor: not-allowed;
+        --kds-btn-opacity: var(--kds-base-opacity-disabled, 0.2);
+      }
     }
 
-    &:focus-visible {
-      outline: var(--kds-border-width-sm) solid var(--kds-border-info-emphasis-base);
-      outline-offset: var(--kds-border-width-sm);
+    ::slotted([slot='start']),
+    ::slotted([slot='end']) {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+      pointer-events: none;
     }
 
-    &:disabled {
-      cursor: not-allowed;
-      --kds-btn-opacity-disabled: var(--kds-base-opacity-disabled, 20%);
-    }
-
-    /* Property Treatment */
-
-    /* Neutral */
-    &.neutral.outline {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-base);
-      --kds-btn-color: var(--kds-fg-base);
-      --kds-btn-color-hover: var(--kds-fg-base);
-      --kds-btn-border-color: var(--kds-border-neutral-emphasis-base);
-      --kds-btn-border-color-hover: var(--kds-border-neutral-emphasis-hover);
-    }
-
-    &.neutral.transparent {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-hover);
-      --kds-btn-color: var(--kds-fg-base);
-      --kds-btn-color-hover: var(--kds-fg-base);
-    }
-
-    /* Negative */
-    &.negative {
-      --kds-btn-bg-color: var(--kds-bg-negative-emphasis-base);
-      --kds-btn-bg-color-hover: var(--kds-bg-negative-emphasis-hover);
-    }
-
-    &.negative.outline {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-negative-muted-base);
-      --kds-btn-color: var(--kds-fg-negative-base);
-      --kds-btn-color-hover: var(--kds-fg-negative-base);
-      --kds-btn-border-color: var(--kds-border-negative-emphasis-base);
-      --kds-btn-border-color-hover: var(--kds-border-negative-emphasis-hover);
-    }
-
-    &.negative.transparent {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-negative-muted-hover);
-      --kds-btn-color: var(--kds-fg-negative-base);
-      --kds-btn-color-hover: var(--kds-fg-negative-base);
-    }
-
-    /* Positive */
-    &.positive {
-      --kds-btn-bg-color: var(--kds-bg-positive-emphasis-base);
-      --kds-btn-bg-color-hover: var(--kds-bg-positive-emphasis-hover);
-    }
-
-    &.positive.outline {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-positive-muted-base);
-      --kds-btn-color: var(--kds-fg-positive-base);
-      --kds-btn-color-hover: var(--kds-fg-positive-base);
-      --kds-btn-border-color: var(--kds-border-positive-emphasis-base);
-      --kds-btn-border-color-hover: var(--kds-border-positive-emphasis-hover);
-    }
-
-    &.positive.transparent {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-positive-muted-hover);
-      --kds-btn-color: var(--kds-fg-positive-base);
-      --kds-btn-color-hover: var(--kds-fg-positive-base);
-    }
-
-    /* Warning */
-    &.warning {
-      --kds-btn-bg-color: var(--kds-bg-warning-emphasis-base);
-      --kds-btn-bg-color-hover: var(--kds-bg-warning-emphasis-hover);
-    }
-
-    &.warning.outline {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-warning-muted-base);
-      --kds-btn-color: var(--kds-fg-warning-base);
-      --kds-btn-color-hover: var(--kds-fg-warning-base);
-      --kds-btn-border-color: var(--kds-border-warning-emphasis-base);
-      --kds-btn-border-color-hover: var(--kds-border-warning-emphasis-hover);
-    }
-
-    &.warning.transparent {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-warning-muted-hover);
-      --kds-btn-color: var(--kds-fg-warning-base);
-      --kds-btn-color-hover: var(--kds-fg-warning-base);
-    }
-
-    /* Info */
-    &.info {
-      --kds-btn-bg-color: var(--kds-bg-info-emphasis-base);
-      --kds-btn-bg-color-hover: var(--kds-bg-info-emphasis-hover);
-    }
-
-    &.info.outline {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-info-muted-base);
-      --kds-btn-color: var(--kds-fg-info-base);
-      --kds-btn-color-hover: var(--kds-fg-info-base);
-      --kds-btn-border-color: var(--kds-border-info-emphasis-base);
-      --kds-btn-border-color-hover: var(--kds-border-info-emphasis-hover);
-    }
-
-    &.info.transparent {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-info-muted-hover);
-      --kds-btn-color: var(--kds-fg-info-base);
-      --kds-btn-color-hover: var(--kds-fg-info-base);
-    }
-
-    /* Property Priority */
-
-    /* Priority */
-    &.primary {
-      --kds-btn-bg-color: var(--kds-bg-brand-emphasis-base);
-      --kds-btn-bg-color-hover: var(--kds-bg-brand-emphasis-hover);
-    }
-
-    &.secondary {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-base);
-      --kds-btn-color: var(--kds-fg-base);
-      --kds-btn-color-hover: var(--kds-fg-base);
-      --kds-btn-border-color: var(--kds-border-neutral-emphasis-base);
-      --kds-btn-border-color-hover: var(--kds-border-neutral-emphasis-hover);
-    }
-
-    &.tertiary {
-      --kds-btn-bg-color: transparent;
-      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-hover);
-      --kds-btn-color: var(--kds-fg-base);
-      --kds-btn-color-hover: var(--kds-fg-base);
-    }
-
-    /* Size Variants */
-    &.xs {
+    /* Sizes (host attributes tweak kds defaults) */
+    :host([size="xs"]) {
       --kds-btn-height: var(--kds-button-input-height-xs);
       --kds-btn-font-size: var(--kds-font-size-xs);
       --kds-btn-padding-inline: var(--kds-space-md);
     }
-
-    &.sm {
+    :host([size="sm"]) {
       --kds-btn-height: var(--kds-button-input-height-sm);
       --kds-btn-font-size: var(--kds-font-size-sm);
       --kds-btn-padding-inline: var(--kds-space-lg);
     }
-
-    &.md {
-      --kds-btn-height: var(--kds-button-input-height-md);
-      --kds-btn-font-size: var(--kds-font-size-md);
-      --kds-btn-padding-inline: var(--kds-space-xl);
-    }
-
-    &.lg {
+    :host([size="md"]) { }
+    :host([size="lg"]) {
       --kds-btn-height: var(--kds-button-input-height-lg);
       --kds-btn-font-size: var(--kds-font-size-lg);
       --kds-btn-padding-inline: var(--kds-space-2xl);
     }
+  } /* end @layer base */
 
-    /* Link */
-    &.link {
+  /* ============================
+   * VARIANT
+   * ============================ */
+  @layer variant {
+    /* Solid color families */
+    :host([color="neutral"]) { }
+
+    :host([color="positive"]) {
+      --kds-btn-bg-color: var(--kds-bg-positive-emphasis-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-positive-emphasis-hover);
+      --kds-btn-text-color: var(--kds-fg-on-emphasis);
+    }
+    :host([color="negative"]) {
+      --kds-btn-bg-color: var(--kds-bg-negative-emphasis-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-negative-emphasis-hover);
+      --kds-btn-text-color: var(--kds-fg-on-emphasis);
+    }
+    :host([color="warning"]) {
+      --kds-btn-bg-color: var(--kds-bg-warning-emphasis-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-warning-emphasis-hover);
+      --kds-btn-text-color: var(--kds-fg-on-emphasis);
+    }
+    :host([color="info"]) {
+      --kds-btn-bg-color: var(--kds-bg-info-emphasis-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-info-emphasis-hover);
+      --kds-btn-text-color: var(--kds-fg-on-emphasis);
+    }
+
+    /* Generic variants */
+    :host([variant="outline"]) {
+      --kds-btn-bg-color: transparent;
+      --kds-btn-text-color: var(--kds-fg-base);
+      --kds-btn-text-color-hover: var(--kds-fg-base);
+      --kds-btn-border-color: var(--kds-border-neutral-emphasis-base);
+      --kds-btn-border-color-hover: var(--kds-border-neutral-emphasis-hover);
+      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-base);
+    }
+    :host([variant="transparent"]) {
+      --kds-btn-bg-color: transparent;
+      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-hover);
+      --kds-btn-text-color: var(--kds-fg-base);
+      --kds-btn-text-color-hover: var(--kds-fg-base);
+    }
+    :host([variant="link"]) {
       --kds-btn-bg-color: transparent;
       --kds-btn-bg-color-hover: transparent;
-      --kds-btn-color: var(--kds-fg-link-base);
-      --kds-btn-color-hover: var(--kds-fg-link-hover);
+      --kds-btn-text-color: var(--kds-fg-link-base);
+      --kds-btn-text-color-hover: var(--kds-fg-link-hover);
       --kds-btn-text-decoration-hover: underline;
       --kds-btn-padding-inline: 0;
       --kds-btn-height: initial;
     }
-  }
 
-  ::slotted([slot="start"]),
-  ::slotted([slot="end"]) {
-    display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-    pointer-events: none;
-  }
+    /* Color × Variant combos (override generic rules) */
+    :host([variant="outline"][color="positive"]) {
+      --kds-btn-text-color: var(--kds-fg-positive-base);
+      --kds-btn-text-color-hover: var(--kds-fg-positive-base);
+      --kds-btn-border-color: var(--kds-border-positive-emphasis-base);
+      --kds-btn-border-color-hover: var(--kds-border-positive-emphasis-hover);
+      --kds-btn-bg-color-hover: var(--kds-bg-positive-muted-base);
+    }
+    :host([variant="transparent"][color="positive"]) {
+      --kds-btn-text-color: var(--kds-fg-positive-base);
+      --kds-btn-text-color-hover: var(--kds-fg-positive-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-positive-muted-hover);
+    }
+
+    :host([variant="outline"][color="negative"]) {
+      --kds-btn-text-color: var(--kds-fg-negative-base);
+      --kds-btn-text-color-hover: var(--kds-fg-negative-base);
+      --kds-btn-border-color: var(--kds-border-negative-emphasis-base);
+      --kds-btn-border-color-hover: var(--kds-border-negative-emphasis-hover);
+      --kds-btn-bg-color-hover: var(--kds-bg-negative-muted-base);
+    }
+    :host([variant="transparent"][color="negative"]) {
+      --kds-btn-text-color: var(--kds-fg-negative-base);
+      --kds-btn-text-color-hover: var(--kds-fg-negative-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-negative-muted-hover);
+    }
+
+    :host([variant="outline"][color="warning"]) {
+      --kds-btn-text-color: var(--kds-fg-warning-base);
+      --kds-btn-text-color-hover: var(--kds-fg-warning-base);
+      --kds-btn-border-color: var(--kds-border-warning-emphasis-base);
+      --kds-btn-border-color-hover: var(--kds-border-warning-emphasis-hover);
+      --kds-btn-bg-color-hover: var(--kds-bg-warning-muted-base);
+    }
+    :host([variant="transparent"][color="warning"]) {
+      --kds-btn-text-color: var(--kds-fg-warning-base);
+      --kds-btn-text-color-hover: var(--kds-fg-warning-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-warning-muted-hover);
+    }
+
+    :host([variant="outline"][color="info"]) {
+      --kds-btn-text-color: var(--kds-fg-info-base);
+      --kds-btn-text-color-hover: var(--kds-fg-info-base);
+      --kds-btn-border-color: var(--kds-border-info-emphasis-base);
+      --kds-btn-border-color-hover: var(--kds-border-info-emphasis-hover);
+      --kds-btn-bg-color-hover: var(--kds-bg-info-muted-base);
+    }
+    :host([variant="transparent"][color="info"]) {
+      --kds-btn-text-color: var(--kds-fg-info-base);
+      --kds-btn-text-color-hover: var(--kds-fg-info-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-info-muted-hover);
+    }
+  } /* end @layer variant */
+
+  /* ============================
+   * PRIORITY
+   * ============================ */
+  @layer priority {
+    :host([priority="primary"]) {
+      --kds-btn-bg-color: var(--kds-bg-brand-emphasis-base);
+      --kds-btn-bg-color-hover: var(--kds-bg-brand-emphasis-hover);
+      --kds-btn-text-color: var(--kds-fg-on-emphasis);
+      --kds-btn-text-color-hover: var(--kds-fg-on-emphasis);
+      --kds-btn-text-decoration-hover: none;
+      --kds-btn-border-color: transparent;
+      --kds-btn-border-color-hover: transparent;
+    }
+
+    :host([priority="secondary"]) {
+      --kds-btn-bg-color: transparent;
+      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-base);
+      --kds-btn-text-color: var(--kds-fg-base);
+      --kds-btn-text-color-hover: var(--kds-fg-base);
+      --kds-btn-border-color: var(--kds-border-neutral-emphasis-base);
+      --kds-btn-border-color-hover: var(--kds-border-neutral-emphasis-hover);
+      --kds-btn-text-decoration-hover: none;
+    }
+
+    :host([priority="tertiary"]) {
+      --kds-btn-bg-color: transparent;
+      --kds-btn-bg-color-hover: var(--kds-bg-neutral-muted-hover);
+      --kds-btn-text-color: var(--kds-fg-base);
+      --kds-btn-text-color-hover: var(--kds-fg-base);
+      --kds-btn-text-decoration-hover: none;
+    }
+
+    :host([priority="link"]) {
+      --kds-btn-bg-color: transparent;
+      --kds-btn-bg-color-hover: transparent;
+      --kds-btn-text-color: var(--kds-fg-link-base);
+      --kds-btn-text-color-hover: var(--kds-fg-link-hover);
+      --kds-btn-text-decoration-hover: underline;
+      --kds-btn-padding-inline: 0;
+      --kds-btn-height: initial;
+      --kds-btn-border-color: transparent;
+      --kds-btn-border-color-hover: transparent;
+    }
+  } /* end @layer priority */
 `;
