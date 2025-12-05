@@ -50,15 +50,23 @@ export const buttonGroupStyles = css`
     & ::slotted(*) {
       position: relative;
       z-index: 0;
-      margin-block: 0 !important;
-      margin-inline-end: 0 !important;
+      margin-block: 0;
+      margin-inline-end: 0;
     }
 
-    /* Collapse borders using negative margin (row/default) */
-    & ::slotted(*:nth-child(n+2)) {
+    /* Default spacing for all buttons unless explicitly collapsed */
+    & ::slotted(kds-button:nth-child(n+2)) {
+      margin-inline-start: 1px;
+    }
+
+    /* Preserve collapsed borders for secondary outlined (or implied outlined) buttons */
+    & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
+    & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
       margin-inline-start: calc(
         -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
       );
+      margin-block-start: 0;
+      margin-inline-end: 0;
     }
 
     /* Focus stacking: raise focused button above neighbors */
@@ -91,16 +99,29 @@ export const buttonGroupStyles = css`
   :host([gap="none"][direction="column"]) {
     /* Reset row margins for column */
     & ::slotted(*) {
-      margin-inline-start: 0 !important;
-      margin-inline-end: 0 !important;
-      margin-block-end: 0 !important;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      margin-block-end: 0;
     }
 
-    /* Collapse borders using negative margin on block axis */
-    & ::slotted(*:nth-child(n+2)) {
+    /* No inline margin in column layout; spacing handled on block axis */
+    & ::slotted(kds-button:nth-child(n+2)) {
+      margin-inline-start: 0;
+    }
+
+    /* Default spacing for all buttons unless explicitly collapsed */
+    & ::slotted(kds-button:nth-child(n+2)) {
+      margin-block-start: 1px;
+    }
+
+    /* Preserve collapsed borders for secondary outlined (or implied outlined) buttons */
+    & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
+    & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
       margin-block-start: calc(
         -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
-      ) !important;
+      );
+      margin-inline-start: 0;
+      margin-inline-end: 0;
     }
   }
 
