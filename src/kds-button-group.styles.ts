@@ -56,17 +56,18 @@ export const buttonGroupStyles = css`
 
     /* Apply -1px margin collapse to all non-first buttons */
     & ::slotted(kds-button:nth-child(n+2)) {
-      margin-inline-start: calc(
-        -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
-      );
+      margin-inline-start: calc(-1 * var(--kds-button-group-border-width, var(--kds-border-width-xs)));
+
       /* Add white border on inline-start (left) side for visual separation */
       --mod-btn-border-color-inline-start: var(--kds-border-neutral-muted-base, white);
+      --mod-btn-border-color-inline-start-hover: var(--kds-border-neutral-muted-base, white);
     }
 
     /* Secondary outlined buttons: keep collapsed margins, no border override */
     & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
     & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
       --mod-btn-border-color-inline-start: unset;
+      --mod-btn-border-color-inline-start-hover: unset;
       margin-block-start: 0;
       margin-inline-end: 0;
     }
@@ -109,11 +110,14 @@ export const buttonGroupStyles = css`
 
   /* Gap="none" + column direction: vertical connected buttons */
   :host([gap="none"][direction="column"]) {
-    /* Reset row margins for column */
+    /* Reset row margins and border colors for column */
     & ::slotted(*) {
       margin-inline-start: 0;
       margin-inline-end: 0;
       margin-block-end: 0;
+      --mod-btn-border-color-inline-start: unset;
+      --mod-btn-border-color-block-start: unset;
+      --mod-btn-border-color-inline-start-hover: unset;
     }
 
     /* Apply -1px margin collapse to all non-first buttons */
@@ -122,7 +126,10 @@ export const buttonGroupStyles = css`
         -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
       );
       /* Add white border on block-start (top) side for visual separation */
-      --mod-btn-border-color-block-start: var(--kds-border-neutral-muted-base, white);
+      --mod-btn-border-color-block-start: var(--kds-border-neutral-muted-base);
+      --mod-btn-border-color-block-start-hover: var(--kds-border-neutral-muted-base);
+      --mod-btn-border-color-inline-start: unset;
+      --mod-btn-border-color-inline-start-hover: unset;
       margin-inline-start: 0;
       margin-inline-end: 0;
     }
@@ -131,6 +138,10 @@ export const buttonGroupStyles = css`
     & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
     & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
       --mod-btn-border-color-block-start: unset;
+      --mod-btn-border-color-block-start-hover: unset;
+      margin-block-start: calc(
+        -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
+      );
     }
   }
 
