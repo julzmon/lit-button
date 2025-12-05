@@ -54,17 +54,19 @@ export const buttonGroupStyles = css`
       margin-inline-end: 0;
     }
 
-    /* Default spacing for all buttons unless explicitly collapsed */
+    /* Apply -1px margin collapse to all non-first buttons */
     & ::slotted(kds-button:nth-child(n+2)) {
-      margin-inline-start: 1px;
-    }
-
-    /* Preserve collapsed borders for secondary outlined (or implied outlined) buttons */
-    & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
-    & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
       margin-inline-start: calc(
         -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
       );
+      /* Add white border on inline-start (left) side for visual separation */
+      --mod-btn-border-color-inline-start: var(--kds-border-neutral-muted-base, white);
+    }
+
+    /* Secondary outlined buttons: keep collapsed margins, no border override */
+    & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
+    & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
+      --mod-btn-border-color-inline-start: unset;
       margin-block-start: 0;
       margin-inline-end: 0;
     }
@@ -77,22 +79,32 @@ export const buttonGroupStyles = css`
   }
 
   /* Border radius adjustments for gap=none row direction */
-  :host([gap="none"]) ::slotted(:first-child:last-child) {
-    --mod-btn-border-radius: var(--kds-border-radius-sm) !important;
+  :host([gap="none"]) ::slotted(kds-button:first-of-type:last-of-type) {
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
   }
 
-  :host([gap="none"]) ::slotted(:first-child:not(:last-child)) {
-    --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0
-      var(--kds-border-radius-sm) !important;
+  :host([gap="none"]) ::slotted(kds-button:first-of-type:not(:last-of-type)) {
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-right: 0 !important;
+    --mod-btn-border-radius-bottom-right: 0 !important;
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
   }
 
-  :host([gap="none"]) ::slotted(:last-child:not(:first-child)) {
-    --mod-btn-border-radius: 0 var(--kds-border-radius-sm)
-      var(--kds-border-radius-sm) 0 !important;
+  :host([gap="none"]) ::slotted(kds-button:last-of-type:not(:first-of-type)) {
+    --mod-btn-border-radius-top-left: 0 !important;
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-left: 0 !important;
   }
 
-  :host([gap="none"]) ::slotted(:not(:first-child):not(:last-child)) {
-    --mod-btn-border-radius: 0 !important;
+  :host([gap="none"]) ::slotted(kds-button:not(:first-of-type):not(:last-of-type)) {
+    --mod-btn-border-radius-top-left: 0 !important;
+    --mod-btn-border-radius-top-right: 0 !important;
+    --mod-btn-border-radius-bottom-right: 0 !important;
+    --mod-btn-border-radius-bottom-left: 0 !important;
   }
 
   /* Gap="none" + column direction: vertical connected buttons */
@@ -104,44 +116,51 @@ export const buttonGroupStyles = css`
       margin-block-end: 0;
     }
 
-    /* No inline margin in column layout; spacing handled on block axis */
+    /* Apply -1px margin collapse to all non-first buttons */
     & ::slotted(kds-button:nth-child(n+2)) {
-      margin-inline-start: 0;
-    }
-
-    /* Default spacing for all buttons unless explicitly collapsed */
-    & ::slotted(kds-button:nth-child(n+2)) {
-      margin-block-start: 1px;
-    }
-
-    /* Preserve collapsed borders for secondary outlined (or implied outlined) buttons */
-    & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
-    & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
       margin-block-start: calc(
         -1 * var(--kds-button-group-border-width, var(--kds-border-width-xs))
       );
+      /* Add white border on block-start (top) side for visual separation */
+      --mod-btn-border-color-block-start: var(--kds-border-neutral-muted-base, white);
       margin-inline-start: 0;
       margin-inline-end: 0;
+    }
+
+    /* Secondary outlined buttons: keep collapsed margins, no border override */
+    & ::slotted(kds-button[priority="secondary"][variant="outline"]:nth-child(n+2)),
+    & ::slotted(kds-button[priority="secondary"]:not([variant]):nth-child(n+2)) {
+      --mod-btn-border-color-block-start: unset;
     }
   }
 
   /* Border radius adjustments for gap=none column direction */
-  :host([gap="none"][direction="column"]) ::slotted(:first-child:last-child) {
-    --mod-btn-border-radius: var(--kds-border-radius-sm) !important;
+  :host([gap="none"][direction="column"]) ::slotted(kds-button:first-of-type:last-of-type) {
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
   }
 
-  :host([gap="none"][direction="column"]) ::slotted(:first-child:not(:last-child)) {
-    --mod-btn-border-radius: var(--kds-border-radius-sm)
-      var(--kds-border-radius-sm) 0 0 !important;
+  :host([gap="none"][direction="column"]) ::slotted(kds-button:first-of-type:not(:last-of-type)) {
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-right: 0 !important;
+    --mod-btn-border-radius-bottom-left: 0 !important;
   }
 
-  :host([gap="none"][direction="column"]) ::slotted(:last-child:not(:first-child)) {
-    --mod-btn-border-radius: 0 0 var(--kds-border-radius-sm)
-      var(--kds-border-radius-sm) !important;
+  :host([gap="none"][direction="column"]) ::slotted(kds-button:last-of-type:not(:first-of-type)) {
+    --mod-btn-border-radius-top-left: 0 !important;
+    --mod-btn-border-radius-top-right: 0 !important;
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
   }
 
-  :host([gap="none"][direction="column"]) ::slotted(:not(:first-child):not(:last-child)) {
-    --mod-btn-border-radius: 0 !important;
+  :host([gap="none"][direction="column"]) ::slotted(kds-button:not(:first-of-type):not(:last-of-type)) {
+    --mod-btn-border-radius-top-left: 0 !important;
+    --mod-btn-border-radius-top-right: 0 !important;
+    --mod-btn-border-radius-bottom-right: 0 !important;
+    --mod-btn-border-radius-bottom-left: 0 !important;
   }
 
   /* Stretch mode: equal-width buttons with container queries */
