@@ -253,6 +253,7 @@ export class KDSButton extends LitElement {
           tabindex=${ifDefined(this.disabled ? -1 : this.tabindex)}
           target=${ifDefined(this.target)}
           rel=${ifDefined(this._computedRel)}
+          aria-disabled=${this.disabled ? 'true' : 'false'}
         >
           <slot name="start"></slot>
           <slot></slot>
