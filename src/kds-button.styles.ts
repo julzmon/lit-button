@@ -146,7 +146,6 @@ export const buttonStyles = css`
       --kds-btn-font-size: var(--kds-font-size-sm);
       --kds-btn-padding-inline: var(--kds-space-lg);
     }
-    :host([size="md"]) { }
     :host([size="lg"]) {
       --kds-btn-height: var(--kds-button-input-height-lg);
       --kds-btn-font-size: var(--kds-font-size-lg);
