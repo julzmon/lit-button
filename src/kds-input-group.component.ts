@@ -162,6 +162,8 @@ export class KdsInputGroup extends LitElement {
    * Ensures slotted elements receive initial property values (size, invalid, disabled).
    */
   protected firstUpdated() {
+    // Capture any pre-rendered slotted help content so the wrapper renders immediately
+    this._hasHelpContent = this.querySelector('[slot="help-text"]') !== null;
     this.updateSlottedElements();
   }
 
@@ -249,7 +251,7 @@ export class KdsInputGroup extends LitElement {
    */
   render() {
     const hasError = this.invalid && this.errorMessage;
-    const hasHelpText = !!this.helpText;
+    const hasHelpText = !!this.helpText || this._hasHelpContent;
 
     const groupClasses = {
       group: true,

@@ -107,16 +107,28 @@ export const inputGroupStyles = css`
 
     /* Button corner shaping mirrors text inputs */
     & ::slotted(kds-button:first-child:last-child) {
-      --mod-btn-border-radius: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
     }
     & ::slotted(kds-button:first-child:not(:last-child)) {
-      --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: 0;
+      --mod-btn-border-radius-bottom-right: 0;
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
     }
     & ::slotted(kds-button:last-child:not(:first-child)) {
-      --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+      --mod-btn-border-radius-top-left: 0;
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: 0;
     }
     & ::slotted(kds-button:not(:first-child):not(:last-child)) {
-      --mod-btn-border-radius: 0;
+      --mod-btn-border-radius-top-left: 0;
+      --mod-btn-border-radius-top-right: 0;
+      --mod-btn-border-radius-bottom-right: 0;
+      --mod-btn-border-radius-bottom-left: 0;
     }
 
     /* Interior elements (any except first/last) no corner rounding for other custom controls */

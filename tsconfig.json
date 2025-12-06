@@ -11,6 +11,7 @@
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
   }
 }

@@ -2,22 +2,14 @@
   "extends": [
     "stylelint-config-recommended"
   ],
-  "ignoreFiles": ["**/*.ts"],
+  "customSyntax": "postcss-lit",
+  "overrides": [
+    {
+      "files": ["*.ts", "**/*.css"],
+      "customSyntax": "postcss-lit"
+    }
+  ],
   "rules": {
-    "no-descending-specificity": null,
-    "selector-type-no-unknown": [
-      true,
-      {
-        "ignoreTypes": ["/^lit-/"]
-      }
-    ],
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        "ignorePseudoClasses": ["host"]
-      }
-    ],
-    "property-no-vendor-prefix": null,
-    "value-no-vendor-prefix": null
+    "no-empty-source": null
   }
 }
