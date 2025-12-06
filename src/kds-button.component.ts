@@ -174,7 +174,7 @@ export class KDSButton extends LitElement {
   // ---------- Link-only API ----------
 
   /**
- * When set, the component renders as an anchor tag instead of a button.
+  * When set, the component renders as an anchor tag instead of a button.
  */
   @property({ type: String })
   href?: string;
