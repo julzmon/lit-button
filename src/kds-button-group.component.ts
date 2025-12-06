@@ -27,7 +27,6 @@ import { buttonGroupStyles } from "./kds-button-group.styles.js";
  * @cssprop --mod-button-group-gap - Custom gap value (overrides gap property)
  * @cssprop --mod-btn-border-radius - Applied to button children to control corner radius (used in gap="none" mode)
  *
- * @csspart base - The host element (no internal container)
  *
  * @example
  * ```html
