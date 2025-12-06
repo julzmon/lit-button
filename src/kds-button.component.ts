@@ -210,7 +210,7 @@ export class KDSButton extends LitElement {
    * Useful for programmatically triggering focus-related behavior.
    */
   override focus(options: FocusOptions) {
-    this.element?.focus(options)
+    this.element?.focus(options);
   }
 
   /**
@@ -218,7 +218,7 @@ export class KDSButton extends LitElement {
    * Useful for programmatically triggering blur-related behavior.
    */
   override blur() {
-    this.element?.blur()
+    this.element?.blur();
   }
 
 
