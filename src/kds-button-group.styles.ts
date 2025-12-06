@@ -87,31 +87,31 @@ export const buttonGroupStyles = css`
 
   /* Border radius adjustments for gap=none row direction */
   :host([gap="none"]) ::slotted(kds-button:first-of-type:last-of-type) {
-    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
   }
 
   :host([gap="none"]) ::slotted(kds-button:first-of-type:not(:last-of-type)) {
-    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-top-right: 0 !important;
-    --mod-btn-border-radius-bottom-right: 0 !important;
-    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-top-right: 0;
+    --mod-btn-border-radius-bottom-right: 0;
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
   }
 
   :host([gap="none"]) ::slotted(kds-button:last-of-type:not(:first-of-type)) {
-    --mod-btn-border-radius-top-left: 0 !important;
-    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-left: 0 !important;
+    --mod-btn-border-radius-top-left: 0;
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-left: 0;
   }
 
   :host([gap="none"]) ::slotted(kds-button:not(:first-of-type):not(:last-of-type)) {
-    --mod-btn-border-radius-top-left: 0 !important;
-    --mod-btn-border-radius-top-right: 0 !important;
-    --mod-btn-border-radius-bottom-right: 0 !important;
-    --mod-btn-border-radius-bottom-left: 0 !important;
+    --mod-btn-border-radius-top-left: 0;
+    --mod-btn-border-radius-top-right: 0;
+    --mod-btn-border-radius-bottom-right: 0;
+    --mod-btn-border-radius-bottom-left: 0;
   }
 
   /* Gap="none" + column direction: vertical connected buttons */
@@ -150,31 +150,31 @@ export const buttonGroupStyles = css`
 
   /* Border radius adjustments for gap=none column direction */
   :host([gap="none"][direction="column"]) ::slotted(kds-button:first-of-type:last-of-type) {
-    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
   }
 
   :host([gap="none"][direction="column"]) ::slotted(kds-button:first-of-type:not(:last-of-type)) {
-    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-right: 0 !important;
-    --mod-btn-border-radius-bottom-left: 0 !important;
+    --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-right: 0;
+    --mod-btn-border-radius-bottom-left: 0;
   }
 
   :host([gap="none"][direction="column"]) ::slotted(kds-button:last-of-type:not(:first-of-type)) {
-    --mod-btn-border-radius-top-left: 0 !important;
-    --mod-btn-border-radius-top-right: 0 !important;
-    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm) !important;
-    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm) !important;
+    --mod-btn-border-radius-top-left: 0;
+    --mod-btn-border-radius-top-right: 0;
+    --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+    --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
   }
 
   :host([gap="none"][direction="column"]) ::slotted(kds-button:not(:first-of-type):not(:last-of-type)) {
-    --mod-btn-border-radius-top-left: 0 !important;
-    --mod-btn-border-radius-top-right: 0 !important;
-    --mod-btn-border-radius-bottom-right: 0 !important;
-    --mod-btn-border-radius-bottom-left: 0 !important;
+    --mod-btn-border-radius-top-left: 0;
+    --mod-btn-border-radius-top-right: 0;
+    --mod-btn-border-radius-bottom-right: 0;
+    --mod-btn-border-radius-bottom-left: 0;
   }
 
   /* Stretch mode: equal-width buttons with container queries */
