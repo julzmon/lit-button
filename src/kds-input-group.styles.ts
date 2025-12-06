@@ -46,15 +46,15 @@ export const inputGroupStyles = css`
 
     /* Screen reader only utility - visually hides legend while keeping it accessible */
     &.sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border-width: 0 !important;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
     }
   }
 
@@ -107,16 +107,28 @@ export const inputGroupStyles = css`
 
     /* Button corner shaping mirrors text inputs */
     & ::slotted(kds-button:first-child:last-child) {
-      --mod-btn-border-radius: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
     }
     & ::slotted(kds-button:first-child:not(:last-child)) {
-      --mod-btn-border-radius: var(--kds-border-radius-sm) 0 0 var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: 0;
+      --mod-btn-border-radius-bottom-right: 0;
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
     }
     & ::slotted(kds-button:last-child:not(:first-child)) {
-      --mod-btn-border-radius: 0 var(--kds-border-radius-sm) var(--kds-border-radius-sm) 0;
+      --mod-btn-border-radius-top-left: 0;
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: 0;
     }
     & ::slotted(kds-button:not(:first-child):not(:last-child)) {
-      --mod-btn-border-radius: 0;
+      --mod-btn-border-radius-top-left: 0;
+      --mod-btn-border-radius-top-right: 0;
+      --mod-btn-border-radius-bottom-right: 0;
+      --mod-btn-border-radius-bottom-left: 0;
     }
 
     /* Interior elements (any except first/last) no corner rounding for other custom controls */
@@ -163,6 +175,6 @@ export const inputGroupStyles = css`
 
   /* Accessibility preferences */
   @media (prefers-reduced-motion: reduce) {
-    .group ::slotted(*) { transition: none !important; }
+    .group ::slotted(*) { transition: none; }
   }
 `;
