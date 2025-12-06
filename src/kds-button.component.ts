@@ -185,7 +185,7 @@ export class KDSButton extends LitElement {
   @property() target?: '_blank' | '_parent' | '_self' | '_top';
 
   /** When using `href`, this attribute will map to the underlying link's `rel` attribute. */
-  @property({ type: String }) rel?: string
+  @property({ type: String }) rel?: string;
 
   // ---------- ARIA API ----------
   @property({ attribute: 'aria-label' }) override ariaLabel: string | null = null;
