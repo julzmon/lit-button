@@ -210,7 +210,7 @@ export class KDSButton extends LitElement {
    * Useful for programmatically triggering focus-related behavior.
    */
   override focus(options: FocusOptions) {
-    this.element?.focus(options)
+    this.element?.focus(options);
   }
 
   /**
@@ -218,7 +218,7 @@ export class KDSButton extends LitElement {
    * Useful for programmatically triggering blur-related behavior.
    */
   override blur() {
-    this.element?.blur()
+    this.element?.blur();
   }
 
 
@@ -253,6 +253,7 @@ export class KDSButton extends LitElement {
           tabindex=${ifDefined(this.disabled ? -1 : this.tabindex)}
           target=${ifDefined(this.target)}
           rel=${ifDefined(this._computedRel)}
+          aria-disabled=${ifDefined(this.disabled ? 'true' : undefined)}
         >
           <slot name="start"></slot>
           <slot></slot>
