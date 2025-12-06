@@ -1,5 +1,5 @@
 /* kds-button.styles.ts */
-import { css } from 'lit';
+import { css } from "lit";
 
 export const buttonStyles = css`
   /* Layers: base < variant < priority */
