@@ -175,6 +175,6 @@ export const inputGroupStyles = css`
 
   /* Accessibility preferences */
   @media (prefers-reduced-motion: reduce) {
-    .group ::slotted(*) { transition: none; }
+    .group ::slotted(*) { transition: none !important; }
   }
 `;
