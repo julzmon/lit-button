@@ -243,7 +243,7 @@ export class KDSButton extends LitElement {
   }
 
   override render() {
-    const baseClass = 'button'
+    const baseClass = 'button';
     // Render anchor tag if href is provided
     if (this.href) {
       return html`
