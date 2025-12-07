@@ -15,22 +15,6 @@ export const buttonGroupStyles = css`
     --separator-hover: rgba(255, 255, 255, 0.3);
   }
 
-  /* Direction variants */
-  :host([direction="column"]) {
-    flex-direction: column;
-    /* No inline-start borders in column mode */
-    --separator: transparent;
-  }
-
-  /* Justify variants */
-  :host([justify="center"]) {
-    justify-content: center;
-  }
-
-  :host([justify="end"]) {
-    justify-content: flex-end;
-  }
-
   :host([gap="sm"]) {
     gap: var(--mod-button-group-gap, var(--kds-space-sm));
   }
@@ -198,6 +182,23 @@ export const buttonGroupStyles = css`
     flex-direction: row;
   }
 
+    /* Direction variants */
+  :host([direction="column"]) {
+    flex-direction: column;
+    /* No inline-start borders in column mode */
+    --separator: transparent;
+  }
+
+  /* Justify variants */
+  :host([justify="center"]) {
+    justify-content: center;
+  }
+
+  :host([justify="end"]) {
+    /* justify-content: flex-end; */
+    flex-direction: row-reverse;
+  }
+
   /* Responsive breakpoint: switch to column when container is narrow */
   /* Applies to both stretch (equal-width) and auto-stack (natural width) modes */
   @container (inline-size < 30rem) {
@@ -211,6 +212,7 @@ export const buttonGroupStyles = css`
 
     :host([auto-stack]) {
       flex-direction: column;
+      justify-content: flex-start;
       & ::slotted(*) {
         inline-size: 100%;
       }
