@@ -266,7 +266,14 @@ export class KDSButton extends LitElement {
   protected override updated(changed: PropertyValues<this>) {
     super.updated(changed);
 
-    if (this.element) this._applyAriaAttributes(this.element, this._computedAriaLabel);
+    if (
+      changed.has('pending') ||
+      changed.has('ariaLabel') ||
+      changed.has('pendingLabel') ||
+      changed.has('disabled')
+    ) {
+      if (this.element) this._applyAriaAttributes(this.element, this._computedAriaLabel);
+    }
 
     if (changed.has('pending')) {
       this.dispatchEvent(new CustomEvent('kds-pending-change', {
