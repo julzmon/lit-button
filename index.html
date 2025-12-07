@@ -139,6 +139,19 @@
     </div>
 
     <div class="demo-section">
+      <h2>Pending</h2>
+      <div class="button-grid">
+        <kds-button pending>Loading Button</kds-button>
+        <kds-button pending pending-label="Saving" priority="primary">Save changes</kds-button>
+        <kds-button pending pending-label="Uploading" priority="secondary">
+          <span slot="start">⬆️</span>
+          Upload file
+        </kds-button>
+        <kds-button pending href="#" pending-label="Loading link">Pending anchor</kds-button>
+      </div>
+    </div>
+
+    <div class="demo-section">
       <h2>Anchor</h2>
       <div class="button-grid">
         <kds-button href="#">Anchor Button</kds-button>
