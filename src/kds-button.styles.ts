@@ -184,6 +184,10 @@ export const buttonStyles = css`
       );
     }
 
+    :host([pending]) {
+      cursor: not-allowed;
+    }
+
     :host([pending]) .button {
       cursor: not-allowed;
       --kds-btn-opacity: 1;
