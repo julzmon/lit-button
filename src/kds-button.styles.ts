@@ -133,6 +133,12 @@ export const buttonStyles = css`
       }
     }
 
+    /* Pending state overrides disabled opacity to keep button visible during loading */
+    :host([pending]) .button {
+      cursor: not-allowed;
+      --kds-btn-opacity: 1;
+    }
+
     .button__spinner {
       display: inline-flex;
       align-items: center;
