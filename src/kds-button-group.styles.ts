@@ -15,22 +15,6 @@ export const buttonGroupStyles = css`
     --separator-hover: rgba(255, 255, 255, 0.3);
   }
 
-  /* Direction variants */
-  :host([direction="column"]) {
-    flex-direction: column;
-    /* No inline-start borders in column mode */
-    --separator: transparent;
-  }
-
-  /* Justify variants */
-  :host([justify="center"]) {
-    justify-content: center;
-  }
-
-  :host([justify="end"]) {
-    justify-content: flex-end;
-  }
-
   :host([gap="sm"]) {
     gap: var(--mod-button-group-gap, var(--kds-space-sm));
   }
@@ -196,6 +180,23 @@ export const buttonGroupStyles = css`
     inline-size: 100%;
     display: flex;
     flex-direction: row;
+  }
+
+    /* Direction variants */
+  :host([direction="column"]) {
+    flex-direction: column;
+    /* No inline-start borders in column mode */
+    --separator: transparent;
+  }
+
+  /* Justify variants */
+  :host([justify="center"]) {
+    justify-content: center;
+  }
+
+  :host([justify="end"]) {
+    /* justify-content: flex-end; */
+    flex-direction: row-reverse;
   }
 
   /* Responsive breakpoint: switch to column when container is narrow */
