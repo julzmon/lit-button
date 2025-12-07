@@ -152,6 +152,23 @@
     </div>
 
     <div class="demo-section">
+      <h2>Dynamic Label Changes (Testing Slot Change Tracking)</h2>
+      <p style="font-size: 0.9em; color: var(--kds-fg-muted, #666);">
+        This section demonstrates that the button's aria-label updates when the label text changes dynamically.
+        Open the browser console to see the aria-label values logged after each change.
+      </p>
+      <div class="button-grid">
+        <kds-button id="dynamic-test-1" pending pending-label="Saving">Save Changes</kds-button>
+        <button type="button" onclick="changeLabel1()">Change to "Submit Form"</button>
+        <button type="button" onclick="resetLabel1()">Reset to "Save Changes"</button>
+      </div>
+      <div class="button-grid" style="margin-top: 1rem;">
+        <kds-button id="dynamic-test-2" pending-label="Loading">Click Me</kds-button>
+        <button type="button" onclick="togglePending2()">Toggle Pending State</button>
+      </div>
+    </div>
+
+    <div class="demo-section">
       <h2>Anchor</h2>
       <div class="button-grid">
         <kds-button href="#">Anchor Button</kds-button>
@@ -783,6 +800,34 @@
       </div>
     </div>
     <script>
+      // Test functions for dynamic label changes
+      window.changeLabel1 = () => {
+        const btn = document.getElementById('dynamic-test-1');
+        btn.textContent = 'Submit Form';
+        setTimeout(() => {
+          const ariaLabel = btn.shadowRoot?.querySelector('button')?.getAttribute('aria-label');
+          console.log('Changed label to "Submit Form" - aria-label:', ariaLabel);
+        }, 100);
+      };
+
+      window.resetLabel1 = () => {
+        const btn = document.getElementById('dynamic-test-1');
+        btn.textContent = 'Save Changes';
+        setTimeout(() => {
+          const ariaLabel = btn.shadowRoot?.querySelector('button')?.getAttribute('aria-label');
+          console.log('Reset label to "Save Changes" - aria-label:', ariaLabel);
+        }, 100);
+      };
+
+      window.togglePending2 = () => {
+        const btn = document.getElementById('dynamic-test-2');
+        btn.pending = !btn.pending;
+        setTimeout(() => {
+          const ariaLabel = btn.shadowRoot?.querySelector('button')?.getAttribute('aria-label');
+          console.log('Toggled pending to:', btn.pending, '- aria-label:', ariaLabel);
+        }, 100);
+      };
+
       window.addEventListener('load', () => {
         const button = document.getElementById('focus-button');
         button?.focus();

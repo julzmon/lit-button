@@ -216,7 +216,6 @@ export class KDSButton extends LitElement {
   @query('button, a') private element?: HTMLButtonElement | HTMLAnchorElement;
   @query('slot:not([name])') private _labelSlot?: HTMLSlotElement;
 
-
   // Internal: ensure rel security if opening a new tab
   private get _computedRel(): string | undefined {
     if (this.target === '_blank') {
@@ -242,6 +241,22 @@ export class KDSButton extends LitElement {
     this.element?.blur();
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    this.updateComplete.then(() => {
+      this._labelSlot?.addEventListener('slotchange', this.handleLabelSlotChange);
+    });
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this._labelSlot?.removeEventListener('slotchange', this.handleLabelSlotChange);
+  }
+
+  private handleLabelSlotChange = () => {
+    // Trigger a re-render to update the computed aria-label
+    this.requestUpdate();
+  };
 
   private _applyAriaAttributes(el: HTMLElement, computedAriaLabel?: string) {
     // Set computed or explicit aria-label, then merge any other aria-* host attrs.
