@@ -319,6 +319,10 @@ export class KDSButton extends LitElement {
   private _handleClick = (event: MouseEvent) => {
     if (this.pending) {
       event.preventDefault();
+      // Note: stopImmediatePropagation() prevents further listeners on this element,
+      // but does NOT prevent event listeners on ancestor elements (e.g., a parent form's submit handler)
+      // that were registered before this handler. If you need to block all ancestor listeners,
+      // consider using event.stopPropagation() as well.
       event.stopImmediatePropagation();
     }
   };
