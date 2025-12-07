@@ -189,6 +189,15 @@ export const buttonStyles = css`
         calc(var(--kds-btn-height) * 0.55)
       );
     }
+
+    :host([pending]) {
+      cursor: not-allowed;
+    }
+
+    :host([pending]) .button {
+      cursor: not-allowed;
+      --kds-btn-opacity: 1;
+    }
   } /* end @layer base */
 
   /* ============================
