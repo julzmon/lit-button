@@ -211,6 +211,7 @@ export const buttonGroupStyles = css`
 
     :host([auto-stack]) {
       flex-direction: column;
+      justify-content: flex-start;
       & ::slotted(*) {
         inline-size: 100%;
       }
