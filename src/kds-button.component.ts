@@ -311,7 +311,6 @@ export class KDSButton extends LitElement {
       <span class="button__spinner" aria-hidden="true">
         <kds-progress-circle
           size=${this._spinnerSize}
-          aria-hidden="true"
         ></kds-progress-circle>
       </span>
     `;
