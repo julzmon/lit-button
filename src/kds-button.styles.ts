@@ -41,6 +41,12 @@ export const buttonStyles = css`
 
       /* Default opacity (enabled) */
       --kds-btn-opacity: 1;
+
+      /* Spinner sizing derives from the control height; overridden per size below. */
+      --kds-btn-spinner-size: var(
+        --mod-btn-spinner-size,
+        calc(var(--kds-btn-height) * 0.5)
+      );
     }
 
     .button {
@@ -127,6 +133,20 @@ export const buttonStyles = css`
       }
     }
 
+    .button__spinner {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: var(--kds-btn-spinner-size);
+      block-size: var(--kds-btn-spinner-size);
+      pointer-events: none;
+    }
+
+    .button__label {
+      display: inline-flex;
+      align-items: center;
+    }
+
     ::slotted([slot='start']),
     ::slotted([slot='end']) {
       display: flex;
@@ -140,16 +160,33 @@ export const buttonStyles = css`
       --kds-btn-height: var(--kds-button-input-height-xs);
       --kds-btn-font-size: var(--kds-font-size-xs);
       --kds-btn-padding-inline: var(--kds-space-md);
+      --kds-btn-spinner-size: var(
+        --mod-btn-spinner-size,
+        calc(var(--kds-btn-height) * 0.65)
+      );
     }
     :host([size="sm"]) {
       --kds-btn-height: var(--kds-button-input-height-sm);
       --kds-btn-font-size: var(--kds-font-size-sm);
       --kds-btn-padding-inline: var(--kds-space-lg);
+      --kds-btn-spinner-size: var(
+        --mod-btn-spinner-size,
+        calc(var(--kds-btn-height) * 0.6)
+      );
     }
     :host([size="lg"]) {
       --kds-btn-height: var(--kds-button-input-height-lg);
       --kds-btn-font-size: var(--kds-font-size-lg);
       --kds-btn-padding-inline: var(--kds-space-2xl);
+      --kds-btn-spinner-size: var(
+        --mod-btn-spinner-size,
+        calc(var(--kds-btn-height) * 0.55)
+      );
+    }
+
+    :host([pending]) .button {
+      cursor: not-allowed;
+      --kds-btn-opacity: 1;
     }
   } /* end @layer base */
 
@@ -158,7 +195,6 @@ export const buttonStyles = css`
    * ============================ */
   @layer variant {
     /* Solid color families */
-    :host([color="neutral"]) { }
 
     :host([color="positive"]) {
       --kds-btn-bg-color: var(--kds-bg-positive-emphasis-base);

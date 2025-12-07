@@ -1,6 +1,7 @@
-import { html, LitElement, PropertyDeclaration } from "lit";
+import { html, LitElement, PropertyDeclaration, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
+import "./kds-progress-circle.component.js";
 import { buttonStyles } from "./kds-button.styles.js";
 /**
  * @summary A clickable element for triggering actions.
@@ -12,6 +13,9 @@ import { buttonStyles } from "./kds-button.styles.js";
  * Styling is driven by **host attributes** and CSS **layers**: `base < variant < priority`.
  * The shadow DOM **reads `--mod-btn-*` first** and falls back to internal `--kds-*` tokens.
  * This means inline or page-level `--mod-btn-*` overrides always beat color/variant/priority.
+ *
+ * The button supports a **pending** state that replaces the start slot with a spinner, blocks
+ * interaction, and updates the accessible name via `pending-label`.
  *
  * **Precedence (highest → lowest):**
  * 1) Inline/page `--mod-btn-*`
@@ -60,9 +64,11 @@ import { buttonStyles } from "./kds-button.styles.js";
  * @cssprop --mod-btn-background-color - Background color (wins over attributes/layers).
  * @cssprop --mod-btn-background-color-hover - Background color on hover.
  * @cssprop --mod-btn-text-decoration-hover - Text decoration on hover.
+ * @cssprop --mod-btn-spinner-size - Size of the pending spinner.
  *
  * @event blur - Emitted when the button loses focus.
  * @event focus - Emitted when the button gains focus.
+ * @event kds-pending-change - Emitted when `pending` changes. Detail: `{ pending: boolean }`.
  */
 
 @customElement('kds-button')
@@ -121,6 +127,20 @@ export class KDSButton extends LitElement {
    */
   @property({ reflect: true, useDefault: true } as PropertyDeclaration)
   size: 'xs' | 'sm' | 'md' | 'lg' = 'md';
+
+  /**
+   * Shows a pending state and suppresses interaction while true.
+   * When pending, the button blocks clicks/submits and displays a spinner.
+   */
+  @property({ type: Boolean, reflect: true })
+  pending = false;
+
+  /**
+   * Accessible label prefix used while pending (combined with the base label).
+   * Example: `pending-label="Saving"` → "Saving Save changes".
+   */
+  @property({ type: String, attribute: 'pending-label' })
+  pendingLabel?: string;
 
   /**
    * Sets the tab order of the button element.
@@ -194,6 +214,7 @@ export class KDSButton extends LitElement {
 
   // Reference to the inner button or anchor
   @query('button, a') private element?: HTMLButtonElement | HTMLAnchorElement;
+  @query('slot:not([name])') private _labelSlot?: HTMLSlotElement;
 
 
   // Internal: ensure rel security if opening a new tab
@@ -222,42 +243,112 @@ export class KDSButton extends LitElement {
   }
 
 
-  private _applyAriaAttributes(el: HTMLElement) {
-    // Pass-through a few common ARIA attrs and any host aria-* attributes
-    if (this.ariaLabel) el.setAttribute('aria-label', this.ariaLabel);
+  private _applyAriaAttributes(el: HTMLElement, computedAriaLabel?: string) {
+    // Set computed or explicit aria-label, then merge any other aria-* host attrs.
+    if (computedAriaLabel !== undefined) {
+      el.setAttribute('aria-label', computedAriaLabel);
+    } else if (this.ariaLabel) {
+      el.setAttribute('aria-label', this.ariaLabel);
+    }
+
     if (this.ariaLabelledby) el.setAttribute('aria-labelledby', this.ariaLabelledby);
     if (this.ariaDescribedby) el.setAttribute('aria-describedby', this.ariaDescribedby);
 
     for (const name of this.getAttributeNames()) {
-      if (name.startsWith('aria-')) {
-        const val = this.getAttribute(name);
-        if (val) el.setAttribute(name, val);
-      }
+      if (!name.startsWith('aria-')) continue;
+      if (name === 'aria-label') continue; // avoid overriding computed label during pending
+      const val = this.getAttribute(name);
+      if (val) el.setAttribute(name, val);
     }
   }
 
 
-  protected override updated() {
-    // After render, make sure ARIA is applied to the inner control
-    if (this.element) this._applyAriaAttributes(this.element);
+  protected override updated(changed: PropertyValues<this>) {
+    super.updated(changed);
+
+    if (this.element) this._applyAriaAttributes(this.element, this._computedAriaLabel);
+
+    if (changed.has('pending')) {
+      this.dispatchEvent(new CustomEvent('kds-pending-change', {
+        detail: { pending: this.pending },
+        bubbles: true,
+        composed: true,
+      }));
+    }
   }
+
+  private _getTextLabel(): string {
+    const slot = this._labelSlot;
+    if (!slot) return '';
+
+    return slot
+      .assignedNodes({ flatten: true })
+      .map((node) => node.textContent?.trim() ?? '')
+      .join(' ')
+      .trim();
+  }
+
+  private get _computedAriaLabel(): string | undefined {
+    const base = this.ariaLabel ?? this._getTextLabel();
+
+    if (!this.pending) {
+      return base || undefined;
+    }
+
+    const pendingLabel = this.pendingLabel ?? 'Loading';
+    if (!base) return pendingLabel;
+    return `${pendingLabel} ${base}`;
+  }
+
+  private get _spinnerSize(): 'xs' | 'sm' | 'md' {
+    if (this.size === 'lg') return 'md';
+    if (this.size === 'md') return 'sm';
+    return this.size;
+  }
+
+  private _renderSpinner() {
+    return html`
+      <span class="button__spinner" aria-hidden="true">
+        <kds-progress-circle
+          size=${this._spinnerSize}
+          aria-hidden="true"
+        ></kds-progress-circle>
+      </span>
+    `;
+  }
+
+  private _handleClick = (event: MouseEvent) => {
+    if (this.pending) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  };
 
   override render() {
     const baseClass = 'button';
+    const isDisabled = this.disabled || this.pending;
+    const ariaLabel = this._computedAriaLabel;
+    const startNode = this.pending ? this._renderSpinner() : html`<slot name="start"></slot>`;
+    const content = html`
+      ${startNode}
+      <span class="button__label"><slot></slot></span>
+      <slot name="end"></slot>
+    `;
+
     // Render anchor tag if href is provided
     if (this.href) {
       return html`
         <a
           class=${baseClass}
-          href=${ifDefined(this.disabled ? undefined : this.href)}
-          tabindex=${ifDefined(this.disabled ? -1 : this.tabindex)}
+          href=${ifDefined(isDisabled ? undefined : this.href)}
+          tabindex=${ifDefined(isDisabled ? -1 : this.tabindex)}
           target=${ifDefined(this.target)}
           rel=${ifDefined(this._computedRel)}
-          aria-disabled=${ifDefined(this.disabled ? 'true' : undefined)}
+          aria-disabled=${ifDefined(isDisabled ? 'true' : undefined)}
+          aria-label=${ifDefined(ariaLabel)}
+          @click=${this._handleClick}
         >
-          <slot name="start"></slot>
-          <slot></slot>
-          <slot name="end"></slot>
+          ${content}
         </a>
       `;
     }
@@ -266,16 +357,16 @@ export class KDSButton extends LitElement {
     return html`
       <button
         class=${baseClass}
-        ?disabled=${this.disabled}
+        ?disabled=${isDisabled}
         type=${this.type}
         name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}
         form=${ifDefined(this.form)}
         tabindex=${ifDefined(this.tabindex)}
+        aria-label=${ifDefined(ariaLabel)}
+        @click=${this._handleClick}
       >
-        <slot name="start"></slot>
-        <slot></slot>
-        <slot name="end"></slot>
+        ${content}
       </button>
     `;
   }
