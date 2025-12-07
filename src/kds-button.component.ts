@@ -61,8 +61,10 @@ import { buttonStyles } from "./kds-button.styles.js";
  * @cssprop --mod-btn-background-color-hover - Background color on hover.
  * @cssprop --mod-btn-text-decoration-hover - Text decoration on hover.
  *
- * @event blur - Emitted when the button loses focus.
- * @event focus - Emitted when the button gains focus.
+ * @event blur - Native blur event. Emitted when the button loses focus.
+ * @event focus - Native focus event. Emitted when the button gains focus.
+ * @event kds-blur - Emitted when the button loses focus.
+ * @event kds-focus - Emitted when the button gains focus.
  */
 
 @customElement('kds-button')
@@ -221,6 +223,21 @@ export class KDSButton extends LitElement {
     this.element?.blur();
   }
 
+  private handleFocus = (event: FocusEvent) => {
+    this.dispatchEvent(new CustomEvent("kds-focus", {
+      detail: { originalEvent: event },
+      bubbles: true,
+      composed: true
+    }));
+  };
+
+  private handleBlur = (event: FocusEvent) => {
+    this.dispatchEvent(new CustomEvent("kds-blur", {
+      detail: { originalEvent: event },
+      bubbles: true,
+      composed: true
+    }));
+  };
 
   private _applyAriaAttributes(el: HTMLElement) {
     // Pass-through a few common ARIA attrs and any host aria-* attributes
@@ -272,6 +289,8 @@ export class KDSButton extends LitElement {
         value=${ifDefined(this.value)}
         form=${ifDefined(this.form)}
         tabindex=${ifDefined(this.tabindex)}
+        @focus=${this.handleFocus}
+        @blur=${this.handleBlur}
       >
         <slot name="start"></slot>
         <slot></slot>
