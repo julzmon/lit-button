@@ -141,6 +141,25 @@ export class KdsInputGroup extends LitElement {
   @property({ type: Boolean, reflect: true })
   disabled = false;
 
+  /**
+   * Layout direction for the group. Use 'column' for radio/checkbox groups.
+   */
+  @property({ reflect: true })
+  direction: "row" | "column" = "row";
+
+  /**
+   * Gap size between grouped elements.
+   */
+  @property({ reflect: true })
+  gap: "none" | "sm" | "md" | "lg" = "md";
+
+  /**
+   * The value of the selected radio (for radio groups).
+   * Automatically tracks which radio is checked.
+   */
+  @property({ type: String })
+  value?: string;
+
   // Internal state
 
   /* Removed start/end slot tracking in refactor: single default slot now */
@@ -177,6 +196,22 @@ export class KdsInputGroup extends LitElement {
     if (changedProperties.has('size') || changedProperties.has('invalid') || changedProperties.has('disabled')) {
       this.updateSlottedElements();
     }
+
+    // Update radio tabindex when value changes
+    if (changedProperties.has('value')) {
+      this.updateRadioTabIndexes();
+    }
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    // Listen for radio change events
+    this.addEventListener('kds-change', this.handleRadioChange as EventListener);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('kds-change', this.handleRadioChange as EventListener);
   }
 
   /**
@@ -229,7 +264,74 @@ export class KdsInputGroup extends LitElement {
       if ('disabled' in element && this.disabled) (element as any).disabled = this.disabled;
       if (element.tagName === 'KDS-TEXT-INPUT') (element as any).hideLabel = true;
     });
+
+    // Update radio state when slots change
+    this.updateRadioTabIndexes();
   };
+
+  /**
+   * Handles radio button change events for coordinating radio groups.
+   */
+  private handleRadioChange = (event: CustomEvent) => {
+    const target = event.target as any;
+
+    // Only handle radio events
+    if (target.tagName?.toLowerCase() !== 'kds-radio') {
+      return;
+    }
+
+    // Update value and emit group change event
+    this.value = event.detail.value;
+
+    // Update checked state of all radios in group
+    this.getRadios().forEach(radio => {
+      radio.checked = radio.value === this.value;
+    });
+
+    this.updateRadioTabIndexes();
+
+    // Emit group-level change event
+    this.dispatchEvent(
+      new CustomEvent("kds-change", {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  /**
+   * Gets all radio buttons in the default slot.
+   */
+  private getRadios(): any[] {
+    const slot = this.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
+    if (!slot) return [];
+
+    return slot.assignedElements().filter(el =>
+      el.tagName?.toLowerCase() === 'kds-radio'
+    );
+  }
+
+  /**
+   * Implements roving tabindex for radio button keyboard navigation.
+   * Only one radio should be tabbable at a time.
+   */
+  private updateRadioTabIndexes() {
+    const radios = this.getRadios();
+    if (radios.length === 0) return;
+
+    // Find checked radio or default to first
+    let focusableIndex = 0;
+    if (this.value) {
+      const checkedIndex = radios.findIndex(r => r.value === this.value);
+      if (checkedIndex !== -1) focusableIndex = checkedIndex;
+    }
+
+    // Set tabindex: 0 for focusable radio, -1 for others
+    radios.forEach((radio, index) => {
+      radio.tabIndex = index === focusableIndex ? 0 : -1;
+    });
+  }
 
 
 

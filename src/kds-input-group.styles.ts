@@ -69,9 +69,12 @@ export const inputGroupStyles = css`
   .group {
     position: relative;
     display: flex;
+    flex-direction: var(--group-direction, row);
+    gap: var(--group-gap, 0);
     align-items: stretch;
     inline-size: 100%;
     isolation: isolate;
+
     /* Base slotted element layout */
     & ::slotted(*) {
       block-size: 100%;
@@ -80,7 +83,7 @@ export const inputGroupStyles = css`
       z-index: 0;
     }
 
-    /* Collapse adjoining borders using negative margin (except first) */
+    /* Collapse adjoining borders using negative margin (except first) - only in row direction with no gap */
     & ::slotted(*:not(:first-child)) {
       margin-inline-start: calc(-1 * var(--kds-input-group-border-width));
     }
@@ -134,6 +137,81 @@ export const inputGroupStyles = css`
     /* Interior elements (any except first/last) no corner rounding for other custom controls */
     & ::slotted(*:not(kds-text-input):not(kds-button):not(:first-child):not(:last-child)) {
       border-radius: 0;
+    }
+  }
+
+  /* Direction: column layout for radio/checkbox groups */
+  :host([direction="column"]) .group {
+    --group-direction: column;
+    align-items: flex-start;
+
+    /* Remove negative margin for column layout */
+    & ::slotted(*:not(:first-child)) {
+      margin-inline-start: 0;
+    }
+
+    /* No border radius shaping in column mode */
+    & ::slotted(*) {
+      --mod-input-border-radius: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
+    }
+  }
+
+  /* Gap variants */
+  :host([gap="none"]) .group {
+    --group-gap: 0;
+  }
+
+  :host([gap="sm"]) .group {
+    --group-gap: var(--kds-space-sm);
+
+    /* Remove negative margin when gap is applied */
+    & ::slotted(*:not(:first-child)) {
+      margin-inline-start: 0;
+    }
+
+    /* Restore full border radius for all elements */
+    & ::slotted(*) {
+      --mod-input-border-radius: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
+    }
+  }
+
+  :host([gap="md"]) .group {
+    --group-gap: var(--kds-space-md);
+
+    & ::slotted(*:not(:first-child)) {
+      margin-inline-start: 0;
+    }
+
+    & ::slotted(*) {
+      --mod-input-border-radius: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
+    }
+  }
+
+  :host([gap="lg"]) .group {
+    --group-gap: var(--kds-space-lg);
+
+    & ::slotted(*:not(:first-child)) {
+      margin-inline-start: 0;
+    }
+
+    & ::slotted(*) {
+      --mod-input-border-radius: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-left: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-top-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-right: var(--kds-border-radius-sm);
+      --mod-btn-border-radius-bottom-left: var(--kds-border-radius-sm);
     }
   }
 

@@ -1,0 +1,312 @@
+import { LitElement, html } from "lit";
+import { customElement, property, query, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { live } from "lit/directives/live.js";
+import { radioStyles } from "./kds-radio.styles.js";
+
+/** @internal Global counter for generating unique IDs */
+let uid = 0;
+
+/**
+ * @summary A radio button input designed for use in radio groups
+ * @documentation https://example.com/docs/radio
+ * @status beta
+ * @since 1.0
+ *
+ * @description
+ * A fully accessible radio button component with form association support. Radio buttons are
+ * designed to be used in groups where only one option can be selected at a time. Use with
+ * `kds-input-group` to create properly associated radio groups with legend, error messages,
+ * and help text.
+ *
+ * @slot - Default slot for radio label text
+ * @slot help-text - Optional help text shown below the radio
+ *
+ * @event change - Fired when the radio is selected (native event)
+ * @event input - Fired when the radio is toggled (native event)
+ * @event kds-change - Fired when radio is selected. Detail: { value: string }
+ * @event kds-focus - Fired when radio receives focus
+ * @event kds-blur - Fired when radio loses focus
+ *
+ * @cssprop --mod-radio-size - Size of the radio indicator
+ * @cssprop --mod-radio-color - Color of the checked indicator
+ * @cssprop --mod-radio-border-color - Border color of the radio
+ * @cssprop --mod-radio-background - Background color when checked
+ *
+ * @csspart base - The root container element
+ * @csspart control - The radio control wrapper
+ * @csspart input - The native input element
+ * @csspart indicator - The custom radio indicator
+ * @csspart label - The label text container
+ * @csspart help-text - The help text container
+ *
+ * @example
+ * ```html
+ * <kds-input-group legend="Size" value="md">
+ *   <kds-radio name="size" value="sm">Small</kds-radio>
+ *   <kds-radio name="size" value="md">Medium</kds-radio>
+ *   <kds-radio name="size" value="lg">Large</kds-radio>
+ * </kds-input-group>
+ * ```
+ */
+@customElement("kds-radio")
+export class KdsRadio extends LitElement {
+  static styles = radioStyles;
+  static formAssociated = true;
+
+  static shadowRootOptions: ShadowRootInit = {
+    mode: "open" as ShadowRootMode,
+    delegatesFocus: true,
+  };
+
+  private internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.internals = this.attachInternals();
+  }
+
+  @query(".native-input") private _native!: HTMLInputElement;
+
+  @state() private _helpTextId = `kds-radio-help-${++uid}`;
+  @state() private _inputId = `kds-radio-${++uid}`;
+
+  /**
+   * The name of the radio button, submitted as a name/value pair with form data.
+   * All radios in a group must share the same name.
+   */
+  @property({ type: String })
+  name?: string;
+
+  /**
+   * The value of the radio button, submitted with the name when selected.
+   */
+  @property({ type: String })
+  value = "";
+
+  /**
+   * Whether the radio is checked.
+   */
+  @property({ type: Boolean, reflect: true })
+  checked = false;
+
+  /**
+   * The radio's size.
+   */
+  @property({ reflect: true })
+  size: "sm" | "md" | "lg" = "md";
+
+  /**
+   * Disables the radio.
+   */
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
+
+  /**
+   * Makes the radio a required field (when in a group, at least one must be selected).
+   */
+  @property({ type: Boolean, reflect: true })
+  required = false;
+
+  /**
+   * Indicates the radio is in an invalid state.
+   */
+  @property({ type: Boolean, reflect: true })
+  invalid = false;
+
+  /**
+   * The radio's help text. Alternatively, use the help-text slot.
+   */
+  @property({ type: String, attribute: "help-text" })
+  helpText?: string;
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.updateComplete.then(() => {
+      this.updateValidity();
+    });
+  }
+
+  protected override updated(changed: Map<PropertyKey, unknown>) {
+    if (changed.has("checked")) {
+      this.internals.setFormValue(this.checked ? this.value : null);
+      this.updateValidity();
+    }
+
+    const validityAffecting = ["required", "checked"] as const;
+    if (validityAffecting.some((prop) => changed.has(prop))) {
+      this.updateValidity();
+    }
+  }
+
+  private handleChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    this.checked = target.checked;
+
+    // Re-dispatch native event for framework compatibility
+    this.dispatchEvent(
+      new Event("change", {
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    // Emit custom prefixed event with detail
+    this.dispatchEvent(
+      new CustomEvent("kds-change", {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    this.checked = target.checked;
+
+    // Re-dispatch native event
+    this.dispatchEvent(
+      new Event("input", {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleFocus = () => {
+    this.dispatchEvent(
+      new CustomEvent("kds-focus", {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private handleBlur = () => {
+    this.dispatchEvent(
+      new CustomEvent("kds-blur", {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  private updateValidity() {
+    if (this.disabled) {
+      this.internals.setValidity({}, "");
+      return;
+    }
+
+    const validity = this._native?.validity;
+    if (!validity) return;
+
+    if (validity.valid) {
+      this.internals.setValidity({}, "");
+    } else {
+      const flags: Record<string, boolean> = {};
+      if (validity.valueMissing) flags.valueMissing = true;
+
+      this.internals.setValidity(
+        flags,
+        this._native.validationMessage,
+        this._native
+      );
+    }
+  }
+
+  /**
+   * Checks for validity and shows the browser's validation message if invalid.
+   */
+  reportValidity() {
+    this.updateValidity();
+    return this.internals.reportValidity();
+  }
+
+  /**
+   * Checks for validity but doesn't show a validation message.
+   */
+  checkValidity() {
+    this.updateValidity();
+    return this.internals.checkValidity();
+  }
+
+  /**
+   * Called when a containing fieldset is disabled.
+   * @internal
+   */
+  formDisabledCallback(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * Called when the form is reset.
+   * @internal
+   */
+  formResetCallback() {
+    this.checked = this.hasAttribute("checked");
+    this.updateValidity();
+  }
+
+  render() {
+    const hasHelpText = this.helpText || this.querySelector('[slot="help-text"]');
+
+    const ariaDescribedBy = hasHelpText ? this._helpTextId : undefined;
+
+    const classes = {
+      radio: true,
+      [this.size]: true,
+      checked: this.checked,
+      invalid: this.invalid,
+      disabled: this.disabled,
+    };
+
+    return html`
+      <div part="base" class=${classMap(classes)}>
+        <div part="control" class="control">
+          <input
+            part="input"
+            class="native-input"
+            id=${this._inputId}
+            type="radio"
+            name=${ifDefined(this.name)}
+            value=${this.value}
+            .checked=${live(this.checked)}
+            ?disabled=${this.disabled}
+            ?required=${this.required}
+            aria-describedby=${ifDefined(ariaDescribedBy)}
+            aria-invalid=${this.invalid ? "true" : "false"}
+            @change=${this.handleChange}
+            @input=${this.handleInput}
+            @focus=${this.handleFocus}
+            @blur=${this.handleBlur}
+          />
+          <span part="indicator" class="indicator">
+            <span class="dot"></span>
+          </span>
+        </div>
+
+        <div class="content">
+          <label part="label" class="label" for=${this._inputId}>
+            <slot></slot>
+          </label>
+
+          ${hasHelpText
+            ? html`
+                <div part="help-text" class="help-text" id=${this._helpTextId}>
+                  <slot name="help-text">${this.helpText}</slot>
+                </div>
+              `
+            : null}
+        </div>
+      </div>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "kds-radio": KdsRadio;
+  }
+}
