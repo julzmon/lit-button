@@ -3,52 +3,28 @@ import { css } from "lit";
 export const checkboxStyles = css`
   :host {
     display: inline-block;
-    --checkbox-size: 24px;
-    --checkbox-color: var(
-      --mod-checkbox-color,
-      var(--kds-fg-on-emphasis)
-    );
-    --checkbox-border-color: var(
-      --mod-checkbox-border-color,
-      #717778
-    );
-    --checkbox-background: var(
-      --mod-checkbox-background,
-      #0080a7
-    );
-    --checkbox-background-hover: var(
-      --mod-checkbox-background-hover,
-      var(--kds-bg-brand-emphasis-hover)
-    );
-    --checkbox-background-invalid: var(
-      --mod-checkbox-background-invalid,
-      #cc0000
-    );
-    --checkbox-border-invalid: var(
-      --mod-checkbox-border-invalid,
-      #e52626
-    );
-    --checkbox-border-radius: var(
-      --mod-checkbox-border-radius,
-      var(--kds-border-radius-sm)
-    );
-    --checkbox-border-width: var(
-      --mod-checkbox-border-width,
-      1px
-    );
+    --checkbox-size: var(--kds-icon-size-md);
+    --gap: var(--kds-space-md);
+    --font-size: var(--kds-font-size-md);
+    --checkbox-color: var(--mod-checkbox-color, var(--kds-fg-on-emphasis));
+    --checkbox-border-color: var(--mod-checkbox-border-color, var(--kds-border-neutral-emphasis-base));
+    --checkbox-background: var(--mod-checkbox-background, var(--kds-bg-info-emphasis-base));
+    --checkbox-background-hover: var(--mod-checkbox-background-hover, var(--kds-bg-info-emphasis-hover));
+    --checkbox-background-invalid: var(--mod-checkbox-background-invalid, var(--kds-bg-error-emphasis-base));
+    --checkbox-border-invalid: var(--mod-checkbox-border-invalid, var(--kds-border-error-emphasis-base));
+    --checkbox-border-radius: var(--mod-checkbox-border-radius, var(--kds-border-radius-sm));
+    --checkbox-border-width: var(--mod-checkbox-border-width,1px);
   }
 
-  /* Size variants affect label font size only */
+  /* Size variants */
   :host([size="sm"]) {
-    font-size: var(--kds-font-size-sm);
+    --checkbox-size: var(--kds-icon-size-sm);
+    --gap: var(--kds-space-sm);
+    --font-size: var(--kds-font-size-sm);
   }
 
   :host([size="md"]) {
     font-size: var(--kds-font-size-md);
-  }
-
-  :host([size="lg"]) {
-    font-size: var(--kds-font-size-lg);
   }
 
   /* State styles */
@@ -69,7 +45,7 @@ export const checkboxStyles = css`
 
   .checkbox {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: var(--kds-space-xs);
     cursor: pointer;
   }
@@ -78,21 +54,33 @@ export const checkboxStyles = css`
     cursor: not-allowed;
   }
 
-  .control {
-    position: relative;
+  .label {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    gap: var(--gap);
+    cursor: pointer;
+    font-family: var(--kds-font-family);
+    font-size: var(--font-size);
+    font-weight: 400;
+    color: var(--kds-fg-base);
+    line-height: 1.4;
+    letter-spacing: var(--kds-font-letter-spacing-wide);
+    user-select: none;
+    position: relative;
+  }
+
+  .checkbox.disabled .label {
+    cursor: not-allowed;
   }
 
   .native-input {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
     opacity: 0;
     cursor: pointer;
     margin: 0;
+    z-index: 1;
   }
 
   .native-input:disabled {
@@ -103,6 +91,7 @@ export const checkboxStyles = css`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: var(--checkbox-size);
     height: var(--checkbox-size);
     border: var(--checkbox-border-width) solid var(--checkbox-border-color);
@@ -112,11 +101,6 @@ export const checkboxStyles = css`
       var(--kds-animation-duration-normal) background-color,
       var(--kds-animation-duration-normal) border-color,
       var(--kds-animation-duration-normal) box-shadow;
-  }
-
-  /* Hover state - subtle hover per design */
-  .native-input:hover:not(:disabled) ~ .indicator {
-    /* Hover state matches design - no significant color change */
   }
 
   /* Focus state */
@@ -158,27 +142,11 @@ export const checkboxStyles = css`
   }
 
   /* Content area */
-  .content {
+  .describedby {
     display: flex;
     flex-direction: column;
     gap: var(--kds-space-xs);
-    flex: 1;
-    min-width: 0;
-  }
-
-  .label {
-    display: block;
-    cursor: pointer;
-    font-family: var(--kds-font-family);
-    font-weight: 400;
-    color: var(--kds-fg-base);
-    line-height: 1.4;
-    letter-spacing: var(--kds-font-letter-spacing-wide);
-    user-select: none;
-  }
-
-  .checkbox.disabled .label {
-    cursor: not-allowed;
+    margin-inline-start: calc(var(--checkbox-size) + var(--gap) + 3px);
   }
 
   .help-text {

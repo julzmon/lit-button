@@ -1029,3 +1029,4 @@ When creating a new component:
 - ❌ Missing ARIA attributes for accessibility
 - ❌ Not chaining fallbacks in CSS custom properties
 - ❌ Editing `tokens.css` directly (it's generated)
+- ❌ **Using CSS `part` attributes** - Do not use `part="..."` in templates or `::part(...)` selectors in styles. Instead, rely on element selectors and CSS custom properties for theming

@@ -103,7 +103,7 @@ export class KdsCheckbox extends LitElement {
    * The checkbox's size.
    */
   @property({ reflect: true })
-  size: "sm" | "md" | "lg" = "md";
+  size: "sm" | "md" = "md";
 
   /**
    * Disables the checkbox.
@@ -310,7 +310,7 @@ export class KdsCheckbox extends LitElement {
 
     return html`
       <div part="base" class=${classMap(classes)}>
-        <div part="control" class="control">
+        <label part="label" class="label">
           <input
             part="input"
             class="native-input"
@@ -344,33 +344,38 @@ export class KdsCheckbox extends LitElement {
               />
             </svg>
           </span>
-        </div>
+          <slot></slot>
+        </label>
 
-        <div class="content">
-          <label part="label" class="label" for=${this._inputId}>
-            <slot></slot>
-          </label>
-
-          ${hasHelpText
-            ? html`
-                <div part="help-text" class="help-text" id=${this._helpTextId}>
-                  <slot name="help-text">${this.helpText}</slot>
-                </div>
-              `
-            : null}
-          ${this.invalid && hasErrorMessage
-            ? html`
-                <div
-                  part="error-message"
-                  class="error-message"
-                  id=${this._errorId}
-                  role="alert"
-                >
-                  <slot name="error-message">${this.errorMessage}</slot>
-                </div>
-              `
-            : null}
-        </div>
+        ${hasHelpText || (this.invalid && hasErrorMessage)
+          ? html`
+              <div
+                part="describedby"
+                class="describedby"
+                id=${this._helpTextId}
+              >
+                ${hasHelpText
+                  ? html`
+                      <div part="help-text" class="help-text">
+                        <slot name="help-text">${this.helpText}</slot>
+                      </div>
+                    `
+                  : null}
+                ${this.invalid && hasErrorMessage
+                  ? html`
+                      <div
+                        part="error-message"
+                        class="error-message"
+                        id=${this._errorId}
+                        role="alert"
+                      >
+                        <slot name="error-message">${this.errorMessage}</slot>
+                      </div>
+                    `
+                  : null}
+              </div>
+            `
+          : null}
       </div>
     `;
   }
