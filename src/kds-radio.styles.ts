@@ -3,59 +3,68 @@ import { css } from "lit";
 export const radioStyles = css`
   :host {
     display: inline-block;
-    --radio-size: var(--mod-radio-size, var(--kds-size-md));
+    --radio-size: 24px;
     --radio-color: var(
       --mod-radio-color,
-      var(--kds-fg-on-emphasis)
+      #0080a7
     );
     --radio-border-color: var(
       --mod-radio-border-color,
-      var(--kds-border-neutral-emphasis-base)
+      #717778
     );
     --radio-background: var(
       --mod-radio-background,
-      var(--kds-bg-brand-emphasis-base)
+      transparent
     );
     --radio-background-hover: var(
       --mod-radio-background-hover,
-      var(--kds-bg-brand-emphasis-hover)
+      transparent
+    );
+    --radio-border-invalid: var(
+      --mod-radio-border-invalid,
+      #e52626
+    );
+    --radio-color-invalid: var(
+      --mod-radio-color-invalid,
+      #e52626
     );
     --radio-border-width: var(
       --mod-radio-border-width,
-      var(--kds-border-width-sm)
+      1px
     );
   }
 
-  /* Size variants */
+  /* Size variants affect label font size only */
   :host([size="sm"]) {
-    --radio-size: var(--kds-size-sm);
     font-size: var(--kds-font-size-sm);
   }
 
   :host([size="md"]) {
-    --radio-size: var(--kds-size-md);
     font-size: var(--kds-font-size-md);
   }
 
   :host([size="lg"]) {
-    --radio-size: var(--kds-size-lg);
     font-size: var(--kds-font-size-lg);
   }
 
   /* State styles */
   :host([disabled]) {
     cursor: not-allowed;
-    opacity: var(--kds-base-opacity-disabled, 0.5);
+    opacity: 0.4;
   }
 
   :host([invalid]) .indicator {
-    border-color: var(--kds-border-negative-emphasis-base);
+    border-color: var(--radio-border-invalid);
+  }
+
+  :host([invalid]) .dot {
+    background-color: var(--radio-color-invalid);
   }
 
   .radio {
     display: flex;
-    align-items: flex-start;
-    gap: var(--kds-space-sm);
+    align-items: center;
+    gap: var(--kds-space-xs);
     cursor: pointer;
   }
 
@@ -92,16 +101,15 @@ export const radioStyles = css`
     height: var(--radio-size);
     border: var(--radio-border-width) solid var(--radio-border-color);
     border-radius: 50%;
-    background-color: var(--kds-bg-base);
+    background-color: var(--radio-background);
     transition:
       var(--kds-animation-duration-normal) background-color,
-      var(--kds-animation-duration-normal) border-color,
-      var(--kds-animation-duration-normal) box-shadow;
+      var(--kds-animation-duration-normal) border-color;
   }
 
-  /* Hover state */
+  /* Hover state - subtle per design */
   .native-input:hover:not(:disabled) ~ .indicator {
-    border-color: var(--kds-border-brand-emphasis-base);
+    /* Hover state matches design - no significant color change */
   }
 
   /* Focus state */
@@ -111,21 +119,20 @@ export const radioStyles = css`
     outline-offset: var(--kds-border-width-sm);
   }
 
-  /* Checked state */
+  /* Checked state - background stays transparent, just show dot */
   .native-input:checked ~ .indicator {
     background-color: var(--radio-background);
-    border-color: var(--radio-background);
+    border-color: var(--radio-border-color);
   }
 
   .native-input:checked:hover:not(:disabled) ~ .indicator {
     background-color: var(--radio-background-hover);
-    border-color: var(--radio-background-hover);
   }
 
   /* Radio dot */
   .dot {
-    width: 40%;
-    height: 40%;
+    width: 60%;
+    height: 60%;
     border-radius: 50%;
     background-color: var(--radio-color);
     opacity: 0;
@@ -152,9 +159,11 @@ export const radioStyles = css`
   .label {
     display: block;
     cursor: pointer;
-    font-weight: var(--kds-font-weight-regular);
+    font-family: var(--kds-font-family);
+    font-weight: 400;
     color: var(--kds-fg-base);
-    line-height: var(--kds-size-md);
+    line-height: 1.4;
+    letter-spacing: var(--kds-font-letter-spacing-wide);
     user-select: none;
   }
 

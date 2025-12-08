@@ -3,63 +3,74 @@ import { css } from "lit";
 export const checkboxStyles = css`
   :host {
     display: inline-block;
-    --checkbox-size: var(--mod-checkbox-size, var(--kds-size-md));
+    --checkbox-size: 24px;
     --checkbox-color: var(
       --mod-checkbox-color,
       var(--kds-fg-on-emphasis)
     );
     --checkbox-border-color: var(
       --mod-checkbox-border-color,
-      var(--kds-border-neutral-emphasis-base)
+      #717778
     );
     --checkbox-background: var(
       --mod-checkbox-background,
-      var(--kds-bg-brand-emphasis-base)
+      #0080a7
     );
     --checkbox-background-hover: var(
       --mod-checkbox-background-hover,
       var(--kds-bg-brand-emphasis-hover)
     );
+    --checkbox-background-invalid: var(
+      --mod-checkbox-background-invalid,
+      #cc0000
+    );
+    --checkbox-border-invalid: var(
+      --mod-checkbox-border-invalid,
+      #e52626
+    );
     --checkbox-border-radius: var(
       --mod-checkbox-border-radius,
-      var(--kds-border-radius-xs)
+      var(--kds-border-radius-sm)
     );
     --checkbox-border-width: var(
       --mod-checkbox-border-width,
-      var(--kds-border-width-sm)
+      1px
     );
   }
 
-  /* Size variants */
+  /* Size variants affect label font size only */
   :host([size="sm"]) {
-    --checkbox-size: var(--kds-size-sm);
     font-size: var(--kds-font-size-sm);
   }
 
   :host([size="md"]) {
-    --checkbox-size: var(--kds-size-md);
     font-size: var(--kds-font-size-md);
   }
 
   :host([size="lg"]) {
-    --checkbox-size: var(--kds-size-lg);
     font-size: var(--kds-font-size-lg);
   }
 
   /* State styles */
   :host([disabled]) {
     cursor: not-allowed;
-    opacity: var(--kds-base-opacity-disabled, 0.5);
+    opacity: 0.4;
   }
 
   :host([invalid]) .indicator {
-    border-color: var(--kds-border-negative-emphasis-base);
+    border-color: var(--checkbox-border-invalid);
+  }
+
+  :host([invalid]) .native-input:checked ~ .indicator,
+  :host([invalid]) .native-input:indeterminate ~ .indicator {
+    background-color: var(--checkbox-background-invalid);
+    border-color: var(--checkbox-background-invalid);
   }
 
   .checkbox {
     display: flex;
-    align-items: flex-start;
-    gap: var(--kds-space-sm);
+    align-items: center;
+    gap: var(--kds-space-xs);
     cursor: pointer;
   }
 
@@ -103,9 +114,9 @@ export const checkboxStyles = css`
       var(--kds-animation-duration-normal) box-shadow;
   }
 
-  /* Hover state */
+  /* Hover state - subtle hover per design */
   .native-input:hover:not(:disabled) ~ .indicator {
-    border-color: var(--kds-border-brand-emphasis-base);
+    /* Hover state matches design - no significant color change */
   }
 
   /* Focus state */
@@ -158,9 +169,11 @@ export const checkboxStyles = css`
   .label {
     display: block;
     cursor: pointer;
-    font-weight: var(--kds-font-weight-regular);
+    font-family: var(--kds-font-family);
+    font-weight: 400;
     color: var(--kds-fg-base);
-    line-height: var(--kds-size-md);
+    line-height: 1.4;
+    letter-spacing: var(--kds-font-letter-spacing-wide);
     user-select: none;
   }
 
