@@ -4,6 +4,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
+import "./kds-alert-contextual.component.js";
 import { textInputStyles } from "./kds-text-input.styles.js";
 
 /**
@@ -519,19 +520,16 @@ export class KdsTextInput extends LitElement {
       </div>
 
       ${this.invalid || this._hasErrorSlot ? html`
-        <div id="${this._inputId}-error" role="alert" part="error" class="error">
+        <div id="${this._inputId}-error" role="alert" class="error-block">
           ${this.errorMessage ? html`
-            <div class="error-message">
-              <span class="error-icon" aria-hidden="true">⚠</span>
-              <span class="error-text">${this.errorMessage}</span>
-            </div>
+            <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
           ` : html`
             <slot name="error"></slot>
           `}
         </div>
       ` : null}
 
-      <div id="${this._inputId}-help" part="help-text" class="help-text-wrapper">
+      <div id="${this._inputId}-help" class="help-text-wrapper">
         <slot name="help-text">${this.helpText}</slot>
       </div>
     `;

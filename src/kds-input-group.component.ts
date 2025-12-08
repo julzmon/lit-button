@@ -3,6 +3,7 @@ import type { PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
+import "./kds-alert-contextual.component.js";
 import { inputGroupStyles } from "./kds-input-group.styles.js";
 
 /**
@@ -287,12 +288,9 @@ export class KdsInputGroup extends LitElement {
         </div>
 
         ${this.invalid ? html`
-          <div part="error" class="error" id=${this._errorId}>
+          <div part="error" class="error-block" id=${this._errorId}>
             ${this.errorMessage ? html`
-              <div class="error-message">
-                <span class="error-icon" aria-hidden="true">⚠</span>
-                <span class="error-text">${this.errorMessage}</span>
-              </div>
+              <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
             ` : html`<slot name="error"></slot>`}
           </div>
         ` : ''}
