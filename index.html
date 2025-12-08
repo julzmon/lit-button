@@ -85,17 +85,17 @@
     <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
       🌙
     </button>
-    <h1>Lit Button Component Demo</h1>
+    <h1 id="lit-button-component-demo">Lit Button Component Demo</h1>
 
     <div class="demo-section">
-      <h2>Default</h2>
+      <h2 id="default">Default</h2>
       <div class="button-grid">
         <kds-button>Default Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
-      <h2>Priorities</h2>
+      <h2 id="priorities">Priorities</h2>
       <div class="button-grid">
         <kds-button priority="primary">Primary Button</kds-button>
         <kds-button priority="secondary">Secondary Button</kds-button>
@@ -105,7 +105,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Colors & Variants</h2>
+      <h2 id="colors-variants">Colors & Variants</h2>
       <div class="button-grid">
         <kds-button color="neutral" variant="solid">Solid Button</kds-button>
         <kds-button color="neutral" variant="outline">Outline Button</kds-button>
@@ -134,7 +134,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Sizes</h2>
+      <h2 id="sizes">Sizes</h2>
       <div class="button-grid">
         <kds-button size="xs">Extra Small Button</kds-button>
         <kds-button size="sm">Small Button</kds-button>
@@ -144,7 +144,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>States</h2>
+      <h2 id="states">States</h2>
       <div class="button-grid">
         <kds-button disabled="disabled">Disabled Button</kds-button>
         <kds-button id="focus-button">Focus Button</kds-button>
@@ -154,7 +154,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Pending</h2>
+      <h2 id="pending">Pending</h2>
       <div class="button-grid">
         <kds-button pending>Loading Button</kds-button>
         <kds-button pending pending-label="Saving" priority="primary">Save changes</kds-button>
@@ -167,7 +167,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Dynamic Label Changes (Testing Slot Change Tracking)</h2>
+      <h2 id="dynamic-label-changes">Dynamic Label Changes (Testing Slot Change Tracking)</h2>
       <p style="font-size: 0.9em; color: var(--kds-fg-muted, #666);">
         This section demonstrates that the button's aria-label updates when the label text changes dynamically.
         Open the browser console to see the aria-label values logged after each change.
@@ -184,14 +184,14 @@
     </div>
 
     <div class="demo-section">
-      <h2>Anchor</h2>
+      <h2 id="anchor">Anchor</h2>
       <div class="button-grid">
         <kds-button href="#">Anchor Button</kds-button>
       </div>
     </div>
 
     <div class="demo-section">
-      <h2>Slots</h2>
+      <h2 id="slots">Slots</h2>
       <div class="button-grid">
         <kds-button>
           <span slot="start">
@@ -207,7 +207,7 @@
       </div>
 
       <div class="demo-section">
-        <h2>Full width</h2>
+        <h2 id="full-width">Full width</h2>
         <div class="button-grid">
           <kds-button href="#" style="width: 100%">Full Width Button</kds-button>
         </div>
@@ -215,7 +215,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Progress Circle</h2>
+      <h2 id="progress-circle">Progress Circle</h2>
       <div class="progress-grid">
         <div>
           <span>Default md</span>
@@ -281,7 +281,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Input Fields</h2>
+      <h2 id="input-fields">Input Fields</h2>
 
       <h3>Basic Inputs</h3>
       <div class="button-grid">
@@ -350,7 +350,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Input Groups</h2>
+      <h2 id="input-groups">Input Groups</h2>
       <p>Input groups use fieldset/legend semantics and combine inputs with buttons.</p>
 
       <h3>Basic: Input with Button</h3>
@@ -470,7 +470,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Button Group Component</h2>
+      <h2 id="button-group">Button Group Component</h2>
 
       <h3>Default Spaced Buttons (Row)</h3>
       <div class="button-grid">
@@ -816,7 +816,7 @@
     </div>
 
     <div class="demo-section">
-      <h2>Checkbox Component</h2>
+      <h2 id="checkbox">Checkbox Component</h2>
 
       <h3>Basic Checkboxes</h3>
       <div class="checkbox-grid">
@@ -836,6 +836,7 @@
       <h3>With Help Text</h3>
       <div class="checkbox-grid">
         <kds-checkbox
+          required
           name="notifications"
           value="yes"
           help-text="We'll send you email notifications about important updates">
@@ -858,7 +859,7 @@
           required
           invalid
           error-message="You must accept the terms to continue">
-          Accept terms and conditions *
+          Accept terms and conditions
         </kds-checkbox>
         <kds-checkbox
           name="age"
@@ -887,7 +888,7 @@
       </div>
 
       <h3>Checkbox Group</h3>
-      <kds-input-group legend="Preferences" help-text="Select all that apply">
+      <kds-input-group label="Preferences" help-text="Select all that apply">
         <kds-checkbox name="pref-email" value="email" checked>Email notifications</kds-checkbox>
         <kds-checkbox name="pref-sms" value="sms">SMS notifications</kds-checkbox>
         <kds-checkbox name="pref-push" value="push">Push notifications</kds-checkbox>
@@ -895,18 +896,18 @@
 
       <h3>Form Integration</h3>
       <form id="checkbox-form" style="max-width: 400px;">
-        <kds-input-group legend="Account Settings" required>
+        <kds-input-group label="Account Settings" required>
           <kds-checkbox
             name="terms"
             value="accepted"
             required>
-            I accept the terms and conditions *
+            I accept the terms and conditions
           </kds-checkbox>
           <kds-checkbox
             name="privacy"
             value="accepted"
             required>
-            I accept the privacy policy *
+            I accept the privacy policy
           </kds-checkbox>
           <kds-checkbox
             name="newsletter"
@@ -922,17 +923,17 @@
     </div>
 
     <div class="demo-section">
-      <h2>Radio Component</h2>
+      <h2 id="radio">Radio Component</h2>
 
       <h3>Basic Radio Group</h3>
-      <kds-input-group legend="Size" direction="column" gap="sm" value="md">
+      <kds-input-group label="Size" direction="column" gap="sm" value="md">
         <kds-radio name="size" value="sm">Small</kds-radio>
         <kds-radio name="size" value="md">Medium</kds-radio>
         <kds-radio name="size" value="lg">Large</kds-radio>
       </kds-input-group>
 
       <h3>Horizontal Radio Group</h3>
-      <kds-input-group legend="Priority" direction="row" gap="md" value="normal">
+      <kds-input-group label="Priority" direction="row" gap="md" value="normal">
         <kds-radio name="priority" value="low">Low</kds-radio>
         <kds-radio name="priority" value="normal">Normal</kds-radio>
         <kds-radio name="priority" value="high">High</kds-radio>
@@ -940,17 +941,17 @@
 
       <h3>Sizes</h3>
       <div class="checkbox-grid" style="gap: 1.5rem;">
-        <kds-input-group legend="Small" size="sm" direction="column" gap="xs" value="opt1">
+        <kds-input-group label="Small" size="sm" direction="column" gap="xs" value="opt1">
           <kds-radio name="small-group" value="opt1">Option 1</kds-radio>
           <kds-radio name="small-group" value="opt2">Option 2</kds-radio>
         </kds-input-group>
 
-        <kds-input-group legend="Medium (default)" size="md" direction="column" gap="sm" value="opt1">
+        <kds-input-group label="Medium (default)" size="md" direction="column" gap="sm" value="opt1">
           <kds-radio name="medium-group" value="opt1">Option 1</kds-radio>
           <kds-radio name="medium-group" value="opt2">Option 2</kds-radio>
         </kds-input-group>
 
-        <kds-input-group legend="Large" size="lg" direction="column" gap="md" value="opt1">
+        <kds-input-group label="Large" size="lg" direction="column" gap="md" value="opt1">
           <kds-radio name="large-group" value="opt1">Option 1</kds-radio>
           <kds-radio name="large-group" value="opt2">Option 2</kds-radio>
         </kds-input-group>
@@ -958,7 +959,7 @@
 
       <h3>With Help Text</h3>
       <kds-input-group
-        legend="Shipping Method"
+        label="Shipping Method"
         direction="column"
         gap="sm"
         help-text="Select your preferred shipping option"
@@ -970,7 +971,7 @@
 
       <h3>Validation States</h3>
       <kds-input-group
-        legend="Terms & Conditions"
+        label="Terms & Conditions"
         direction="column"
         gap="sm"
         required
@@ -982,7 +983,7 @@
 
       <h3>Disabled State</h3>
       <kds-input-group
-        legend="Disabled Radio Group"
+        label="Disabled Radio Group"
         direction="column"
         gap="sm"
         disabled
@@ -996,7 +997,7 @@
       <form id="radio-form" style="max-width: 500px;">
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
           <kds-input-group
-            legend="Account Type"
+            label="Account Type"
             direction="column"
             gap="sm"
             required
@@ -1007,7 +1008,7 @@
           </kds-input-group>
 
           <kds-input-group
-            legend="Notification Frequency"
+            label="Notification Frequency"
             direction="column"
             gap="sm"
             value="daily"
@@ -1026,7 +1027,7 @@
       </form>
 
       <h3>Compact Horizontal Layout</h3>
-      <kds-input-group legend="Rating" direction="row" gap="lg" value="3">
+      <kds-input-group label="Rating" direction="row" gap="lg" value="3">
         <kds-radio name="rating" value="1">⭐</kds-radio>
         <kds-radio name="rating" value="2">⭐⭐</kds-radio>
         <kds-radio name="rating" value="3">⭐⭐⭐</kds-radio>

@@ -53,6 +53,12 @@ export const checkboxStyles = css`
     opacity: 0.4;
   }
 
+  :host([required]) .label::after {
+    /* margin-inline-start: var(--kds-space-sm); */
+    content: "*";
+    color: var(--kds-fg-negative-base);
+  }
+
   .checkbox {
     display: flex;
     flex-direction: column;

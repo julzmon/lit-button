@@ -60,7 +60,7 @@ export const inputGroupStyles = css`
 
   /* Required indicator (red asterisk) */
   :host([required]) .legend::after {
-    margin-inline-start: .125rem;
+    margin-inline-start: var(--kds-space-sm);
     content: "*";
     color: var(--kds-fg-negative-base);
   }
