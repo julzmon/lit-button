@@ -182,7 +182,7 @@ export const buttonGroupStyles = css`
     flex-direction: row;
   }
 
-    /* Direction variants */
+  /* Direction variants */
   :host([direction="column"]) {
     flex-direction: column;
     /* No inline-start borders in column mode */
@@ -195,7 +195,6 @@ export const buttonGroupStyles = css`
   }
 
   :host([justify="end"]) {
-    /* justify-content: flex-end; */
     flex-direction: row-reverse;
   }
 
