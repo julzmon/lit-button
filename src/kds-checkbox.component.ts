@@ -354,7 +354,18 @@ export class KdsCheckbox extends LitElement {
                         id=${this._errorId}
                         role="alert"
                       >
-                        <slot name="error-message">${this.errorMessage}</slot>
+                        ${this.errorMessage
+                          ? html`
+                              <span class="error-icon" aria-hidden="true"
+                                >⚠</span
+                              >
+                              <span class="error-text"
+                                >${this.errorMessage}</span
+                              >
+                            `
+                          : html`
+                              <slot name="error-message"></slot>
+                            `}
                       </div>
                     `
                   : null}

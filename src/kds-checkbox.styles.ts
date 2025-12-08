@@ -188,9 +188,23 @@ export const checkboxStyles = css`
   }
 
   .error-message {
+    display: flex;
+    align-items: center;
+    gap: var(--kds-space-sm);
     font-size: var(--kds-font-size-sm);
     color: var(--kds-fg-negative-base);
+    font-family: var(--kds-font-family);
+    font-weight: var(--kds-font-weight-bold);
     line-height: 1.4;
+  }
+
+  .error-icon {
+    flex: 0 0 auto;
+    font-size: var(--kds-font-size-sm);
+  }
+
+  .error-text {
+    flex: 1;
   }
 
   /* Reduced motion */
