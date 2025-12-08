@@ -9,6 +9,7 @@
     <script type="module" src="/src/kds-text-input.component.ts"></script>
     <script type="module" src="/src/kds-input-group.component.ts"></script>
     <script type="module" src="/src/kds-button-group.component.ts"></script>
+    <script type="module" src="/src/kds-alert-contextual.component.ts"></script>
     <style>
       body {
         font-family: system-ui, -apple-system, sans-serif;
@@ -195,6 +196,30 @@
         <h2>Full width</h2>
         <div class="button-grid">
           <kds-button href="#" style="width: 100%">Full Width Button</kds-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Alert Contextual</h2>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+        <div>
+          <h3>Default (md size)</h3>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <kds-alert-contextual >Alert contextual</kds-alert-contextual>
+            <kds-alert-contextual status="positive" >Alert contextual</kds-alert-contextual>
+            <kds-alert-contextual status="negative" >Alert contextual</kds-alert-contextual>
+            <kds-alert-contextual status="warning" >Alert contextual</kds-alert-contextual>
+          </div>
+        </div>
+        <div>
+          <h3>Small Size</h3>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <kds-alert-contextual size="sm">Alert contextual</kds-alert-contextual>
+            <kds-alert-contextual status="positive" size="sm">Alert contextual</kds-alert-contextual>
+            <kds-alert-contextual status="negative" size="sm">Alert contextual</kds-alert-contextual>
+            <kds-alert-contextual status="warning" size="sm">Alert contextual</kds-alert-contextual>
+          </div>
         </div>
       </div>
     </div>
