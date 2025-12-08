@@ -137,20 +137,10 @@ export const inputGroupStyles = css`
     }
   }
 
-  /* Error text block (mirror kds-text-input) */
-  .error { margin-block-start: var(--kds-space-sm); }
-  .error-message {
-    display: flex;
-    align-items: center;
-    gap: var(--kds-space-sm);
-    color: var(--kds-fg-negative-base);
-    font-size: var(--kds-font-size-sm);
-    font-family: var(--kds-font-family);
-    font-weight: var(--kds-font-weight-bold);
-
-    .error-icon { flex: 0 0 auto; font-size: var(--kds-font-size-sm); }
-    .error-text { flex: 1; }
-  }
+  /* Error spacing */
+  /* .error-block {
+    margin-block-start: var(--kds-space-sm);
+  } */
 
   /* Help text (matching text-input) */
   .help-text {
