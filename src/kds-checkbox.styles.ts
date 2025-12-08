@@ -5,6 +5,7 @@ export const checkboxStyles = css`
     display: inline-block;
     --size: var(--kds-icon-size-xl);
     --font-size: var(--kds-font-size-md);
+    --gap: var(--kds-space-md);
     --color: var(
       --mod-checkbox-color,
       var(--kds-fg-on-emphasis)
@@ -42,11 +43,8 @@ export const checkboxStyles = css`
   /* Size variants */
   :host([size="sm"]) {
     --size: var(--kds-icon-size-sm);
-    font-size: var(--kds-font-size-sm);
-  }
-
-  :host([size="md"]) {
-    font-size: var(--kds-font-size-md);
+    --gap: var(--kds-space-sm);
+    --font-size: var(--kds-font-size-sm);
   }
 
   /* State styles */
@@ -68,7 +66,7 @@ export const checkboxStyles = css`
   .label {
     display: flex;
     align-items: center;
-    gap: var(--kds-space-xs);
+    gap: var(--gap);
     cursor: pointer;
     font-family: var(--kds-font-family);
     font-size: var(--font-size);
@@ -166,6 +164,7 @@ export const checkboxStyles = css`
   /* Invalid state */
   :host([invalid]) .native-input {
     border-color: var(--border-invalid);
+    background-color: var(--kds-bg-negative-muted-base);
   }
 
   :host([invalid]) .native-input:checked,
@@ -178,13 +177,13 @@ export const checkboxStyles = css`
   .describedby {
     display: flex;
     flex-direction: column;
-    gap: var(--kds-space-xs);
-    margin-inline-start: calc(var(--size) + var(--kds-space-xs));
+    gap: var(--gap);
+    margin-inline-start: calc(var(--size) + var(--gap) + 3px);
   }
 
   .help-text {
     font-size: var(--kds-font-size-sm);
-    color: var(--kds-fg-muted);
+    color: var(--kds-fg-neutral-base);
     line-height: 1.4;
   }
 
