@@ -3,24 +3,46 @@ import { css } from "lit";
 export const checkboxStyles = css`
   :host {
     display: inline-block;
-    --checkbox-size: var(--kds-icon-size-md);
-    --gap: var(--kds-space-md);
+    --size: var(--kds-icon-size-xl);
     --font-size: var(--kds-font-size-md);
-    --checkbox-color: var(--mod-checkbox-color, var(--kds-fg-on-emphasis));
-    --checkbox-border-color: var(--mod-checkbox-border-color, var(--kds-border-neutral-emphasis-base));
-    --checkbox-background: var(--mod-checkbox-background, var(--kds-bg-info-emphasis-base));
-    --checkbox-background-hover: var(--mod-checkbox-background-hover, var(--kds-bg-info-emphasis-hover));
-    --checkbox-background-invalid: var(--mod-checkbox-background-invalid, var(--kds-bg-error-emphasis-base));
-    --checkbox-border-invalid: var(--mod-checkbox-border-invalid, var(--kds-border-error-emphasis-base));
-    --checkbox-border-radius: var(--mod-checkbox-border-radius, var(--kds-border-radius-sm));
-    --checkbox-border-width: var(--mod-checkbox-border-width,1px);
+    --color: var(
+      --mod-checkbox-color,
+      var(--kds-fg-on-emphasis)
+    );
+    --border-color: var(
+      --mod-checkbox-border-color,
+      var(--kds-border-neutral-emphasis-base)
+    );
+    --background: var(
+      --mod-checkbox-background,
+      var(--kds-bg-info-emphasis-base)
+    );
+    --background-hover: var(
+      --mod-checkbox-background-hover,
+      var(--kds-bg-info-emphasis-hover)
+    );
+    --background-invalid: var(
+      --mod-checkbox-background-invalid,
+      var(--kds-bg-negative-emphasis-base)
+    );
+    --border-invalid: var(
+      --mod-checkbox-border-invalid,
+      var(--kds-border-negative-emphasis-base)
+    );
+    --border-radius: var(
+      --mod-checkbox-border-radius,
+      var(--kds-border-radius-sm)
+    );
+    --border-width: var(
+      --mod-checkbox-border-width,
+      1px
+    );
   }
 
   /* Size variants */
   :host([size="sm"]) {
-    --checkbox-size: var(--kds-icon-size-sm);
-    --gap: var(--kds-space-sm);
-    --font-size: var(--kds-font-size-sm);
+    --size: var(--kds-icon-size-sm);
+    font-size: var(--kds-font-size-sm);
   }
 
   :host([size="md"]) {
@@ -33,21 +55,10 @@ export const checkboxStyles = css`
     opacity: 0.4;
   }
 
-  :host([invalid]) .indicator {
-    border-color: var(--checkbox-border-invalid);
-  }
-
-  :host([invalid]) .native-input:checked ~ .indicator,
-  :host([invalid]) .native-input:indeterminate ~ .indicator {
-    background-color: var(--checkbox-background-invalid);
-    border-color: var(--checkbox-background-invalid);
-  }
-
   .checkbox {
     display: flex;
     flex-direction: column;
     gap: var(--kds-space-xs);
-    cursor: pointer;
   }
 
   .checkbox.disabled {
@@ -57,7 +68,7 @@ export const checkboxStyles = css`
   .label {
     display: flex;
     align-items: center;
-    gap: var(--gap);
+    gap: var(--kds-space-xs);
     cursor: pointer;
     font-family: var(--kds-font-family);
     font-size: var(--font-size);
@@ -66,7 +77,6 @@ export const checkboxStyles = css`
     line-height: 1.4;
     letter-spacing: var(--kds-font-letter-spacing-wide);
     user-select: none;
-    position: relative;
   }
 
   .checkbox.disabled .label {
@@ -74,71 +84,94 @@ export const checkboxStyles = css`
   }
 
   .native-input {
-    position: absolute;
-    width: var(--checkbox-size);
-    height: var(--checkbox-size);
-    opacity: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: var(--size);
+    height: var(--size);
+    flex-shrink: 0;
     cursor: pointer;
     margin: 0;
-    z-index: 1;
+    margin-inline-end: var(--kds-space-xs);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--kds-bg-base);
+    transition:
+      var(--kds-animation-duration-normal) background-color,
+      var(--kds-animation-duration-normal) border-color,
+      var(--kds-animation-duration-normal) box-shadow;
+    accent-color: var(--background);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Checkmark pseudo-element */
+  .native-input::before {
+    content: "";
+    position: absolute;
+    width: calc(var(--size) * 0.5);
+    height: calc(var(--size) * 0.5);
+    background-color: var(--color);
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transition:
+      var(--kds-animation-duration-fast) transform;
+    transform-origin: center;
   }
 
   .native-input:disabled {
     cursor: not-allowed;
   }
 
-  .indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: var(--checkbox-size);
-    height: var(--checkbox-size);
-    border: var(--checkbox-border-width) solid var(--checkbox-border-color);
-    border-radius: var(--checkbox-border-radius);
-    background-color: var(--kds-bg-base);
-    transition:
-      var(--kds-animation-duration-normal) background-color,
-      var(--kds-animation-duration-normal) border-color,
-      var(--kds-animation-duration-normal) box-shadow;
-  }
-
   /* Focus state */
-  .native-input:focus-visible ~ .indicator {
+  .native-input:focus-visible {
     outline: var(--kds-border-width-sm) solid
       var(--kds-border-info-emphasis-base);
     outline-offset: var(--kds-border-width-sm);
   }
 
   /* Checked state */
-  .native-input:checked ~ .indicator,
-  .native-input:indeterminate ~ .indicator {
-    background-color: var(--checkbox-background);
-    border-color: var(--checkbox-background);
+  .native-input:checked {
+    background-color: var(--background);
+    border-color: var(--background);
   }
 
-  .native-input:checked:hover:not(:disabled) ~ .indicator,
-  .native-input:indeterminate:hover:not(:disabled) ~ .indicator {
-    background-color: var(--checkbox-background-hover);
-    border-color: var(--checkbox-background-hover);
-  }
-
-  /* Checkmark */
-  .checkmark {
-    width: 100%;
-    height: 100%;
-    color: var(--checkbox-color);
-    opacity: 0;
-    transform: scale(0.8);
-    transition:
-      var(--kds-animation-duration-fast) opacity,
-      var(--kds-animation-duration-fast) transform;
-  }
-
-  .native-input:checked ~ .indicator .checkmark,
-  .native-input:indeterminate ~ .indicator .checkmark {
-    opacity: 1;
+  .native-input:checked::before {
     transform: scale(1);
+  }
+
+  .native-input:checked:hover:not(:disabled) {
+    background-color: var(--background-hover);
+    border-color: var(--background-hover);
+  }
+
+  /* Indeterminate state */
+  .native-input:indeterminate {
+    background-color: var(--background);
+    border-color: var(--background);
+  }
+
+  .native-input:indeterminate::before {
+    clip-path: inset(0);
+    transform: scale(0.6);
+  }
+
+  .native-input:indeterminate:hover:not(:disabled) {
+    background-color: var(--background-hover);
+    border-color: var(--background-hover);
+  }
+
+  /* Invalid state */
+  :host([invalid]) .native-input {
+    border-color: var(--border-invalid);
+  }
+
+  :host([invalid]) .native-input:checked,
+  :host([invalid]) .native-input:indeterminate {
+    background-color: var(--background-invalid);
+    border-color: var(--background-invalid);
   }
 
   /* Content area */
@@ -146,7 +179,7 @@ export const checkboxStyles = css`
     display: flex;
     flex-direction: column;
     gap: var(--kds-space-xs);
-    margin-inline-start: calc(var(--checkbox-size) + var(--gap) + 3px);
+    margin-inline-start: calc(var(--size) + var(--kds-space-xs));
   }
 
   .help-text {
@@ -163,8 +196,7 @@ export const checkboxStyles = css`
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .indicator,
-    .checkmark {
+    .native-input {
       transition: none !important;
     }
   }

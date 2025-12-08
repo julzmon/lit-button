@@ -329,21 +329,6 @@ export class KdsCheckbox extends LitElement {
             @focus=${this.handleFocus}
             @blur=${this.handleBlur}
           />
-          <span part="indicator" class="indicator">
-            <svg class="checkmark" viewBox="0 0 16 16">
-              <path
-                class=${this.indeterminate ? "indeterminate-mark" : "check-mark"}
-                d=${this.indeterminate
-                  ? "M3 8 L13 8"
-                  : "M3 8 L6.5 11.5 L13 4.5"}
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </span>
           <slot></slot>
         </label>
 
