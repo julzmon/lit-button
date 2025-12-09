@@ -3,29 +3,30 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
+import "./kds-alert-contextual.component.js";
 import { radioStyles } from "./kds-radio.styles.js";
 
 /** @internal Global counter for generating unique IDs */
 let uid = 0;
 
 /**
- * @summary A radio button input designed for use in radio groups
+ * @summary A radio button input with label, error, and help text support
  * @documentation https://example.com/docs/radio
  * @status beta
  * @since 1.0
  *
  * @description
- * A fully accessible radio button component with form association support. Radio buttons are
- * designed to be used in groups where only one option can be selected at a time. Use with
- * `kds-input-group` to create properly associated radio groups with legend, error messages,
- * and help text.
+ * A fully accessible radio button component with form association support. Extends native radio
+ * functionality with custom styling, validation, and comprehensive error/help text handling.
+ * Radio buttons should be used in groups where only one option can be selected at a time.
  *
  * @slot - Default slot for radio label text
  * @slot help-text - Optional help text shown below the radio
+ * @slot error-message - Error message shown when invalid
  *
  * @event change - Fired when the radio is selected (native event)
  * @event input - Fired when the radio is toggled (native event)
- * @event kds-change - Fired when radio is selected. Detail: { value: string }
+ * @event kds-change - Fired when radio is selected. Detail: { checked: boolean, value: string }
  * @event kds-focus - Fired when radio receives focus
  * @event kds-blur - Fired when radio loses focus
  *
@@ -40,14 +41,21 @@ let uid = 0;
  * @csspart indicator - The custom radio indicator
  * @csspart label - The label text container
  * @csspart help-text - The help text container
+ * @csspart error-message - The error message container
  *
  * @example
  * ```html
- * <kds-input-group legend="Size" value="md">
- *   <kds-radio name="size" value="sm">Small</kds-radio>
- *   <kds-radio name="size" value="md">Medium</kds-radio>
- *   <kds-radio name="size" value="lg">Large</kds-radio>
- * </kds-input-group>
+ * <kds-radio name="color" value="red" checked>Red</kds-radio>
+ * <kds-radio name="color" value="blue">Blue</kds-radio>
+ * <kds-radio name="color" value="green">Green</kds-radio>
+ *
+ * <kds-radio
+ *   name="plan"
+ *   value="premium"
+ *   help-text="Includes all features"
+ *   required>
+ *   Premium Plan
+ * </kds-radio>
  * ```
  */
 @customElement("kds-radio")
@@ -70,6 +78,7 @@ export class KdsRadio extends LitElement {
   @query(".native-input") private _native!: HTMLInputElement;
 
   @state() private _helpTextId = `kds-radio-help-${++uid}`;
+  @state() private _errorId = `kds-radio-error-${++uid}`;
   @state() private _inputId = `kds-radio-${++uid}`;
 
   /**
@@ -121,6 +130,12 @@ export class KdsRadio extends LitElement {
   @property({ type: String, attribute: "help-text" })
   helpText?: string;
 
+  /**
+   * The radio's error message. Alternatively, use the error-message slot.
+   */
+  @property({ type: String, attribute: "error-message" })
+  errorMessage?: string;
+
   override connectedCallback() {
     super.connectedCallback();
     this.updateComplete.then(() => {
@@ -155,7 +170,7 @@ export class KdsRadio extends LitElement {
     // Emit custom prefixed event with detail
     this.dispatchEvent(
       new CustomEvent("kds-change", {
-        detail: { value: this.value },
+        detail: { checked: this.checked, value: this.value },
         bubbles: true,
         composed: true,
       })
@@ -251,8 +266,13 @@ export class KdsRadio extends LitElement {
 
   render() {
     const hasHelpText = this.helpText || this.querySelector('[slot="help-text"]');
+    const hasErrorMessage = this.errorMessage || this.querySelector('[slot="error-message"]');
 
-    const ariaDescribedBy = hasHelpText ? this._helpTextId : undefined;
+    const describedByIds: string[] = [];
+    if (hasHelpText) describedByIds.push(this._helpTextId);
+    if (this.invalid && hasErrorMessage) describedByIds.push(this._errorId);
+    const ariaDescribedBy =
+      describedByIds.length > 0 ? describedByIds.join(" ") : undefined;
 
     const classes = {
       radio: true,
@@ -282,22 +302,41 @@ export class KdsRadio extends LitElement {
             @focus=${this.handleFocus}
             @blur=${this.handleBlur}
           />
-          <span part="indicator" class="indicator">
-            <span class="dot"></span>
-          </span>
           <slot></slot>
         </label>
 
-        ${hasHelpText
+        ${hasHelpText || (this.invalid && hasErrorMessage)
           ? html`
               <div
                 part="describedby"
                 class="describedby"
                 id=${this._helpTextId}
               >
-                <div part="help-text" class="help-text">
-                  <slot name="help-text">${this.helpText}</slot>
-                </div>
+                ${this.invalid && hasErrorMessage
+                  ? html`
+                      <div
+                        part="error-message"
+                        class="error-block"
+                        id=${this._errorId}
+                        role="alert"
+                      >
+                        ${this.errorMessage
+                          ? html`
+                              <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
+                            `
+                          : html`
+                              <slot name="error-message"></slot>
+                            `}
+                      </div>
+                    `
+                  : null}
+                ${hasHelpText
+                  ? html`
+                      <div part="help-text" class="help-text">
+                        <slot name="help-text">${this.helpText}</slot>
+                      </div>
+                    `
+                  : null}
               </div>
             `
           : null}

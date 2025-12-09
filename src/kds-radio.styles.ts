@@ -3,32 +3,34 @@ import { css } from "lit";
 export const radioStyles = css`
   :host {
     display: inline-block;
-    --radio-size: 24px;
-    --radio-color: var(
+    --size: var(--kds-icon-size-xl);
+    --font-size: var(--kds-font-size-md);
+    --gap: var(--kds-space-md);
+    --color: var(
       --mod-radio-color,
-      #0080a7
+      var(--kds-fg-on-emphasis)
     );
-    --radio-border-color: var(
+    --border-color: var(
       --mod-radio-border-color,
-      #717778
+      var(--kds-border-neutral-emphasis-base)
     );
-    --radio-background: var(
+    --background: var(
       --mod-radio-background,
-      transparent
+      var(--kds-bg-info-emphasis-base)
     );
-    --radio-background-hover: var(
+    --background-hover: var(
       --mod-radio-background-hover,
-      transparent
+      var(--kds-bg-info-emphasis-hover)
     );
-    --radio-border-invalid: var(
+    --background-invalid: var(
+      --mod-radio-background-invalid,
+      var(--kds-bg-negative-emphasis-base)
+    );
+    --border-invalid: var(
       --mod-radio-border-invalid,
-      #e52626
+      var(--kds-border-negative-emphasis-base)
     );
-    --radio-color-invalid: var(
-      --mod-radio-color-invalid,
-      #e52626
-    );
-    --radio-border-width: var(
+    --border-width: var(
       --mod-radio-border-width,
       1px
     );
@@ -36,12 +38,9 @@ export const radioStyles = css`
 
   /* Size variants */
   :host([size="sm"]) {
-    --radio-size: 16px;
-    font-size: var(--kds-font-size-sm);
-  }
-
-  :host([size="md"]) {
-    font-size: var(--kds-font-size-md);
+    --size: var(--kds-icon-size-sm);
+    --gap: var(--kds-space-sm);
+    --font-size: var(--kds-font-size-sm);
   }
 
   /* State styles */
@@ -50,12 +49,9 @@ export const radioStyles = css`
     opacity: 0.4;
   }
 
-  :host([invalid]) .indicator {
-    border-color: var(--radio-border-invalid);
-  }
-
-  :host([invalid]) .dot {
-    background-color: var(--radio-color-invalid);
+  :host([required]) .label::after {
+    content: "*";
+    color: var(--kds-fg-negative-base);
   }
 
   .radio {
@@ -70,16 +66,16 @@ export const radioStyles = css`
 
   .label {
     display: flex;
-    align-items: center;
-    gap: var(--kds-space-xs);
+    align-items: flex-start;
+    gap: var(--gap);
     cursor: pointer;
     font-family: var(--kds-font-family);
+    font-size: var(--font-size);
     font-weight: 400;
     color: var(--kds-fg-base);
     line-height: 1.4;
     letter-spacing: var(--kds-font-letter-spacing-wide);
     user-select: none;
-    position: relative;
   }
 
   .radio.disabled .label {
@@ -87,81 +83,102 @@ export const radioStyles = css`
   }
 
   .native-input {
-    position: absolute;
-    width: var(--radio-size);
-    height: var(--radio-size);
-    opacity: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: var(--size);
+    height: var(--size);
+    flex-shrink: 0;
     cursor: pointer;
     margin: 0;
-    z-index: 1;
+    margin-inline-end: var(--kds-space-xs);
+    margin-block-start: 0.125em;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 50%;
+    background-color: var(--kds-bg-base);
+    transition:
+      var(--kds-animation-duration-normal) background-color,
+      var(--kds-animation-duration-normal) border-color,
+      var(--kds-animation-duration-normal) box-shadow;
+    accent-color: var(--background);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Radio dot pseudo-element */
+  .native-input::before {
+    content: "";
+    position: absolute;
+    width: calc(var(--size) * 0.5);
+    height: calc(var(--size) * 0.5);
+    background-color: var(--color);
+    border-radius: 50%;
+    transform: scale(0);
+    transition:
+      var(--kds-animation-duration-fast) transform;
+    transform-origin: center;
   }
 
   .native-input:disabled {
     cursor: not-allowed;
   }
 
-  .indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: var(--radio-size);
-    height: var(--radio-size);
-    border: var(--radio-border-width) solid var(--radio-border-color);
-    border-radius: 50%;
-    background-color: var(--radio-background);
-    transition:
-      var(--kds-animation-duration-normal) background-color,
-      var(--kds-animation-duration-normal) border-color;
-  }
-
   /* Focus state */
-  .native-input:focus-visible ~ .indicator {
+  .native-input:focus-visible {
     outline: var(--kds-border-width-sm) solid
       var(--kds-border-info-emphasis-base);
     outline-offset: var(--kds-border-width-sm);
   }
 
   /* Checked state */
-  .native-input:checked ~ .indicator {
-    background-color: var(--radio-background);
-    border-color: var(--radio-border-color);
+  .native-input:checked {
+    background-color: var(--background);
+    border-color: var(--background);
   }
 
-  /* Radio dot */
-  .dot {
-    width: 60%;
-    height: 60%;
-    border-radius: 50%;
-    background-color: var(--radio-color);
-    opacity: 0;
-    transform: scale(0.5);
-    transition:
-      var(--kds-animation-duration-fast) opacity,
-      var(--kds-animation-duration-fast) transform;
-  }
-
-  .native-input:checked ~ .indicator .dot {
-    opacity: 1;
+  .native-input:checked::before {
     transform: scale(1);
   }
 
+  .native-input:checked:hover:not(:disabled) {
+    background-color: var(--background-hover);
+    border-color: var(--background-hover);
+  }
+
+  /* Invalid state */
+  :host([invalid]) .native-input {
+    border-color: var(--border-invalid);
+    background-color: var(--kds-bg-negative-muted-base);
+  }
+
+  :host([invalid]) .native-input:checked {
+    background-color: var(--background-invalid);
+    border-color: var(--background-invalid);
+  }
+
+  /* Content area */
   .describedby {
     display: flex;
     flex-direction: column;
-    gap: var(--kds-space-xs);
+    gap: var(--gap);
+    margin-inline-start: calc(var(--size) + var(--gap));
   }
 
   .help-text {
-    font-size: var(--kds-font-size-sm);
-    color: var(--kds-fg-muted);
+    font-size: var(--kds-font-size-xs);
+    color: var(--kds-fg-neutral-base);
     line-height: 1.4;
   }
 
+  /* .error-block {
+    margin-block-start: var(--kds-space-sm);
+  } */
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .indicator,
-    .dot {
+    .native-input {
       transition: none !important;
     }
   }

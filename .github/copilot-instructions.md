@@ -358,6 +358,7 @@ protected willUpdate(_changed: PropertyValues): void {
 - System tokens: `--kds-*` (defined in `tokens.css`)
 - Component modifiers: `--mod-*` (component-specific overrides)
 - CSS classes: kebab-case
+- Component-scoped CSS vars: `--{prop}` for locals (e.g. `--kds-button-height`); expose override points as `--mod-{component}-{prop}` and chain to tokens (`--mod-btn-bg` → `--kds-bg-*`)
 - Always use fallback chains: `var(--mod-prop, var(--kds-prop, fallback))`
 
 ### Properties
