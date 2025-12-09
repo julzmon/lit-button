@@ -2,6 +2,10 @@
 
 This file provides guidance to GitHub Copilot when working with code in this repository.
 
+## Quick Start for AI Agents
+
+**The Big Picture:** This is a Lit Web Components library for the KDS (Key Design System). Each component is a two-file unit: `*.component.ts` (logic) + `*.styles.ts` (CSS). Components are heavily themeable via `--mod-*` CSS properties that layer over `--kds-*` tokens (auto-generated in `tokens.css`). The library uses **CSS Layers** for style precedence and **form association** for inputs. No tests exist—verify via `npm run build` and manual testing on `index.html`.
+
 ## Project Overview
 
 This is a **Lit Web Components** library implementing the **KDS (Key Design System)**. The project builds reusable, themeable UI components with comprehensive CSS custom property theming and accessibility features.
@@ -30,6 +34,13 @@ Each component consists of two files:
    - Exports `css` tagged template literal
    - Uses CSS custom properties for theming
    - CSS nesting syntax enabled (with `&`)
+
+### Component Composition
+
+Composite components (like `kds-button-group`) manage child components and apply layout/styling:
+- **`kds-button-group`**: Container for multiple `kds-button` children with layout control (gap, direction, stretch)
+- **`kds-input-group`**: Fieldset-based wrapper organizing form controls
+- Use `<slot>` for projecting children; track with `@query` + slotchange listeners when styling depends on content
 
 ### Component Template
 
@@ -347,6 +358,7 @@ protected willUpdate(_changed: PropertyValues): void {
 - System tokens: `--kds-*` (defined in `tokens.css`)
 - Component modifiers: `--mod-*` (component-specific overrides)
 - CSS classes: kebab-case
+- Component-scoped CSS vars: `--{prop}` for locals (e.g. `--kds-button-height`); expose override points as `--mod-{component}-{prop}` and chain to tokens (`--mod-btn-bg` → `--kds-bg-*`)
 - Always use fallback chains: `var(--mod-prop, var(--kds-prop, fallback))`
 
 ### Properties
@@ -565,6 +577,39 @@ import { buttonStyles } from "./kds-button.styles";
   }
 }
 ```
+
+### CSS Layers Pattern
+
+Use `@layer` to establish precedence for style overrides (from `kds-button.styles.ts`):
+
+```css
+@layer base, variant, priority;
+
+@layer base {
+  :host {
+    /* Default token values */
+    --kds-btn-height: var(--kds-button-input-height-md);
+    --kds-btn-bg-color: var(--kds-bg-neutral-emphasis-base);
+  }
+}
+
+@layer variant {
+  :host([variant="outline"]) {
+    /* Override base for outline variant */
+    --kds-btn-bg-color: transparent;
+    --kds-btn-border-color: var(--kds-border-neutral-emphasis-base);
+  }
+}
+
+@layer priority {
+  :host([priority="primary"]) {
+    /* Highest precedence: priority overrides variant */
+    --kds-btn-bg-color: var(--kds-bg-brand-emphasis-base);
+  }
+}
+```
+
+**Layer precedence:** `base < variant < priority` (later layers win). This allows component modifiers (`--mod-*` inline styles) to always win since inline styles beat layers.
 
 ### Color Variant Pattern
 
@@ -922,10 +967,11 @@ Every component must include comprehensive JSDoc with:
 
 ## Current Components
 
-- **`kds-button`** - Button with priorities, colors, variants, sizes
-- **`kds-text-input`** - Form text input with validation and adornments
-- **`kds-input-group`** - Composite wrapper for grouping form controls (fieldset-based)
-- **`kds-progress-circle`** - Circular progress indicator
+- **`kds-button`** - Clickable action element with priority, color, and variant styling; supports pending state with spinner
+- **`kds-button-group`** - Layout container for grouping buttons with customizable gap, direction, and equal-width stretch mode
+- **`kds-text-input`** - Form text input with validation, error messages, help text, and start/end slot adornments
+- **`kds-input-group`** - Fieldset-based wrapper for grouping related form controls
+- **`kds-progress-circle`** - Circular progress indicator with determinate/indeterminate modes and ARIA semantics
 
 ## Design Tokens
 
@@ -984,3 +1030,4 @@ When creating a new component:
 - ❌ Missing ARIA attributes for accessibility
 - ❌ Not chaining fallbacks in CSS custom properties
 - ❌ Editing `tokens.css` directly (it's generated)
+- ❌ **Using CSS `part` attributes** - Do not use `part="..."` in templates or `::part(...)` selectors in styles. Instead, rely on element selectors and CSS custom properties for theming
