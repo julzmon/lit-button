@@ -162,7 +162,6 @@ export const radioStyles = css`
   .describedby {
     display: flex;
     flex-direction: column;
-    gap: var(--gap);
     margin-inline-start: calc(var(--size) + var(--gap));
   }
 
@@ -171,10 +170,6 @@ export const radioStyles = css`
     color: var(--kds-fg-neutral-base);
     line-height: 1.4;
   }
-
-  /* .error-block {
-    margin-block-start: var(--kds-space-sm);
-  } */
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {

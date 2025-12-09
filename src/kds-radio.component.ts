@@ -294,27 +294,35 @@ export class KdsRadio extends LitElement {
             @blur=${this.handleBlur}
           />
           <slot></slot>
-        ${this.invalid && hasErrorMessage
+        </label>
+
+        ${hasHelpText || (this.invalid && hasErrorMessage)
           ? html`
-              <div
-                class="error-block"
-                id=${this._errorId}
-                role="alert"
-              >
-                ${this.errorMessage
+              <div class="describedby">
+                ${this.invalid && hasErrorMessage
                   ? html`
-                      <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
+                      <div
+                        class="error-block"
+                        id=${this._errorId}
+                        role="alert"
+                      >
+                        ${this.errorMessage
+                          ? html`
+                              <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
+                            `
+                          : html`
+                              <slot name="error-message"></slot>
+                            `}
+                      </div>
                     `
-                  : html`
-                      <slot name="error-message"></slot>
-                    `}
-              </div>
-            `
-          : null}
-        ${hasHelpText
-          ? html`
-              <div class="help-text" id=${this._helpTextId}>
-                <slot name="help-text">${this.helpText}</slot>
+                  : null}
+                ${hasHelpText
+                  ? html`
+                      <div class="help-text" id=${this._helpTextId}>
+                        <slot name="help-text">${this.helpText}</slot>
+                      </div>
+                    `
+                  : null}
               </div>
             `
           : null}

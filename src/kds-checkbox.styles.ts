@@ -184,7 +184,6 @@ export const checkboxStyles = css`
   .describedby {
     display: flex;
     flex-direction: column;
-    gap: var(--gap);
     margin-inline-start: calc(var(--size) + var(--gap));
   }
 
@@ -192,10 +191,6 @@ export const checkboxStyles = css`
     font-size: var(--kds-font-size-xs);
     color: var(--kds-fg-neutral-base);
     line-height: 1.4;
-  }
-
-  .error-block {
-    margin-block-start: var(--kds-space-sm);
   }
 
   /* Reduced motion */
