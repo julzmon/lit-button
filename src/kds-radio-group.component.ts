@@ -218,13 +218,8 @@ export class KdsRadioGroup extends LitElement {
       this._hasHelpContent = assignedElements.length > 0;
     }
 
-    assignedElements.forEach(element => {
-      if (element.tagName?.toLowerCase() !== 'kds-radio') return;
-      const radio = element as any;
-      if ('size' in radio) radio.size = this.size;
-      if ('invalid' in radio) radio.invalid = this.invalid;
-      if ('disabled' in radio && this.disabled) radio.disabled = this.disabled;
-    });
+    // Propagate state to slotted radios using shared method
+    this.updateSlottedElements();
 
     this.updateRadioTabIndexes();
   };
