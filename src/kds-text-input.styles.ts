@@ -156,11 +156,21 @@ export const textInputStyles = css`
       opacity: var(--kds-base-opacity-disabled, 0.5);
     }
   }
-  /* Error messaging */
-  .error-block {
-    margin-block-start: var(--kds-space-sm);
-  }
 
+  /* Error text block */
+  .error { margin-block-start: var(--kds-space-sm); }
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: var(--kds-space-sm);
+    color: var(--kds-fg-negative-base);
+    font-size: var(--kds-font-size-sm);
+    font-family: var(--kds-font-family);
+    font-weight: var(--kds-font-weight-bold);
+
+    .error-icon { flex: 0 0 auto; font-size: var(--kds-font-size-sm); }
+    .error-text { flex: 1; }
+  }
 
   /* Disabled: freeze visuals */
   :host([disabled]) {
@@ -192,7 +202,7 @@ export const textInputStyles = css`
     cursor: pointer;
     font-size: 1.05em;
     padding: 0;
-    margin-inline-start: 0.25rem;
+    /* margin-inline-start: 0.25rem; */
     transition: background 0.12s ease, box-shadow 0.12s ease;
 
     &:hover {
@@ -205,7 +215,7 @@ export const textInputStyles = css`
     }
 
     &:last-of-type {
-      margin-inline-end: calc(var(--input-padding-inline) / -2);
+      margin-inline: calc(var(--input-padding-inline) / -2);
     }
   }
 
