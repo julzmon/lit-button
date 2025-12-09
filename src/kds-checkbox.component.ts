@@ -325,7 +325,6 @@ export class KdsCheckbox extends LitElement {
         ${this.invalid && hasErrorMessage
           ? html`
               <div
-                part="error-message"
                 class="error-block"
                 id=${this._errorId}
                 role="alert"
@@ -342,7 +341,7 @@ export class KdsCheckbox extends LitElement {
           : null}
         ${hasHelpText
           ? html`
-              <div part="help-text" class="help-text" id=${this._helpTextId}>
+              <div class="help-text" id=${this._helpTextId}>
                 <slot name="help-text">${this.helpText}</slot>
               </div>
             `
