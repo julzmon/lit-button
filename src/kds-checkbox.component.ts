@@ -3,6 +3,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { live } from "lit/directives/live.js";
+import "./kds-alert-contextual.component.js";
 import { checkboxStyles } from "./kds-checkbox.styles.js";
 
 /** @internal Global counter for generating unique IDs */
@@ -339,33 +340,28 @@ export class KdsCheckbox extends LitElement {
                 class="describedby"
                 id=${this._helpTextId}
               >
-                ${hasHelpText
-                  ? html`
-                      <div part="help-text" class="help-text">
-                        <slot name="help-text">${this.helpText}</slot>
-                      </div>
-                    `
-                  : null}
                 ${this.invalid && hasErrorMessage
                   ? html`
                       <div
                         part="error-message"
-                        class="error-message"
+                        class="error-block"
                         id=${this._errorId}
                         role="alert"
                       >
                         ${this.errorMessage
                           ? html`
-                              <span class="error-icon" aria-hidden="true"
-                                >⚠</span
-                              >
-                              <span class="error-text"
-                                >${this.errorMessage}</span
-                              >
+                              <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
                             `
                           : html`
                               <slot name="error-message"></slot>
                             `}
+                      </div>
+                    `
+                  : null}
+                ${hasHelpText
+                  ? html`
+                      <div part="help-text" class="help-text">
+                        <slot name="help-text">${this.helpText}</slot>
                       </div>
                     `
                   : null}

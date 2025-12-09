@@ -71,7 +71,7 @@ export const checkboxStyles = css`
 
   .label {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--gap);
     cursor: pointer;
     font-family: var(--kds-font-family);
@@ -97,6 +97,7 @@ export const checkboxStyles = css`
     cursor: pointer;
     margin: 0;
     margin-inline-end: var(--kds-space-xs);
+    margin-block-start: 0.125em;
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
     background-color: var(--kds-bg-base);
@@ -184,33 +185,17 @@ export const checkboxStyles = css`
     display: flex;
     flex-direction: column;
     gap: var(--gap);
-    margin-inline-start: calc(var(--size) + var(--gap) + 3px);
+    margin-inline-start: calc(var(--size) + var(--gap));
   }
 
   .help-text {
-    font-size: var(--kds-font-size-sm);
+    font-size: var(--kds-font-size-xs);
     color: var(--kds-fg-neutral-base);
     line-height: 1.4;
   }
 
-  .error-message {
-    display: flex;
-    align-items: center;
-    gap: var(--kds-space-sm);
-    font-size: var(--kds-font-size-sm);
-    color: var(--kds-fg-negative-base);
-    font-family: var(--kds-font-family);
-    font-weight: var(--kds-font-weight-bold);
-    line-height: 1.4;
-  }
-
-  .error-icon {
-    flex: 0 0 auto;
-    font-size: var(--kds-font-size-sm);
-  }
-
-  .error-text {
-    flex: 1;
+  .error-block {
+    margin-block-start: var(--kds-space-sm);
   }
 
   /* Reduced motion */
