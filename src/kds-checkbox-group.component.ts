@@ -347,13 +347,13 @@ export class KdsCheckboxGroup extends LitElement {
           <div class="error-block" id=${this._errorId}>
             <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
           </div>
-        ` : ''}
+        ` : null}
 
         ${hasHelpText ? html`
           <div class="help-text-wrapper" id=${this._helpTextId}>
             ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text" @slotchange=${this.handleSlotChange}></slot>`}
           </div>
-        ` : ''}
+        ` : null}
       </fieldset>
     `;
   }
