@@ -10,7 +10,9 @@
     <script type="module" src="/src/kds-input-group.component.ts"></script>
     <script type="module" src="/src/kds-button-group.component.ts"></script>
     <script type="module" src="/src/kds-checkbox.component.ts"></script>
+    <script type="module" src="/src/kds-checkbox-group.component.ts"></script>
     <script type="module" src="/src/kds-radio.component.ts"></script>
+    <script type="module" src="/src/kds-radio-group.component.ts"></script>
     <style>
       body {
         font-family: system-ui, -apple-system, sans-serif;
@@ -894,164 +896,142 @@
           </div>
         </div>
       </div>
-
-      <h3>Checkbox Group</h3>
-      <kds-input-group label="Preferences" help-text="Select all that apply">
-        <kds-checkbox name="pref-email" value="email" checked>Email notifications</kds-checkbox>
-        <kds-checkbox name="pref-sms" value="sms">SMS notifications</kds-checkbox>
-        <kds-checkbox name="pref-push" value="push">Push notifications</kds-checkbox>
-      </kds-input-group>
-
-      <h3>Form Integration</h3>
-      <form id="checkbox-form" style="max-width: 400px;">
-        <kds-input-group label="Account Settings" required>
-          <kds-checkbox
-            name="terms"
-            value="accepted"
-            required>
-            I accept the terms and conditions
-          </kds-checkbox>
-          <kds-checkbox
-            name="privacy"
-            value="accepted"
-            required>
-            I accept the privacy policy
-          </kds-checkbox>
-          <kds-checkbox
-            name="newsletter"
-            value="yes">
-            Subscribe to newsletter (optional)
-          </kds-checkbox>
-        </kds-input-group>
-        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-          <kds-button type="submit">Submit Form</kds-button>
-          <kds-button type="reset" priority="secondary">Reset</kds-button>
-        </div>
-      </form>
     </div>
 
     <div class="demo-section">
-      <h2 id="radio">Radio Component</h2>
+      <h2 id="checkbox-group">Checkbox Group Component</h2>
+
+      <h3>Basic Checkbox Group</h3>
+      <kds-checkbox-group label="Select your interests">
+        <kds-checkbox name="interests" value="sports">Sports</kds-checkbox>
+        <kds-checkbox name="interests" value="music">Music</kds-checkbox>
+        <kds-checkbox name="interests" value="reading">Reading</kds-checkbox>
+        <kds-checkbox name="interests" value="gaming">Gaming</kds-checkbox>
+      </kds-checkbox-group>
+
+      <h3>Horizontal Layout</h3>
+      <kds-checkbox-group
+        label="Features"
+        direction="row"
+        gap="lg"
+        help-text="Choose all that apply">
+        <kds-checkbox name="features" value="notifications">Notifications</kds-checkbox>
+        <kds-checkbox name="features" value="analytics">Analytics</kds-checkbox>
+        <kds-checkbox name="features" value="export">Export</kds-checkbox>
+      </kds-checkbox-group>
+
+      <h3>With Error State</h3>
+      <kds-checkbox-group
+        label="Required Agreements"
+        required
+        invalid
+        error-message="You must agree to all terms"
+        help-text="Please review each item">
+        <kds-checkbox name="terms" value="privacy" checked>Privacy Policy</kds-checkbox>
+        <kds-checkbox name="terms" value="service">Terms of Service</kds-checkbox>
+        <kds-checkbox name="terms" value="marketing">Marketing Communications</kds-checkbox>
+      </kds-checkbox-group>
+
+      <h3>Disabled Group</h3>
+      <kds-checkbox-group
+        label="Unavailable Options"
+        disabled>
+        <kds-checkbox name="disabled-group" value="option1" checked>Option 1</kds-checkbox>
+        <kds-checkbox name="disabled-group" value="option2">Option 2</kds-checkbox>
+        <kds-checkbox name="disabled-group" value="option3">Option 3</kds-checkbox>
+      </kds-checkbox-group>
+
+      <h3>Different Sizes</h3>
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <kds-checkbox-group label="Small" size="sm">
+          <kds-checkbox name="size-sm" value="opt1">Small option 1</kds-checkbox>
+          <kds-checkbox name="size-sm" value="opt2">Small option 2</kds-checkbox>
+        </kds-checkbox-group>
+
+        <kds-checkbox-group label="Medium (default)" size="md">
+          <kds-checkbox name="size-md" value="opt1" checked>Medium option 1</kds-checkbox>
+          <kds-checkbox name="size-md" value="opt2">Medium option 2</kds-checkbox>
+        </kds-checkbox-group>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2 id="radio-group">Radio Group Component</h2>
 
       <h3>Basic Radio Group</h3>
-      <kds-input-group label="Size" direction="column" gap="sm" value="md">
+      <kds-radio-group label="Select size" value="md">
         <kds-radio name="size" value="sm">Small</kds-radio>
         <kds-radio name="size" value="md">Medium</kds-radio>
         <kds-radio name="size" value="lg">Large</kds-radio>
-      </kds-input-group>
+      </kds-radio-group>
 
-      <h3>Horizontal Radio Group</h3>
-      <kds-input-group label="Priority" direction="row" gap="md" value="normal">
+      <h3>Horizontal Layout</h3>
+      <kds-radio-group
+        label="Priority"
+        direction="row"
+        gap="lg"
+        value="normal"
+        help-text="Choose one priority level">
         <kds-radio name="priority" value="low">Low</kds-radio>
         <kds-radio name="priority" value="normal">Normal</kds-radio>
         <kds-radio name="priority" value="high">High</kds-radio>
-      </kds-input-group>
+      </kds-radio-group>
 
-      <h3>Sizes</h3>
-      <div class="checkbox-grid" style="gap: 1.5rem;">
-        <kds-input-group label="Small" size="sm" direction="column" gap="xs" value="opt1">
-          <kds-radio name="small-group" value="opt1">Option 1</kds-radio>
-          <kds-radio name="small-group" value="opt2">Option 2</kds-radio>
-        </kds-input-group>
-
-        <kds-input-group label="Medium (default)" size="md" direction="column" gap="sm" value="opt1">
-          <kds-radio name="medium-group" value="opt1">Option 1</kds-radio>
-          <kds-radio name="medium-group" value="opt2">Option 2</kds-radio>
-        </kds-input-group>
-
-        <kds-input-group label="Large" size="lg" direction="column" gap="md" value="opt1">
-          <kds-radio name="large-group" value="opt1">Option 1</kds-radio>
-          <kds-radio name="large-group" value="opt2">Option 2</kds-radio>
-        </kds-input-group>
-      </div>
-
-      <h3>With Help Text</h3>
-      <kds-input-group
-        label="Shipping Method"
-        direction="column"
-        gap="sm"
-        help-text="Select your preferred shipping option"
-        value="standard">
-        <kds-radio name="shipping" value="standard" help-text="5-7 business days">Standard Shipping (Free)</kds-radio>
-        <kds-radio name="shipping" value="express" help-text="2-3 business days">Express Shipping ($9.99)</kds-radio>
-        <kds-radio name="shipping" value="overnight" help-text="Next business day">Overnight Shipping ($24.99)</kds-radio>
-      </kds-input-group>
-
-      <h3>Individual Radio with Help Text</h3>
-      <kds-radio name="standalone" value="yes" help-text="This radio has its own help text">
-        Standalone Radio with Help
-      </kds-radio>
-
-      <h3>Individual Radio with Error</h3>
-      <kds-radio name="error-example" value="accept" invalid error-message="You must agree to continue">
-        Accept Terms & Conditions
-      </kds-radio>
-
-      <h3>Validation States</h3>
-      <kds-input-group
-        label="Terms & Conditions"
-        direction="column"
-        gap="sm"
+      <h3>With Error State</h3>
+      <kds-radio-group
+        label="Account Type"
         required
         invalid
-        error-message="You must select an option to continue">
-        <kds-radio name="terms" value="agree">I agree to the terms</kds-radio>
-        <kds-radio name="terms" value="disagree">I disagree</kds-radio>
-      </kds-input-group>
+        error-message="You must select an account type"
+        help-text="Choose the type that fits your needs">
+        <kds-radio name="account" value="personal">Personal Account</kds-radio>
+        <kds-radio name="account" value="business">Business Account</kds-radio>
+        <kds-radio name="account" value="enterprise">Enterprise Account</kds-radio>
+      </kds-radio-group>
 
-      <h3>Disabled State</h3>
-      <kds-input-group
-        label="Disabled Radio Group"
-        direction="column"
-        gap="sm"
+      <h3>Disabled Group</h3>
+      <kds-radio-group
+        label="Unavailable Options"
         disabled
         value="option2">
         <kds-radio name="disabled-group" value="option1">Option 1</kds-radio>
         <kds-radio name="disabled-group" value="option2">Option 2 (selected)</kds-radio>
         <kds-radio name="disabled-group" value="option3">Option 3</kds-radio>
-      </kds-input-group>
+      </kds-radio-group>
 
-      <h3>Form Integration</h3>
-      <form id="radio-form" style="max-width: 500px;">
+      <h3>Different Sizes</h3>
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <kds-radio-group label="Small" size="sm" value="opt1">
+          <kds-radio name="size-sm" value="opt1">Small option 1</kds-radio>
+          <kds-radio name="size-sm" value="opt2">Small option 2</kds-radio>
+        </kds-radio-group>
+
+        <kds-radio-group label="Medium (default)" size="md" value="opt1">
+          <kds-radio name="size-md" value="opt1">Medium option 1</kds-radio>
+          <kds-radio name="size-md" value="opt2">Medium option 2</kds-radio>
+        </kds-radio-group>
+      </div>
+
+      <h3>Radio Group Form Integration</h3>
+      <form id="radio-group-form" style="max-width: 500px;">
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-          <kds-input-group
-            label="Account Type"
-            direction="column"
-            gap="sm"
+          <kds-radio-group
+            label="Shipping Method"
+            name="shipping-group"
             required
-            value="personal">
-            <kds-radio name="account-type" value="personal">Personal Account</kds-radio>
-            <kds-radio name="account-type" value="business">Business Account</kds-radio>
-            <kds-radio name="account-type" value="enterprise">Enterprise Account</kds-radio>
-          </kds-input-group>
-
-          <kds-input-group
-            label="Notification Frequency"
-            direction="column"
-            gap="sm"
-            value="daily"
-            help-text="How often would you like to receive email updates?">
-            <kds-radio name="frequency" value="realtime">Real-time (as they happen)</kds-radio>
-            <kds-radio name="frequency" value="daily">Daily digest</kds-radio>
-            <kds-radio name="frequency" value="weekly">Weekly summary</kds-radio>
-            <kds-radio name="frequency" value="never">Never</kds-radio>
-          </kds-input-group>
+            value="standard"
+            help-text="Select your preferred shipping option">
+            <kds-radio name="shipping" value="standard">Standard (5-7 business days)</kds-radio>
+            <kds-radio name="shipping" value="express">Express (2-3 business days)</kds-radio>
+            <kds-radio name="shipping" value="overnight">Overnight (next business day)</kds-radio>
+          </kds-radio-group>
 
           <div style="display: flex; gap: 0.5rem;">
-            <kds-button type="submit">Submit Form</kds-button>
+            <kds-button type="submit">Submit</kds-button>
             <kds-button type="reset" priority="secondary">Reset</kds-button>
           </div>
         </div>
       </form>
-
-      <h3>Compact Horizontal Layout</h3>
-      <kds-input-group label="Rating" direction="row" gap="lg" value="3">
-        <kds-radio name="rating" value="1">⭐</kds-radio>
-        <kds-radio name="rating" value="2">⭐⭐</kds-radio>
-        <kds-radio name="rating" value="3">⭐⭐⭐</kds-radio>
-        <kds-radio name="rating" value="4">⭐⭐⭐⭐</kds-radio>
-        <kds-radio name="rating" value="5">⭐⭐⭐⭐⭐</kds-radio>
-      </kds-input-group>
     </div>
 
     <script>
@@ -1163,6 +1143,17 @@
           console.log('Radio form submitted:', Object.fromEntries(formData));
           alert('Radio form submitted! Check console for data.');
         });
+
+        // Radio group form demo
+        const radioGroupForm = document.getElementById('radio-group-form');
+        if (radioGroupForm) {
+          radioGroupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(radioGroupForm);
+            console.log('Radio group form submitted:', Object.fromEntries(formData));
+            alert('Radio group form submitted! Check console for data.');
+          });
+        }
       });
     </script>
   </body>
