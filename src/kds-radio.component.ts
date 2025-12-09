@@ -294,38 +294,28 @@ export class KdsRadio extends LitElement {
             @blur=${this.handleBlur}
           />
           <slot></slot>
-        </label>
-
-        ${hasHelpText || (this.invalid && hasErrorMessage)
+        ${this.invalid && hasErrorMessage
           ? html`
               <div
-                class="describedby"
-                id=${this._helpTextId}
+                part="error-message"
+                class="error-block"
+                id=${this._errorId}
+                role="alert"
               >
-                ${this.invalid && hasErrorMessage
+                ${this.errorMessage
                   ? html`
-                      <div
-                        class="error-block"
-                        id=${this._errorId}
-                        role="alert"
-                      >
-                        ${this.errorMessage
-                          ? html`
-                              <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
-                            `
-                          : html`
-                              <slot name="error-message"></slot>
-                            `}
-                      </div>
+                      <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
                     `
-                  : null}
-                ${hasHelpText
-                  ? html`
-                      <div class="help-text">
-                        <slot name="help-text">${this.helpText}</slot>
-                      </div>
-                    `
-                  : null}
+                  : html`
+                      <slot name="error-message"></slot>
+                    `}
+              </div>
+            `
+          : null}
+        ${hasHelpText
+          ? html`
+              <div part="help-text" class="help-text" id=${this._helpTextId}>
+                <slot name="help-text">${this.helpText}</slot>
               </div>
             `
           : null}
