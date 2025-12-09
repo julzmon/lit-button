@@ -39,11 +39,6 @@ import { radioGroupStyles } from "./kds-radio-group.styles.js";
  * @cssprop --mod-legend-color - Legend text color
  * @cssprop --mod-legend-font-size - Legend font size
  *
- * @csspart fieldset - The fieldset element wrapper
- * @csspart legend - The legend element
- * @csspart group - The container holding all grouped radios
- * @csspart help-text - Container for help text
- *
  * @example
  * ```html
  * <kds-radio-group label="Choose a size">
@@ -369,28 +364,27 @@ export class KdsRadioGroup extends LitElement {
 
     return html`
       <fieldset
-        part="fieldset"
         class="fieldset"
         ?disabled=${this.disabled}
         aria-invalid=${this.invalid ? 'true' : 'false'}
         aria-describedby=${ifDefined(ariaDescribedBy)}
       >
-        <legend part="legend" id=${this._legendId} class=${classMap(legendClasses)}>
+        <legend id=${this._legendId} class=${classMap(legendClasses)}>
           ${this.label ? this.label : html`<slot name="legend"></slot>`}
         </legend>
 
-        <div part="group" class=${classMap(groupClasses)}>
+        <div class=${classMap(groupClasses)}>
           <slot @slotchange=${this.handleSlotChange}></slot>
         </div>
 
         ${this.invalid && this.errorMessage ? html`
-          <div part="error" class="error-block" id=${this._errorId}>
+          <div class="error-block" id=${this._errorId}>
             <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
           </div>
         ` : ''}
 
         ${hasHelpText ? html`
-          <div part="help-text" class="help-text-wrapper" id=${this._helpTextId}>
+          <div class="help-text-wrapper" id=${this._helpTextId}>
             ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text" @slotchange=${this.handleSlotChange}></slot>`}
           </div>
         ` : ''}
