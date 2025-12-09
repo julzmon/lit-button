@@ -293,7 +293,7 @@ export class KdsRadio extends LitElement {
             @focus=${this.handleFocus}
             @blur=${this.handleBlur}
           />
-          <slot></slot>
+          <span class="label-text"><slot></slot></span>
         </label>
 
         ${hasHelpText || (this.invalid && hasErrorMessage)

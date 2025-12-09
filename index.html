@@ -898,6 +898,37 @@
     </div>
 
     <div class="demo-section">
+      <h2 id="radio">Radio Component</h2>
+
+      <h3>Validation States</h3>
+      <div class="checkbox-grid">
+        <kds-radio
+          name="radio-required"
+          value="yes"
+          required
+          invalid
+          error-message="You must accept the terms to continue">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi nam hic non earum. Ratione, tempora nisi reprehenderit neque fuga unde debitis sit ipsa nihil officia rem enim repellendus recusandae! Praesentium!
+        </kds-radio>
+        <kds-radio
+          name="radio-age"
+          value="yes"
+          invalid
+          error-message="You must be 18 or older">
+          I am 18 years or older
+        </kds-radio>
+        <kds-radio
+          name="radio-age-help"
+          value="yes"
+          invalid
+          help-text="Please confirm your age"
+          error-message="You must be 18 or older">
+          I am 18 years or older
+        </kds-radio>
+      </div>
+    </div>
+
+    <div class="demo-section">
       <h2 id="checkbox-group">Checkbox Group Component</h2>
 
       <h3>Basic Checkbox Group</h3>

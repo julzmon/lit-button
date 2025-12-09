@@ -49,7 +49,7 @@ export const radioStyles = css`
     opacity: 0.4;
   }
 
-  :host([required]) .label::after {
+  :host([required]) .label-text::after {
     content: "*";
     color: var(--kds-fg-negative-base);
   }
@@ -91,7 +91,6 @@ export const radioStyles = css`
     flex-shrink: 0;
     cursor: pointer;
     margin: 0;
-    margin-inline-end: var(--kds-space-xs);
     margin-block-start: 0.125em;
     border: var(--border-width) solid var(--border-color);
     border-radius: 50%;
