@@ -35,14 +35,6 @@ let uid = 0;
  * @cssprop --mod-radio-border-color - Border color of the radio
  * @cssprop --mod-radio-background - Background color when checked
  *
- * @csspart base - The root container element
- * @csspart control - The radio control wrapper
- * @csspart input - The native input element
- * @csspart indicator - The custom radio indicator
- * @csspart label - The label text container
- * @csspart help-text - The help text container
- * @csspart error-message - The error message container
- *
  * @example
  * ```html
  * <kds-radio name="color" value="red" checked>Red</kds-radio>
@@ -283,10 +275,9 @@ export class KdsRadio extends LitElement {
     };
 
     return html`
-      <div part="base" class=${classMap(classes)}>
-        <label part="label" class="label">
+      <div class=${classMap(classes)}>
+        <label class="label">
           <input
-            part="input"
             class="native-input"
             id=${this._inputId}
             type="radio"
@@ -308,14 +299,12 @@ export class KdsRadio extends LitElement {
         ${hasHelpText || (this.invalid && hasErrorMessage)
           ? html`
               <div
-                part="describedby"
                 class="describedby"
                 id=${this._helpTextId}
               >
                 ${this.invalid && hasErrorMessage
                   ? html`
                       <div
-                        part="error-message"
                         class="error-block"
                         id=${this._errorId}
                         role="alert"
@@ -332,7 +321,7 @@ export class KdsRadio extends LitElement {
                   : null}
                 ${hasHelpText
                   ? html`
-                      <div part="help-text" class="help-text">
+                      <div class="help-text">
                         <slot name="help-text">${this.helpText}</slot>
                       </div>
                     `
