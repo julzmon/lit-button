@@ -395,13 +395,13 @@ export class KdsInputGroup extends LitElement {
               <kds-alert-contextual status="negative" size="sm">${this.errorMessage}</kds-alert-contextual>
             ` : html`<slot name="error"></slot>`}
           </div>
-        ` : ''}
+        ` : null}
 
         ${ (hasHelpText || this._hasHelpContent) ? html`
           <div part="help-text" class="help-text-wrapper" id=${this._helpTextId}>
             ${this.helpText ? html`<span class="help-text">${this.helpText}</span>` : html`<slot name="help-text" @slotchange=${this.handleSlotChange}></slot>`}
           </div>
-        ` : '' }
+        ` : null }
       </fieldset>
     `;
   }
