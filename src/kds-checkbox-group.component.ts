@@ -211,13 +211,7 @@ export class KdsCheckboxGroup extends LitElement {
       this._hasHelpContent = assignedElements.length > 0;
     }
 
-    assignedElements.forEach(element => {
-      if (element.tagName?.toLowerCase() !== 'kds-checkbox') return;
-      const checkbox = element as any;
-      if ('size' in checkbox) checkbox.size = this.size;
-      if ('invalid' in checkbox) checkbox.invalid = this.invalid;
-      if ('disabled' in checkbox && this.disabled) checkbox.disabled = this.disabled;
-    });
+    this.updateSlottedElements();
   };
 
   /**
