@@ -347,7 +347,109 @@ protected willUpdate(_changed: PropertyValues): void {
   const progressValue = this.getProgressValue();
   this.classList.toggle("is-determinate", progressValue !== undefined);
 }
-```## Naming Conventions
+```
+
+### Group Component State Propagation Pattern
+
+Group components (`kds-checkbox-group`, `kds-radio-group`) propagate properties to slotted children:
+
+```typescript
+private updateSlottedElements() {
+  const slot = this.shadowRoot?.querySelector('slot:not([name])') as HTMLSlotElement;
+  if (!slot) return;
+
+  const children = slot.assignedElements().filter(el =>
+    el.tagName?.toLowerCase() === 'kds-checkbox'
+  );
+
+  // Propagate group state to children
+  children.forEach((child: any) => {
+    child.size = this.size;
+    child.disabled = this.disabled;
+    child.invalid = this.invalid;
+  });
+}
+```
+
+**Key patterns:**
+- Filter slot elements by tag name: `el.tagName?.toLowerCase() === 'kds-checkbox'`
+- Update on `slotchange` and property changes
+- Use `PropertyValues` from `lit` (not `lit/decorators.js`)
+
+### Roving Tabindex Pattern (Radio Groups)
+
+Radio groups implement roving tabindex for keyboard navigation (Arrow keys):
+
+```typescript
+private updateRadioTabIndexes() {
+  const radios = this.getRadios();
+  if (radios.length === 0) return;
+
+  // Find checked radio or default to first
+  let focusableIndex = 0;
+  if (this.value) {
+    const checkedIndex = radios.findIndex(r => r.value === this.value);
+    if (checkedIndex !== -1) focusableIndex = checkedIndex;
+  }
+
+  // Set tabindex: 0 for focusable radio, -1 for others
+  radios.forEach((radio, index) => {
+    radio.tabIndex = index === focusableIndex ? 0 : -1;
+  });
+}
+```
+
+**Only the checked radio (or first if none checked) has `tabindex="0"`. All others have `tabindex="-1"`.**
+
+### Inline SVG Icon Pattern
+
+Components render semantic SVG icons inline (no external icon library):
+
+```typescript
+private _renderIcon() {
+  switch (this.status) {
+    case "positive":
+      return html`
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <polyline points="8 12 11 15 16 9" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+      `;
+    // ... other cases
+  }
+}
+```
+
+**Always use `currentColor` for stroke/fill to respect CSS color tokens.**
+
+### Indeterminate State Pattern (Checkboxes)
+
+Checkboxes support indeterminate state (third visual state between checked/unchecked):
+
+```typescript
+@property({ type: Boolean, reflect: true })
+indeterminate = false;
+
+protected override firstUpdated() {
+  this.updateIndeterminate();
+}
+
+protected override updated(changed: Map<PropertyKey, unknown>) {
+  if (changed.has("indeterminate")) {
+    this.updateIndeterminate();
+  }
+}
+
+private updateIndeterminate() {
+  if (this._native) {
+    this._native.indeterminate = this.indeterminate;
+  }
+}
+```
+
+**The `indeterminate` property must be set programmatically on the native input element (cannot be set via HTML attribute).**
+
+## Naming Conventions
 
 ### Components & Files
 - Component tags: `kds-{name}` (kebab-case)
@@ -753,7 +855,9 @@ Components use semantic color tokens that change based on variant:
     outline-offset: var(--kds-border-width-sm);
   }
 }
-```## Accessibility Requirements
+```
+
+## Accessibility Requirements
 
 Always implement:
 
@@ -972,6 +1076,11 @@ Every component must include comprehensive JSDoc with:
 - **`kds-text-input`** - Form text input with validation, error messages, help text, and start/end slot adornments
 - **`kds-input-group`** - Fieldset-based wrapper for grouping related form controls
 - **`kds-progress-circle`** - Circular progress indicator with determinate/indeterminate modes and ARIA semantics
+- **`kds-checkbox`** - Form checkbox with three-state support (indeterminate), validation, help text, and error messages
+- **`kds-checkbox-group`** - Fieldset-based container for multiple checkboxes with state propagation (size, invalid, disabled)
+- **`kds-radio`** - Form radio button with validation, help text, and error messages
+- **`kds-radio-group`** - Fieldset-based container enforcing single-selection with roving tabindex keyboard navigation
+- **`kds-alert-contextual`** - Status message component with semantic icons (info, positive, negative, warning)
 
 ## Design Tokens
 
@@ -1000,7 +1109,11 @@ npm run lint:css # Lint CSS (auto-fix available)
 
 - No automated tests currently
 - Manual testing via `index.html` demo page
+  - Open with `npm run dev` and navigate to `http://localhost:5173`
+  - All components have live demos with various configurations
+  - Test theme switching (light/dark mode) via the theme toggle button
 - Verify TypeScript compilation with `npm run build`
+- Validate CSS styles with `npm run lint:css`
 
 ## Adding New Components Checklist
 

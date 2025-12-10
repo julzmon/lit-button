@@ -1,0 +1,3438 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-alert-contextual.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsAlertContextual",
+          "cssProperties": [
+            {
+              "description": "Font size of the alert text",
+              "name": "--mod-alert-font-size"
+            },
+            {
+              "description": "Size of the status icon",
+              "name": "--mod-alert-icon-size"
+            },
+            {
+              "description": "Text and icon color",
+              "name": "--mod-alert-color"
+            },
+            {
+              "description": "Gap between icon and text",
+              "name": "--mod-alert-gap"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The status icon container",
+              "name": "icon"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for the alert message text",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "status",
+              "type": {
+                "text": "\"info\" | \"positive\" | \"negative\" | \"warning\""
+              },
+              "default": "\"info\"",
+              "description": "The status/type of the alert.\n- `info`: Information status (blue)\n- `positive`: Success/positive status (green)\n- `negative`: Error/negative status (red)\n- `warning`: Warning status (orange/amber)",
+              "attribute": "status",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "The size of the alert.\n- `sm`: Small size\n- `md`: Medium size (default)",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "_renderIcon",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "status",
+              "type": {
+                "text": "\"info\" | \"positive\" | \"negative\" | \"warning\""
+              },
+              "default": "\"info\"",
+              "description": "The status/type of the alert.\n- `info`: Information status (blue)\n- `positive`: Success/positive status (green)\n- `negative`: Error/negative status (red)\n- `warning`: Warning status (orange/amber)",
+              "fieldName": "status"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "The size of the alert.\n- `sm`: Small size\n- `md`: Medium size (default)",
+              "fieldName": "size"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A contextual alert component for displaying status messages.",
+          "tagName": "kds-alert-contextual",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsAlertContextual",
+          "declaration": {
+            "name": "KdsAlertContextual",
+            "module": "src/kds-alert-contextual.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-alert-contextual",
+          "declaration": {
+            "name": "KdsAlertContextual",
+            "module": "src/kds-alert-contextual.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-button-group.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsButtonGroup",
+          "cssProperties": [
+            {
+              "description": "Custom gap value (overrides gap property)",
+              "name": "--mod-button-group-gap"
+            },
+            {
+              "description": "Applied to button children to control corner radius (used in gap=\"none\" mode)",
+              "name": "--mod-btn-border-radius"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for button children (kds-button components)",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "\"none\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+              },
+              "default": "\"md\"",
+              "description": "Controls spacing between buttons. When set to \"none\", buttons are visually\nconnected with shared borders and proper corner radius management.",
+              "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"row\"",
+              "description": "Controls button orientation (horizontal or vertical layout).",
+              "attribute": "direction"
+            },
+            {
+              "kind": "field",
+              "name": "justify",
+              "type": {
+                "text": "\"start\" | \"center\" | \"end\""
+              },
+              "default": "\"start\"",
+              "description": "Controls alignment along the main axis using CSS justify-content.",
+              "attribute": "justify"
+            },
+            {
+              "kind": "field",
+              "name": "stretch",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When true, buttons distribute at equal widths and stack vertically\non smaller containers via container query (30rem breakpoint).",
+              "attribute": "stretch"
+            },
+            {
+              "kind": "field",
+              "name": "autoStack",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When true, buttons stack vertically at the 30rem container breakpoint\nwithout equal-width distribution. Buttons maintain their natural width.",
+              "attribute": "autoStack"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "gap",
+              "type": {
+                "text": "\"none\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+              },
+              "default": "\"md\"",
+              "description": "Controls spacing between buttons. When set to \"none\", buttons are visually\nconnected with shared borders and proper corner radius management.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"row\"",
+              "description": "Controls button orientation (horizontal or vertical layout).",
+              "fieldName": "direction"
+            },
+            {
+              "name": "justify",
+              "type": {
+                "text": "\"start\" | \"center\" | \"end\""
+              },
+              "default": "\"start\"",
+              "description": "Controls alignment along the main axis using CSS justify-content.",
+              "fieldName": "justify"
+            },
+            {
+              "name": "stretch",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When true, buttons distribute at equal widths and stack vertically\non smaller containers via container query (30rem breakpoint).",
+              "fieldName": "stretch"
+            },
+            {
+              "name": "autoStack",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When true, buttons stack vertically at the 30rem container breakpoint\nwithout equal-width distribution. Buttons maintain their natural width.",
+              "fieldName": "autoStack"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A flexible container for grouping multiple buttons together.",
+          "tagName": "kds-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsButtonGroup",
+          "declaration": {
+            "name": "KdsButtonGroup",
+            "module": "src/kds-button-group.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-button-group",
+          "declaration": {
+            "name": "KdsButtonGroup",
+            "module": "src/kds-button-group.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-button.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KDSButton",
+          "cssProperties": [
+            {
+              "description": "Button height.",
+              "name": "--mod-btn-height"
+            },
+            {
+              "description": "Minimum width.",
+              "name": "--mod-btn-min-width"
+            },
+            {
+              "description": "Horizontal padding.",
+              "name": "--mod-btn-padding-inline"
+            },
+            {
+              "description": "Gap between label and start/end slots.",
+              "name": "--mod-btn-gap"
+            },
+            {
+              "description": "External block margin (top/bottom).",
+              "name": "--mod-btn-margin-block"
+            },
+            {
+              "description": "External left margin.",
+              "name": "--mod-btn-margin-left"
+            },
+            {
+              "description": "External right margin.",
+              "name": "--mod-btn-margin-right"
+            },
+            {
+              "description": "Text color.",
+              "name": "--mod-btn-text-color"
+            },
+            {
+              "description": "Text color on hover.",
+              "name": "--mod-btn-text-color-hover"
+            },
+            {
+              "description": "Font size.",
+              "name": "--mod-btn-font-size"
+            },
+            {
+              "description": "Font weight.",
+              "name": "--mod-btn-font-weight"
+            },
+            {
+              "description": "Line height (unitless recommended).",
+              "name": "--mod-btn-line-height"
+            },
+            {
+              "description": "Border width for block-start (top).",
+              "name": "--mod-btn-border-width-block-start"
+            },
+            {
+              "description": "Border width for block-end (bottom).",
+              "name": "--mod-btn-border-width-block-end"
+            },
+            {
+              "description": "Border width for inline-start (left in LTR).",
+              "name": "--mod-btn-border-width-inline-start"
+            },
+            {
+              "description": "Border width for inline-end (right in LTR).",
+              "name": "--mod-btn-border-width-inline-end"
+            },
+            {
+              "description": "Border radius for top-left corner.",
+              "name": "--mod-btn-border-radius-top-left"
+            },
+            {
+              "description": "Border radius for top-right corner.",
+              "name": "--mod-btn-border-radius-top-right"
+            },
+            {
+              "description": "Border radius for bottom-right corner.",
+              "name": "--mod-btn-border-radius-bottom-right"
+            },
+            {
+              "description": "Border radius for bottom-left corner.",
+              "name": "--mod-btn-border-radius-bottom-left"
+            },
+            {
+              "description": "Global border color fallback.",
+              "name": "--mod-btn-border-color"
+            },
+            {
+              "description": "Border color for block-start (top).",
+              "name": "--mod-btn-border-color-block-start"
+            },
+            {
+              "description": "Border color for block-end (bottom).",
+              "name": "--mod-btn-border-color-block-end"
+            },
+            {
+              "description": "Border color for inline-start (left in LTR).",
+              "name": "--mod-btn-border-color-inline-start"
+            },
+            {
+              "description": "Border color for inline-end (right in LTR).",
+              "name": "--mod-btn-border-color-inline-end"
+            },
+            {
+              "description": "Global border color on hover.",
+              "name": "--mod-btn-border-color-hover"
+            },
+            {
+              "description": "Border color for block-start on hover.",
+              "name": "--mod-btn-border-color-block-start-hover"
+            },
+            {
+              "description": "Border color for block-end on hover.",
+              "name": "--mod-btn-border-color-block-end-hover"
+            },
+            {
+              "description": "Border color for inline-start on hover.",
+              "name": "--mod-btn-border-color-inline-start-hover"
+            },
+            {
+              "description": "Border color for inline-end on hover.",
+              "name": "--mod-btn-border-color-inline-end-hover"
+            },
+            {
+              "description": "Background color (wins over attributes/layers).",
+              "name": "--mod-btn-background-color"
+            },
+            {
+              "description": "Background color on hover.",
+              "name": "--mod-btn-background-color-hover"
+            },
+            {
+              "description": "Text decoration on hover.",
+              "name": "--mod-btn-text-decoration-hover"
+            },
+            {
+              "description": "Size of the pending spinner.",
+              "name": "--mod-btn-spinner-size"
+            }
+          ],
+          "slots": [
+            {
+              "description": "slot used for projecting a button label.",
+              "name": "Default"
+            },
+            {
+              "description": "For icon or element before the label.",
+              "name": "start"
+            },
+            {
+              "description": "For icon or element after the label.",
+              "name": "end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "default": "{ mode: 'open' as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "priority",
+              "type": {
+                "text": "'primary' | 'secondary' | 'tertiary' | undefined"
+              },
+              "description": "Defines the visual priority of the button. When set, it overrides\nthe `color` and `variant` properties to enforce consistent styling.\n\n- `primary`: Main action (default style)\n- `secondary`: Secondary action\n- `tertiary`: Low emphasis or subtle action",
+              "attribute": "priority",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "'neutral' | 'positive' | 'negative' | 'warning' | 'info' | undefined"
+              },
+              "description": "Sets the semantic color of the button.\nIgnored if `priority` is set.\n\n- `neutral`: Default styling\n- `positive`: Success or confirmation\n- `negative`: Destructive or error\n- `warning`: Caution or warning\n- `info`: Informational context",
+              "attribute": "color",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'solid' | 'outline' | 'transparent' | 'link' | undefined"
+              },
+              "description": "Controls the button's style variant.\nIgnored if `priority` is set.\n\n- `solid`: Filled background\n- `outline`: Transparent with border\n- `transparent`: No border or fill\n- `link`: Styled as a text link",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "'xs' | 'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Controls the button size.\n\n- `xs`: Extra small\n- `sm`: Small\n- `md`: Medium (default)\n- `lg`: Large",
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "pending",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows a pending state and suppresses interaction while true.\nWhen pending, the button blocks clicks/submits and displays a spinner.",
+              "attribute": "pending",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "pendingLabel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Accessible label prefix used while pending (combined with the base label).\nExample: `pending-label=\"Saving\"` → \"Saving Save changes\".",
+              "attribute": "pending-label"
+            },
+            {
+              "kind": "field",
+              "name": "tabindex",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Sets the tab order of the button element.",
+              "attribute": "tabindex"
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "HTMLButtonElement['type']"
+              },
+              "default": "'button'",
+              "description": "The native button `type` attribute.\n\n- `button` (default)\n- `submit`\n- `reset`\n\nThis attribute is ignored when `href` is present.",
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the button, preventing user interaction.\nThis attribute is ignored when `href` is present.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The `name` attribute used when the button is inside a form.\nThis attribute is ignored when `href` is present.",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The `value` attribute submitted with the form when clicked.\nThis attribute is ignored when `href` is present.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The `form` attribute specifying the form the button is associated with.\n  This attribute is ignored when `href` is present.",
+              "attribute": "form"
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "When set, the component renders as an anchor tag instead of a button.",
+              "attribute": "href"
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "description": "Tells the browser where to open the link. Only used when `href` is present.",
+              "attribute": "target"
+            },
+            {
+              "kind": "field",
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "When using `href`, this attribute will map to the underlying link's `rel` attribute.",
+              "attribute": "rel"
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabel",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "attribute": "aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "ariaLabelledby",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "aria-labelledby"
+            },
+            {
+              "kind": "field",
+              "name": "ariaDescribedby",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "aria-describedby"
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "HTMLButtonElement | HTMLAnchorElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_labelSlot",
+              "type": {
+                "text": "HTMLSlotElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_computedRel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "parameters": [
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "description": "Sets focus on the button and anchor.\nUseful for programmatically triggering focus-related behavior."
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "description": "Removes focus on the button and anchor.\nUseful for programmatically triggering blur-related behavior."
+            },
+            {
+              "kind": "field",
+              "name": "handleLabelSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "_applyAriaAttributes",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "el",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                },
+                {
+                  "name": "computedAriaLabel",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getTextLabel",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_computedAriaLabel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_spinnerSize",
+              "type": {
+                "text": "'xs' | 'sm' | 'md'"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "_renderSpinner",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_handleClick",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "name": "kds-pending-change",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Emitted when `pending` changes. Detail: `{ pending: boolean }`."
+            },
+            {
+              "description": "Emitted when the button loses focus.",
+              "name": "blur"
+            },
+            {
+              "description": "Emitted when the button gains focus.",
+              "name": "focus"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "priority",
+              "type": {
+                "text": "'primary' | 'secondary' | 'tertiary' | undefined"
+              },
+              "description": "Defines the visual priority of the button. When set, it overrides\nthe `color` and `variant` properties to enforce consistent styling.\n\n- `primary`: Main action (default style)\n- `secondary`: Secondary action\n- `tertiary`: Low emphasis or subtle action",
+              "fieldName": "priority"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "'neutral' | 'positive' | 'negative' | 'warning' | 'info' | undefined"
+              },
+              "description": "Sets the semantic color of the button.\nIgnored if `priority` is set.\n\n- `neutral`: Default styling\n- `positive`: Success or confirmation\n- `negative`: Destructive or error\n- `warning`: Caution or warning\n- `info`: Informational context",
+              "fieldName": "color"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "'solid' | 'outline' | 'transparent' | 'link' | undefined"
+              },
+              "description": "Controls the button's style variant.\nIgnored if `priority` is set.\n\n- `solid`: Filled background\n- `outline`: Transparent with border\n- `transparent`: No border or fill\n- `link`: Styled as a text link",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'xs' | 'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Controls the button size.\n\n- `xs`: Extra small\n- `sm`: Small\n- `md`: Medium (default)\n- `lg`: Large",
+              "fieldName": "size"
+            },
+            {
+              "name": "pending",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows a pending state and suppresses interaction while true.\nWhen pending, the button blocks clicks/submits and displays a spinner.",
+              "fieldName": "pending"
+            },
+            {
+              "name": "pending-label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Accessible label prefix used while pending (combined with the base label).\nExample: `pending-label=\"Saving\"` → \"Saving Save changes\".",
+              "fieldName": "pendingLabel"
+            },
+            {
+              "name": "tabindex",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Sets the tab order of the button element.",
+              "fieldName": "tabindex"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "HTMLButtonElement['type']"
+              },
+              "default": "'button'",
+              "description": "The native button `type` attribute.\n\n- `button` (default)\n- `submit`\n- `reset`\n\nThis attribute is ignored when `href` is present.",
+              "fieldName": "type"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the button, preventing user interaction.\nThis attribute is ignored when `href` is present.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The `name` attribute used when the button is inside a form.\nThis attribute is ignored when `href` is present.",
+              "fieldName": "name"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The `value` attribute submitted with the form when clicked.\nThis attribute is ignored when `href` is present.",
+              "fieldName": "value"
+            },
+            {
+              "name": "form",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The `form` attribute specifying the form the button is associated with.\n  This attribute is ignored when `href` is present.",
+              "fieldName": "form"
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "When set, the component renders as an anchor tag instead of a button.",
+              "fieldName": "href"
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "description": "Tells the browser where to open the link. Only used when `href` is present.",
+              "fieldName": "target"
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "When using `href`, this attribute will map to the underlying link's `rel` attribute.",
+              "fieldName": "rel"
+            },
+            {
+              "name": "aria-label",
+              "type": {
+                "text": "string | null"
+              },
+              "default": "null",
+              "fieldName": "ariaLabel"
+            },
+            {
+              "name": "aria-labelledby",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "ariaLabelledby"
+            },
+            {
+              "name": "aria-describedby",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "ariaDescribedby"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A clickable element for triggering actions.",
+          "tagName": "kds-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KDSButton",
+          "declaration": {
+            "name": "KDSButton",
+            "module": "src/kds-button.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-button",
+          "declaration": {
+            "name": "KDSButton",
+            "module": "src/kds-button.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-checkbox-group.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsCheckboxGroup",
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered as the fieldset legend.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the group.",
+              "attribute": "help-text"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown when invalid.",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the group as required.",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the legend while keeping it accessible to screen readers.",
+              "attribute": "hide-label"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the size of the checkboxes in the group.\n- `sm`: Small\n- `md`: Medium (default)",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the group is in an invalid state.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables all child checkboxes in the group.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"column\"",
+              "description": "Layout direction for the group.",
+              "attribute": "direction",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "\"xs\" | \"sm\" | \"md\" | \"lg\""
+              },
+              "default": "\"md\"",
+              "description": "Gap size between grouped checkboxes.",
+              "attribute": "gap",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]",
+              "description": "The values of all checked checkboxes in the group.",
+              "attribute": "value"
+            },
+            {
+              "kind": "method",
+              "name": "updateSlottedElements",
+              "privacy": "private",
+              "description": "Propagates the group's size, invalid, and disabled state to all slotted checkboxes."
+            },
+            {
+              "kind": "field",
+              "name": "handleSlotChange",
+              "privacy": "private",
+              "description": "Handles slot content changes."
+            },
+            {
+              "kind": "field",
+              "name": "handleCheckboxChange",
+              "privacy": "private",
+              "description": "Handles checkbox change events and tracks group values."
+            },
+            {
+              "kind": "method",
+              "name": "updateGroupValue",
+              "privacy": "private",
+              "description": "Updates the group's value array from checked checkboxes."
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Checks validity of the group.\nFor now, basic implementation. Can be extended for min/max selection requirements."
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Reports validity and shows validation message if invalid."
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "isDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "description": "Called when a containing fieldset is disabled."
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "description": "Called when the form is reset."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered as the fieldset legend.",
+              "fieldName": "label"
+            },
+            {
+              "name": "help-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the group.",
+              "fieldName": "helpText"
+            },
+            {
+              "name": "error-message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown when invalid.",
+              "fieldName": "errorMessage"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the group as required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "hide-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the legend while keeping it accessible to screen readers.",
+              "fieldName": "hideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the size of the checkboxes in the group.\n- `sm`: Small\n- `md`: Medium (default)",
+              "fieldName": "size"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the group is in an invalid state.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables all child checkboxes in the group.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"column\"",
+              "description": "Layout direction for the group.",
+              "fieldName": "direction"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "\"xs\" | \"sm\" | \"md\" | \"lg\""
+              },
+              "default": "\"md\"",
+              "description": "Gap size between grouped checkboxes.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "[]",
+              "description": "The values of all checked checkboxes in the group.",
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "kds-checkbox-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsCheckboxGroup",
+          "declaration": {
+            "name": "KdsCheckboxGroup",
+            "module": "src/kds-checkbox-group.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-checkbox-group",
+          "declaration": {
+            "name": "KdsCheckboxGroup",
+            "module": "src/kds-checkbox-group.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-checkbox.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsCheckbox",
+          "cssProperties": [
+            {
+              "description": "Size of the checkbox indicator",
+              "name": "--mod-checkbox-size"
+            },
+            {
+              "description": "Color of the checked indicator",
+              "name": "--mod-checkbox-color"
+            },
+            {
+              "description": "Border color of the checkbox",
+              "name": "--mod-checkbox-border-color"
+            },
+            {
+              "description": "Background color when checked",
+              "name": "--mod-checkbox-background"
+            },
+            {
+              "description": "Border radius of the checkbox",
+              "name": "--mod-checkbox-border-radius"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for checkbox label text",
+              "name": ""
+            },
+            {
+              "description": "Optional help text shown below the checkbox",
+              "name": "help-text"
+            },
+            {
+              "description": "Error message shown when invalid",
+              "name": "error-message"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_native",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_helpTextId",
+              "privacy": "private",
+              "default": "`kds-checkbox-help-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "_errorId",
+              "privacy": "private",
+              "default": "`kds-checkbox-error-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "_inputId",
+              "privacy": "private",
+              "default": "`kds-checkbox-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The name of the checkbox, submitted as a name/value pair with form data.",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"on\"",
+              "description": "The value of the checkbox, submitted with the name when the checkbox is checked.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the checkbox is checked.",
+              "attribute": "checked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "The checkbox's size.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the checkbox.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes the checkbox a required field.",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates the checkbox is in an invalid state.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Puts the checkbox in an indeterminate state (neither checked nor unchecked).",
+              "attribute": "indeterminate",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The checkbox's help text. Alternatively, use the help-text slot.",
+              "attribute": "help-text"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The checkbox's error message. Alternatively, use the error-message slot.",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "method",
+              "name": "updateIndeterminate",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleInput",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleFocus",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleBlur",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "updateValidity",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "description": "Checks for validity and shows the browser's validation message if invalid."
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "description": "Checks for validity but doesn't show a validation message."
+            }
+          ],
+          "events": [
+            {
+              "description": "Fired when the checked state changes (native event)",
+              "name": "change"
+            },
+            {
+              "description": "Fired when the checkbox is toggled (native event)",
+              "name": "input"
+            },
+            {
+              "description": "Fired when checked state changes. Detail: { checked: boolean, value: string }",
+              "name": "kds-change"
+            },
+            {
+              "description": "Fired when checkbox receives focus",
+              "name": "kds-focus"
+            },
+            {
+              "description": "Fired when checkbox loses focus",
+              "name": "kds-blur"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The name of the checkbox, submitted as a name/value pair with form data.",
+              "fieldName": "name"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"on\"",
+              "description": "The value of the checkbox, submitted with the name when the checkbox is checked.",
+              "fieldName": "value"
+            },
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the checkbox is checked.",
+              "fieldName": "checked"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "The checkbox's size.",
+              "fieldName": "size"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the checkbox.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes the checkbox a required field.",
+              "fieldName": "required"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates the checkbox is in an invalid state.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Puts the checkbox in an indeterminate state (neither checked nor unchecked).",
+              "fieldName": "indeterminate"
+            },
+            {
+              "name": "help-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The checkbox's help text. Alternatively, use the help-text slot.",
+              "fieldName": "helpText"
+            },
+            {
+              "name": "error-message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The checkbox's error message. Alternatively, use the error-message slot.",
+              "fieldName": "errorMessage"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A checkbox input with label, error, and help text support",
+          "tagName": "kds-checkbox",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsCheckbox",
+          "declaration": {
+            "name": "KdsCheckbox",
+            "module": "src/kds-checkbox.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-checkbox",
+          "declaration": {
+            "name": "KdsCheckbox",
+            "module": "src/kds-checkbox.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-input-group.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsInputGroup",
+          "members": [
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered as the fieldset legend.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the group.\nCan also be provided via the `help-text` slot.",
+              "attribute": "help-text"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown below the group when invalid (if no `error` slot provided).",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the group as required, showing a required indicator on the legend.",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the legend while keeping it accessible to screen readers.\nUses the sr-only pattern (position: absolute with 1px dimensions).",
+              "attribute": "hide-label"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the size of the group, affecting all child components.\n\n- `sm`: Small\n- `md`: Medium (default)",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the group is in an invalid state.\nThis will be applied to all child components and shows error styling.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables all child form controls in the group.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"row\"",
+              "description": "Layout direction for the group. Use 'column' for radio/checkbox groups.",
+              "attribute": "direction",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "\"none\" | \"sm\" | \"md\" | \"lg\""
+              },
+              "default": "\"md\"",
+              "description": "Gap size between grouped elements.",
+              "attribute": "gap",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The value of the selected radio (for radio groups).\nAutomatically tracks which radio is checked.",
+              "attribute": "value"
+            },
+            {
+              "kind": "method",
+              "name": "updateSlottedElements",
+              "privacy": "private",
+              "description": "Propagates the group's size, invalid, and disabled state to all slotted elements.\nThis ensures child components (like inputs, buttons, selects) inherit the group's state.\n\nOnly updates properties that exist on each slotted element (duck typing approach)."
+            },
+            {
+              "kind": "field",
+              "name": "handleSlotChange",
+              "privacy": "private",
+              "description": "Handles slot content changes.\nPropagates properties to newly slotted elements and updates border radius."
+            },
+            {
+              "kind": "field",
+              "name": "handleRadioChange",
+              "privacy": "private",
+              "description": "Handles radio button change events for coordinating radio groups."
+            },
+            {
+              "kind": "method",
+              "name": "getRadios",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "any[]"
+                }
+              },
+              "description": "Gets all radio buttons in the default slot."
+            },
+            {
+              "kind": "method",
+              "name": "updateRadioTabIndexes",
+              "privacy": "private",
+              "description": "Implements roving tabindex for radio button keyboard navigation.\nOnly one radio should be tabbable at a time."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered as the fieldset legend.",
+              "fieldName": "label"
+            },
+            {
+              "name": "help-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the group.\nCan also be provided via the `help-text` slot.",
+              "fieldName": "helpText"
+            },
+            {
+              "name": "error-message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown below the group when invalid (if no `error` slot provided).",
+              "fieldName": "errorMessage"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the group as required, showing a required indicator on the legend.",
+              "fieldName": "required"
+            },
+            {
+              "name": "hide-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the legend while keeping it accessible to screen readers.\nUses the sr-only pattern (position: absolute with 1px dimensions).",
+              "fieldName": "hideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the size of the group, affecting all child components.\n\n- `sm`: Small\n- `md`: Medium (default)",
+              "fieldName": "size"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the group is in an invalid state.\nThis will be applied to all child components and shows error styling.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables all child form controls in the group.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"row\"",
+              "description": "Layout direction for the group. Use 'column' for radio/checkbox groups.",
+              "fieldName": "direction"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "\"none\" | \"sm\" | \"md\" | \"lg\""
+              },
+              "default": "\"md\"",
+              "description": "Gap size between grouped elements.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The value of the selected radio (for radio groups).\nAutomatically tracks which radio is checked.",
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "kds-input-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsInputGroup",
+          "declaration": {
+            "name": "KdsInputGroup",
+            "module": "src/kds-input-group.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-input-group",
+          "declaration": {
+            "name": "KdsInputGroup",
+            "module": "src/kds-input-group.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-progress-circle.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsProgressCircle",
+          "cssProperties": [
+            {
+              "description": "Preferred size of the control.",
+              "name": "--mod-progress-size"
+            },
+            {
+              "description": "Color of the active progress arc.",
+              "name": "--mod-progress-indicator-color"
+            },
+            {
+              "description": "Animation duration for indeterminate mode.",
+              "name": "--mod-progress-speed"
+            },
+            {
+              "description": "Sweep angle used when spinning.",
+              "name": "--mod-progress-spinner-arc"
+            },
+            {
+              "description": "Color of the inactive track.",
+              "name": "--kds-progress-track-color"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "progress",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Determinate progress percentage (0-100). Omit for spinner mode.\nFractions are allowed and will render proportionally.",
+              "attribute": "progress"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Optional accessible label. Provide when the spinner conveys status.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+              },
+              "default": "\"md\"",
+              "description": "Preset sizes mapped to design tokens.\n\n- `xs`: Extra small\n- `sm`: Small\n- `md`: Medium (default)\n- `lg`: Large\n- `xl`: Extra large",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "arcDeg",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "method",
+              "name": "getProgressValue",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "number | undefined"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "progress",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Determinate progress percentage (0-100). Omit for spinner mode.\nFractions are allowed and will render proportionally.",
+              "fieldName": "progress"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Optional accessible label. Provide when the spinner conveys status.",
+              "fieldName": "label"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\""
+              },
+              "default": "\"md\"",
+              "description": "Preset sizes mapped to design tokens.\n\n- `xs`: Extra small\n- `sm`: Small\n- `md`: Medium (default)\n- `lg`: Large\n- `xl`: Extra large",
+              "fieldName": "size"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "Circular indicator for determinate progress values or indeterminate loading states.",
+          "tagName": "kds-progress-circle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsProgressCircle",
+          "declaration": {
+            "name": "KdsProgressCircle",
+            "module": "src/kds-progress-circle.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-progress-circle",
+          "declaration": {
+            "name": "KdsProgressCircle",
+            "module": "src/kds-progress-circle.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-radio-group.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsRadioGroup",
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered as the fieldset legend.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the group.",
+              "attribute": "help-text"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown when invalid.",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the group as required.",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the legend while keeping it accessible to screen readers.",
+              "attribute": "hide-label"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the size of the radios in the group.\n- `sm`: Small\n- `md`: Medium (default)",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the group is in an invalid state.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables all child radios in the group.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"column\"",
+              "description": "Layout direction for the group.",
+              "attribute": "direction",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "\"xs\" | \"sm\" | \"md\" | \"lg\""
+              },
+              "default": "\"md\"",
+              "description": "Gap size between grouped radios.",
+              "attribute": "gap",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "The value of the selected radio in the group.",
+              "attribute": "value"
+            },
+            {
+              "kind": "method",
+              "name": "updateSlottedElements",
+              "privacy": "private",
+              "description": "Propagates the group's size, invalid, and disabled state to all slotted radios."
+            },
+            {
+              "kind": "field",
+              "name": "handleSlotChange",
+              "privacy": "private",
+              "description": "Handles slot content changes."
+            },
+            {
+              "kind": "field",
+              "name": "handleRadioChange",
+              "privacy": "private",
+              "description": "Handles radio change events and maintains single selection."
+            },
+            {
+              "kind": "method",
+              "name": "getRadios",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "any[]"
+                }
+              },
+              "description": "Gets all radio buttons in the default slot."
+            },
+            {
+              "kind": "method",
+              "name": "updateRadioTabIndexes",
+              "privacy": "private",
+              "description": "Implements roving tabindex for radio button keyboard navigation.\nOnly one radio should be tabbable at a time (the checked one, or first if none checked)."
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Checks validity of the group."
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Reports validity and shows validation message if invalid."
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "isDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "description": "Called when a containing fieldset is disabled."
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "description": "Called when the form is reset."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered as the fieldset legend.",
+              "fieldName": "label"
+            },
+            {
+              "name": "help-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the group.",
+              "fieldName": "helpText"
+            },
+            {
+              "name": "error-message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown when invalid.",
+              "fieldName": "errorMessage"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the group as required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "hide-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the legend while keeping it accessible to screen readers.",
+              "fieldName": "hideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the size of the radios in the group.\n- `sm`: Small\n- `md`: Medium (default)",
+              "fieldName": "size"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the group is in an invalid state.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables all child radios in the group.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "direction",
+              "type": {
+                "text": "\"row\" | \"column\""
+              },
+              "default": "\"column\"",
+              "description": "Layout direction for the group.",
+              "fieldName": "direction"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "\"xs\" | \"sm\" | \"md\" | \"lg\""
+              },
+              "default": "\"md\"",
+              "description": "Gap size between grouped radios.",
+              "fieldName": "gap"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "The value of the selected radio in the group.",
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "kds-radio-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsRadioGroup",
+          "declaration": {
+            "name": "KdsRadioGroup",
+            "module": "src/kds-radio-group.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-radio-group",
+          "declaration": {
+            "name": "KdsRadioGroup",
+            "module": "src/kds-radio-group.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-radio.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsRadio",
+          "cssProperties": [
+            {
+              "description": "Size of the radio indicator",
+              "name": "--mod-radio-size"
+            },
+            {
+              "description": "Color of the checked indicator",
+              "name": "--mod-radio-color"
+            },
+            {
+              "description": "Border color of the radio",
+              "name": "--mod-radio-border-color"
+            },
+            {
+              "description": "Background color when checked",
+              "name": "--mod-radio-background"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot for radio label text",
+              "name": ""
+            },
+            {
+              "description": "Optional help text shown below the radio",
+              "name": "help-text"
+            },
+            {
+              "description": "Error message shown when invalid",
+              "name": "error-message"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_native",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_helpTextId",
+              "privacy": "private",
+              "default": "`kds-radio-help-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "_errorId",
+              "privacy": "private",
+              "default": "`kds-radio-error-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "_inputId",
+              "privacy": "private",
+              "default": "`kds-radio-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The name of the radio button, submitted as a name/value pair with form data.\nAll radios in a group must share the same name.",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "The value of the radio button, submitted with the name when selected.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the radio is checked.",
+              "attribute": "checked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "The radio's size.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the radio.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes the radio a required field (when in a group, at least one must be selected).",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates the radio is in an invalid state.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The radio's help text. Alternatively, use the help-text slot.",
+              "attribute": "help-text"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The radio's error message. Alternatively, use the error-message slot.",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "handleChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleInput",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleFocus",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleBlur",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "updateValidity",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "description": "Checks for validity and shows the browser's validation message if invalid."
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "description": "Checks for validity but doesn't show a validation message."
+            }
+          ],
+          "events": [
+            {
+              "description": "Fired when the radio is selected (native event)",
+              "name": "change"
+            },
+            {
+              "description": "Fired when the radio is toggled (native event)",
+              "name": "input"
+            },
+            {
+              "description": "Fired when radio is selected. Detail: { checked: boolean, value: string }",
+              "name": "kds-change"
+            },
+            {
+              "description": "Fired when radio receives focus",
+              "name": "kds-focus"
+            },
+            {
+              "description": "Fired when radio loses focus",
+              "name": "kds-blur"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The name of the radio button, submitted as a name/value pair with form data.\nAll radios in a group must share the same name.",
+              "fieldName": "name"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "The value of the radio button, submitted with the name when selected.",
+              "fieldName": "value"
+            },
+            {
+              "name": "checked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the radio is checked.",
+              "fieldName": "checked"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "The radio's size.",
+              "fieldName": "size"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the radio.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes the radio a required field (when in a group, at least one must be selected).",
+              "fieldName": "required"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates the radio is in an invalid state.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "help-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The radio's help text. Alternatively, use the help-text slot.",
+              "fieldName": "helpText"
+            },
+            {
+              "name": "error-message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The radio's error message. Alternatively, use the error-message slot.",
+              "fieldName": "errorMessage"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A radio button input with label, error, and help text support",
+          "tagName": "kds-radio",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsRadio",
+          "declaration": {
+            "name": "KdsRadio",
+            "module": "src/kds-radio.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-radio",
+          "declaration": {
+            "name": "KdsRadio",
+            "module": "src/kds-radio.component.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/kds-text-input.component.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "KdsTextInput",
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "ShadowRootInit"
+              },
+              "static": true,
+              "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
+            },
+            {
+              "kind": "field",
+              "name": "internals",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "Current value of the input.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Placeholder text displayed when the input is empty.",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered above the field.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "hideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the label while keeping it accessible to screen readers.",
+              "attribute": "hide-label"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the input size.\n\n- `sm`: Small\n- `md`: Medium (default)",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "HTMLInputElement[\"type\"]"
+              },
+              "default": "\"text\"",
+              "description": "Native input `type` (e.g., \"text\", \"email\", \"number\").",
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native `name` for form submission.",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the field as required.",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and prevents interaction.\nReflected to allow CSS styling with `:host([disabled])`.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the field.\nCan also be provided via the `help-text` slot.",
+              "attribute": "helpText"
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes the field read-only (non-editable).\nReflected to allow CSS styling with `:host([readonly])`.",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Sets the invalid state and updates `aria-invalid`.\nReflected to allow CSS styling with `:host([invalid])`.",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown below the field when invalid (if no `error` slot provided).",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "type": {
+                "text": "HTMLInputElement[\"autocomplete\"] | undefined"
+              },
+              "description": "Native `autocomplete` hint.",
+              "attribute": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native numeric/date lower bound.",
+              "attribute": "min"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native numeric/date upper bound.",
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "type": {
+                "text": "any | undefined"
+              },
+              "description": "Native numeric/date step increment.",
+              "attribute": "step"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native maximum length (characters).",
+              "attribute": "maxlength"
+            },
+            {
+              "kind": "field",
+              "name": "minlength",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native minimum length (characters).",
+              "attribute": "minlength"
+            },
+            {
+              "kind": "field",
+              "name": "pattern",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native validation pattern (regular expression string).",
+              "attribute": "pattern"
+            },
+            {
+              "kind": "field",
+              "name": "clearable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows a clear button when the field has a value.\nClicking the button or pressing Escape clears the input.",
+              "attribute": "clearable",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_hasStart",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_hasEnd",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_hasErrorSlot",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_hasHelpTextSlot",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_showClear",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_inputId",
+              "privacy": "private",
+              "default": "`kds-text-input-${++uid}`"
+            },
+            {
+              "kind": "field",
+              "name": "_showPassword",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_native",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_startSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_endSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_errorSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_helpTextSlot",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "hadUserInteraction",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "description": "Sets focus to the input element."
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "description": "Removes focus from the input element."
+            },
+            {
+              "kind": "method",
+              "name": "select",
+              "description": "Selects all text in the input element."
+            },
+            {
+              "kind": "field",
+              "name": "handleInput",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleFocus",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleBlur",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleClearClick",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleStartSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleEndSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleErrorSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleHelpTextSlotChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleKeyDown",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "buildValidityFlags",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Partial<Record<keyof ValidityState, boolean>>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "validity",
+                  "type": {
+                    "text": "ValidityState"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updateValidity",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "description": "Checks the input's validity and returns `true` if valid, `false` otherwise.\nAlso updates the internal validity state."
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "description": "Checks the input's validity and reports it to the user.\nReturns `true` if valid, `false` otherwise.\nWhen invalid, shows the browser's native validation UI."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Quiet"
+              }
+            },
+            {
+              "name": "kds-text-input",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "kds-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"\"",
+              "description": "Current value of the input.",
+              "fieldName": "value"
+            },
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Placeholder text displayed when the input is empty.",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Text label rendered above the field.",
+              "fieldName": "label"
+            },
+            {
+              "name": "hide-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Visually hides the label while keeping it accessible to screen readers.",
+              "fieldName": "hideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "\"sm\" | \"md\""
+              },
+              "default": "\"md\"",
+              "description": "Controls the input size.\n\n- `sm`: Small\n- `md`: Medium (default)",
+              "fieldName": "size"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "HTMLInputElement[\"type\"]"
+              },
+              "default": "\"text\"",
+              "description": "Native input `type` (e.g., \"text\", \"email\", \"number\").",
+              "fieldName": "type"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native `name` for form submission.",
+              "fieldName": "name"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Marks the field as required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disables the control and prevents interaction.\nReflected to allow CSS styling with `:host([disabled])`.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "helpText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Helper text displayed below the field.\nCan also be provided via the `help-text` slot.",
+              "fieldName": "helpText"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Makes the field read-only (non-editable).\nReflected to allow CSS styling with `:host([readonly])`.",
+              "fieldName": "readonly"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Sets the invalid state and updates `aria-invalid`.\nReflected to allow CSS styling with `:host([invalid])`.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "error-message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Error message shown below the field when invalid (if no `error` slot provided).",
+              "fieldName": "errorMessage"
+            },
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "HTMLInputElement[\"autocomplete\"] | undefined"
+              },
+              "description": "Native `autocomplete` hint.",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "min",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native numeric/date lower bound.",
+              "fieldName": "min"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native numeric/date upper bound.",
+              "fieldName": "max"
+            },
+            {
+              "name": "step",
+              "type": {
+                "text": "any | undefined"
+              },
+              "description": "Native numeric/date step increment.",
+              "fieldName": "step"
+            },
+            {
+              "name": "maxlength",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native maximum length (characters).",
+              "fieldName": "maxlength"
+            },
+            {
+              "name": "minlength",
+              "type": {
+                "text": "number | undefined"
+              },
+              "description": "Native minimum length (characters).",
+              "fieldName": "minlength"
+            },
+            {
+              "name": "pattern",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "Native validation pattern (regular expression string).",
+              "fieldName": "pattern"
+            },
+            {
+              "name": "clearable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows a clear button when the field has a value.\nClicking the button or pressing Escape clears the input.",
+              "fieldName": "clearable"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "kds-text-input",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "KdsTextInput",
+          "declaration": {
+            "name": "KdsTextInput",
+            "module": "src/kds-text-input.component.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "kds-text-input",
+          "declaration": {
+            "name": "KdsTextInput",
+            "module": "src/kds-text-input.component.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -45,7 +45,7 @@ export class KdsAlertContextual extends LitElement {
    * - `negative`: Error/negative status (red)
    * - `warning`: Warning status (orange/amber)
    */
-  @property({ reflect: true, useDefault: true })
+  @property({ reflect: true })
   status: "info" | "positive" | "negative" | "warning" = "info";
 
   /**
@@ -53,7 +53,7 @@ export class KdsAlertContextual extends LitElement {
    * - `sm`: Small size
    * - `md`: Medium size (default)
    */
-    @property({ reflect: true, useDefault: true })
+  @property({ reflect: true })
   size: "sm" | "md" = "md";
 
   render() {
