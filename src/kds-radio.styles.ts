@@ -38,7 +38,7 @@ export const radioStyles = css`
 
   /* Size variants */
   :host([size="sm"]) {
-    --size: var(--kds-icon-size-sm);
+    --size: var(--kds-icon-size-md);
     --gap: var(--kds-space-sm);
     --font-size: var(--kds-font-size-sm);
   }
