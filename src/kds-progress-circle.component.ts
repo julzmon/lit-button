@@ -43,18 +43,22 @@ export class KdsProgressCircle extends LitElement {
   @property({ reflect: true })
   size: "xs" | "sm" | "md" | "lg" | "xl" = "md";
 
+  // Indeterminate is derived: when no progress is provided. Reflected via attribute for styling.
+
   private arcDeg = 0;
 
   protected willUpdate(_changed: PropertyValues): void {
     super.willUpdate(_changed);
 
     const progressValue = this.getProgressValue();
-    const determinate = progressValue !== undefined;
+    const isIndeterminate = progressValue === undefined;
 
-    this.classList.toggle("is-determinate", determinate);
-    this.classList.toggle("is-indeterminate", !determinate);
-
-    if (determinate) {
+    // Reflect a computed attribute for styling via selectors
+    this.toggleAttribute("indeterminate", isIndeterminate);
+    // Keep classes for backward compatibility
+    this.classList.toggle("is-determinate", !isIndeterminate);
+    this.classList.toggle("is-indeterminate", isIndeterminate);
+    if (!isIndeterminate) {
       const clamped = Math.min(100, Math.max(0, progressValue!));
       this.arcDeg = (clamped / 100) * 360;
     }

@@ -7,7 +7,7 @@ const meta: Meta = {
   component: 'kds-progress-circle',
   tags: ['autodocs'],
   argTypes: {
-    value: {
+    progress: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
       description: 'Progress value (0-100). Omit for indeterminate.',
     },
@@ -29,15 +29,15 @@ export const Default: Story = {
 
 export const Playground: Story = {
   args: {
-    value: 50,
+    progress: 50,
     size: 'md',
     label: 'Loading',
   },
   render: (args) => html`
     <kds-progress-circle
-      value=${args.value}
-      size=${args.size}
-      label=${args.label || ''}
+      .progress=${args.progress}
+      .size=${args.size}
+      .label=${args.label || ''}
     ></kds-progress-circle>
   `,
 };
@@ -54,11 +54,11 @@ export const Indeterminate: Story = {
 export const Determinate: Story = {
   render: () => html`
     <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
-      <kds-progress-circle value="0" label="0%"></kds-progress-circle>
-      <kds-progress-circle value="25" label="25%"></kds-progress-circle>
-      <kds-progress-circle value="50" label="50%"></kds-progress-circle>
-      <kds-progress-circle value="75" label="75%"></kds-progress-circle>
-      <kds-progress-circle value="100" label="100%"></kds-progress-circle>
+      <kds-progress-circle progress="0" label="0%"></kds-progress-circle>
+      <kds-progress-circle progress="25" label="25%"></kds-progress-circle>
+      <kds-progress-circle progress="50" label="50%"></kds-progress-circle>
+      <kds-progress-circle progress="75" label="75%"></kds-progress-circle>
+      <kds-progress-circle progress="100" label="100%"></kds-progress-circle>
     </div>
   `,
 };
@@ -67,17 +67,17 @@ export const Sizes: Story = {
   render: () => html`
     <div style="display: flex; gap: 2rem; align-items: center;">
       <div style="text-align: center;">
-        <kds-progress-circle size="sm" value="60"></kds-progress-circle>
+        <kds-progress-circle size="sm" progress="60"></kds-progress-circle>
         <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">Small</p>
       </div>
 
       <div style="text-align: center;">
-        <kds-progress-circle size="md" value="60"></kds-progress-circle>
+        <kds-progress-circle size="md" progress="60"></kds-progress-circle>
         <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">Medium</p>
       </div>
 
       <div style="text-align: center;">
-        <kds-progress-circle size="lg" value="60"></kds-progress-circle>
+        <kds-progress-circle size="lg" progress="60"></kds-progress-circle>
         <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">Large</p>
       </div>
     </div>
@@ -88,12 +88,12 @@ export const WithLabels: Story = {
   render: () => html`
     <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
       <div style="text-align: center;">
-        <kds-progress-circle value="35" label="Uploading"></kds-progress-circle>
+        <kds-progress-circle progress="35" label="Uploading"></kds-progress-circle>
         <p style="margin: 0.5rem 0 0 0;">35% Complete</p>
       </div>
 
       <div style="text-align: center;">
-        <kds-progress-circle value="67" label="Processing"></kds-progress-circle>
+        <kds-progress-circle progress="67" label="Processing"></kds-progress-circle>
         <p style="margin: 0.5rem 0 0 0;">67% Complete</p>
       </div>
 
@@ -122,7 +122,7 @@ export const UsageExamples: Story = {
       </div>
 
       <div style="padding: 2rem; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
-        <kds-progress-circle size="lg" value="82" label="Course completion"></kds-progress-circle>
+        <kds-progress-circle size="lg" progress="82" label="Course completion"></kds-progress-circle>
         <h4 style="margin: 1rem 0 0.25rem 0;">Course Progress</h4>
         <p style="margin: 0; color: #666;">82% Complete - Keep going!</p>
       </div>
@@ -149,7 +149,7 @@ export const AnimatedProgress: Story = {
       <div style="text-align: center;">
         <kds-progress-circle
           id="animated-progress"
-          value="0"
+          progress="0"
           label="Loading"
           size="lg"
         ></kds-progress-circle>
@@ -164,8 +164,8 @@ export const InDarkMode: Story = {
     <div style="background: #1a1a1a; padding: 2rem; border-radius: 8px;">
       <div style="display: flex; gap: 2rem; align-items: center;">
         <kds-progress-circle label="Loading"></kds-progress-circle>
-        <kds-progress-circle value="40"></kds-progress-circle>
-        <kds-progress-circle value="75"></kds-progress-circle>
+        <kds-progress-circle progress="40"></kds-progress-circle>
+        <kds-progress-circle progress="75"></kds-progress-circle>
       </div>
     </div>
   `,

@@ -111,16 +111,16 @@ export const progressCircleStyles = css`
   }
 
   /* Spinner mode spins the indicator container in place. */
-  :host(.is-indeterminate) .indicator {
+  :host([indeterminate]) .indicator {
     animation: kds-progress-circle-spin var(--kds-progress-speed) linear infinite;
   }
 
-  :host(.is-determinate) .indicator {
+  :host(:not([indeterminate])) .indicator {
     animation: none;
   }
 
   /* Determinate mode brightens the leading edge and enables smooth transitions. */
-  :host(.is-determinate) .indicator::before {
+  :host(:not([indeterminate])) .indicator::before {
     --kds-progress-leading-color: color-mix(
       in srgb,
       var(--kds-progress-indicator-color) 10%,
