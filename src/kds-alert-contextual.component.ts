@@ -21,8 +21,6 @@ import { alertContextualStyles } from "./kds-alert-contextual.styles.js";
  * @cssprop --mod-alert-color - Text and icon color
  * @cssprop --mod-alert-gap - Gap between icon and text
  *
- * @csspart icon - The status icon container
- *
  * @example
  * ```html
  * <kds-alert-contextual status="positive" size="md">Success!</kds-alert-contextual>
@@ -58,10 +56,12 @@ export class KdsAlertContextual extends LitElement {
 
   render() {
     return html`
-      <div part="icon" class="icon" aria-hidden="true">
+      <div class="icon" aria-hidden="true">
         ${this._renderIcon()}
       </div>
-      <slot></slot>
+      <span>
+        <slot></slot>
+      </span>
     `;
   }
 
