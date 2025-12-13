@@ -52,14 +52,11 @@ const preview: Preview = {
       const colorMode = context.globals.colorMode || 'light';
       document.documentElement.setAttribute('data-mode', colorMode);
 
-      return html`
-        <div style="padding: 1rem;">
-          ${story()}
-        </div>
-      `;
+      return html`${story()}`;
     },
   ],
   parameters: {
+    layout: 'centered',
     controls: {
       matchers: {
        color: /(background|color)$/i,
