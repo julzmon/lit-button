@@ -119,9 +119,17 @@ export const checkboxStyles = css`
     background-color: var(--color);
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
     transform: scale(0);
+    opacity: 0;
     transition:
-      var(--kds-animation-duration-fast) transform;
+      transform var(--kds-animation-duration-fast),
+      opacity var(--kds-animation-duration-fast),
+      -webkit-transform var(--kds-animation-duration-fast);
+    -webkit-transition:
+      transform var(--kds-animation-duration-fast),
+      opacity var(--kds-animation-duration-fast),
+      -webkit-transform var(--kds-animation-duration-fast);
     transform-origin: center;
+    -webkit-transform-origin: center;
   }
 
   .native-input:disabled {
@@ -143,6 +151,8 @@ export const checkboxStyles = css`
 
   .native-input:checked::before {
     transform: scale(1);
+    -webkit-transform: scale(1);
+    opacity: 1;
   }
 
   .native-input:checked:hover:not(:disabled) {
@@ -159,6 +169,8 @@ export const checkboxStyles = css`
   .native-input:indeterminate::before {
     clip-path: inset(0);
     transform: scale(0.6);
+    -webkit-transform: scale(0.6);
+    opacity: 1;
   }
 
   .native-input:indeterminate:hover:not(:disabled) {
