@@ -3,7 +3,7 @@ import { css } from "lit";
 export const alertContextualStyles = css`
   :host {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--gap);
 
     /* Default component variables */
@@ -52,6 +52,7 @@ export const alertContextualStyles = css`
     width: var(--icon-size);
     height: var(--icon-size);
     color: var(--color);
+    margin-block-start: var(--kds-space-sm);
   }
 
   .icon svg {
