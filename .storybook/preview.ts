@@ -13,17 +13,51 @@ style.textContent = `
     font-family: system-ui, -apple-system, sans-serif;
     background-color: var(--kds-bg-surface-base);
     color: var(--kds-fg-base);
+    transition: background-color 200ms, color 200ms;
+  }
+
+  /* Apply data-mode attribute to root for theme switching */
+  :root[data-mode="dark"] {
+    background-color: var(--kds-bg-surface-base);
+    color: var(--kds-fg-base);
+  }
+
+  :root[data-mode="light"] {
+    background-color: var(--kds-bg-surface-base);
+    color: var(--kds-fg-base);
   }
 `;
 document.head.appendChild(style);
 
 const preview: Preview = {
+  globalTypes: {
+    colorMode: {
+      name: 'Color Mode',
+      description: 'Global theme for components',
+      defaultValue: 'light',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', icon: 'circlehollow', title: 'Light' },
+          { value: 'dark', icon: 'circle', title: 'Dark' }
+        ],
+        dynamicTitle: true
+      }
+    }
+  },
   decorators: [
-    (story) => html`
-      <div style="padding: 1rem;">
-        ${story()}
-      </div>
-    `,
+    (story, context) => {
+      // Apply data-mode attribute to root based on toolbar selection
+      const colorMode = context.globals.colorMode || 'light';
+      document.documentElement.setAttribute('data-mode', colorMode);
+
+      return html`
+        <div style="padding: 1rem;">
+          ${story()}
+        </div>
+      `;
+    },
   ],
   parameters: {
     controls: {
@@ -44,11 +78,7 @@ const preview: Preview = {
       ],
     },
     backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#ffffff' },
-        { name: 'dark', value: '#1a1a1a' },
-      ],
+      disable: true,
     },
     docs: {
       toc: true,
