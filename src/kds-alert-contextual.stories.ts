@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import './kds-alert-contextual.component.js';
 
 interface AlertArgs {
@@ -35,12 +36,15 @@ type Story = StoryObj<AlertArgs>;
 
 export const Default: Story = {
   args: {
-    status: 'info',
-    size: 'md',
+    status: undefined,
+    size: undefined,
     message: 'This is an informational message.',
   },
   render: ({ status, size, message }) => html`
-    <kds-alert-contextual .status=${status} .size=${size}>
+    <kds-alert-contextual
+      .status=${ifDefined(status)}
+      .size=${ifDefined(size)}
+    >
       ${message}
     </kds-alert-contextual>
   `,
