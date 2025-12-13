@@ -15,6 +15,7 @@ export default {
         for (const module of customElementsManifest.modules ?? []) {
           for (const decl of module.declarations ?? []) {
             // Process class members (properties, events, methods)
+            // Keep properties as the primary public API surface
             if (decl.members) {
               decl.members = decl.members.filter((m) => {
                 const jsDoc = (m.jsDoc || '').toLowerCase();
@@ -23,13 +24,7 @@ export default {
                 // Hide Lit @state() and anything annotated internal/private/ignore
                 if (hasInternalTag || isState) return false;
 
-                // Optionally hide non-reflected props (keep public attributes only)
-                if (m.kind === 'field' || m.kind === 'property') {
-                  // analyzer marks attributes separately; when no attribute name is present, treat as non-public
-                  const hasAttribute = !!m.attribute;
-                  // Keep properties explicitly intended as public (with attribute mapping)
-                  if (!hasAttribute) return false;
-                }
+                // Keep properties even if they have attribute mapping (avoid losing Properties in Docs)
                 return true;
               });
             }
@@ -42,6 +37,11 @@ export default {
                 if (hasInternalTag) return false;
                 return typeof e.name === 'string' ? e.name.startsWith('kds-') : true;
               });
+            }
+
+            // Drop attributes entirely to prevent duplicate entries in Storybook Docs tables
+            if (decl.attributes) {
+              decl.attributes = [];
             }
 
             // Slots: keep named public slots; drop unnamed/internal if tagged

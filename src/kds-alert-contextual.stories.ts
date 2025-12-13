@@ -27,9 +27,6 @@ const meta: Meta<AlertArgs> = {
       control: 'text',
       description: 'Alert message content',
     },
-    shadowRootOptions: {
-      table: { disable: true },
-    },
   },
 };
 
