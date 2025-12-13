@@ -23,8 +23,6 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    progress: 75,
-    size: 'md',
     label: 'Loading',
   },
   render: (args) => html`
