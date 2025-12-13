@@ -68,30 +68,6 @@ export const Default: Story = {
 };
 
 /**
- * Interactive playground to experiment with all properties.
- */
-export const Playground: Story = {
-  args: {
-    gap: 'md',
-    direction: 'row',
-    justify: 'start',
-    stretch: false,
-  },
-  render: (args) => html`
-    <kds-button-group
-      .gap=${args.gap}
-      .direction=${args.direction}
-      .justify=${args.justify}
-      .stretch=${args.stretch}
-    >
-      <kds-button>Button One</kds-button>
-      <kds-button>Button Two</kds-button>
-      <kds-button>Button Three</kds-button>
-    </kds-button-group>
-  `,
-};
-
-/**
  * All available gap sizes.
  */
 export const GapSizes: Story = {

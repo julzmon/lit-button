@@ -46,30 +46,6 @@ export const Default: Story = {
   `,
 };
 
-export const Playground: Story = {
-  args: {
-    label: 'Checkbox Label',
-    size: 'md',
-    checked: false,
-    indeterminate: false,
-    disabled: false,
-    required: false,
-    invalid: false,
-  },
-  render: (args) => html`
-    <kds-checkbox
-      .size=${args.size}
-      .checked=${args.checked}
-      .indeterminate=${args.indeterminate}
-      .disabled=${args.disabled}
-      .required=${args.required}
-      .invalid=${args.invalid}
-    >
-      ${args.label}
-    </kds-checkbox>
-  `,
-};
-
 export const Checked: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">

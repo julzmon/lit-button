@@ -109,38 +109,6 @@ export const Default: Story = {
 };
 
 /**
- * Interactive playground to experiment with all button properties.
- */
-export const Playground: Story = {
-  args: {
-    priority: undefined,
-    color: undefined,
-    variant: undefined,
-    size: 'md',
-    disabled: false,
-    pending: false,
-    pendingLabel: '',
-    type: 'button',
-    block: false,
-  },
-  render: (args) => html`
-    <kds-button
-      .priority=${args.priority}
-      .color=${args.color}
-      .variant=${args.variant}
-      .size=${args.size}
-      .disabled=${args.disabled}
-      .pending=${args.pending}
-      .pendingLabel=${args.pendingLabel}
-      .type=${args.type}
-      .block=${args.block}
-    >
-      Button Text
-    </kds-button>
-  `,
-};
-
-/**
  * All available size variants.
  */
 export const Sizes: Story = {

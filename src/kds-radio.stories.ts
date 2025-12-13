@@ -47,30 +47,6 @@ export const Default: Story = {
   `,
 };
 
-export const Playground: Story = {
-  args: {
-    label: 'Radio Label',
-    size: 'md',
-    checked: false,
-    disabled: false,
-    required: false,
-    invalid: false,
-  },
-  render: (args) => html`
-    <kds-radio
-      name="playground"
-      value="1"
-      .size=${args.size}
-      .checked=${args.checked}
-      .disabled=${args.disabled}
-      .required=${args.required}
-      .invalid=${args.invalid}
-    >
-      ${args.label}
-    </kds-radio>
-  `,
-};
-
 export const Group: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">

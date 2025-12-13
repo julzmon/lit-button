@@ -53,31 +53,6 @@ export const Default: Story = {
   `,
 };
 
-export const Playground: Story = {
-  args: {
-    label: 'Input Label',
-    placeholder: 'Enter text...',
-    size: 'md',
-    disabled: false,
-    readonly: false,
-    required: false,
-    invalid: false,
-    clearable: false,
-  },
-  render: (args) => html`
-    <kds-text-input
-      .label=${args.label}
-      .placeholder=${args.placeholder}
-      .size=${args.size}
-      .disabled=${args.disabled}
-      .readonly=${args.readonly}
-      .required=${args.required}
-      .invalid=${args.invalid}
-      .clearable=${args.clearable}
-    ></kds-text-input>
-  `,
-};
-
 export const Sizes: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 400px;">

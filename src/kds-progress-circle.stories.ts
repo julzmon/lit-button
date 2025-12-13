@@ -23,21 +23,8 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    label: 'Loading',
-  },
-  render: (args) => html`
-    <kds-progress-circle
-      .progress=${args.progress}
-      .size=${args.size}
-      .label=${args.label || ''}
-    ></kds-progress-circle>
-  `,
-};
-
-export const Playground: Story = {
-  args: {
-    progress: 50,
-    size: 'md',
+    progress: undefined,
+    size: undefined,
     label: 'Loading',
   },
   render: (args) => html`

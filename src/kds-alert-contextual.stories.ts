@@ -50,18 +50,7 @@ export const Default: Story = {
   `,
 };
 
-export const Playground: Story = {
-  args: {
-    status: 'info',
-    size: 'md',
-    message: 'This is an alert message',
-  },
-  render: ({ status, size, message }) => html`
-    <kds-alert-contextual .status=${status} .size=${size}>
-      ${message}
-    </kds-alert-contextual>
-  `,
-};export const AllStatuses: Story = {
+export const AllStatuses: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
       <kds-alert-contextual status="info">

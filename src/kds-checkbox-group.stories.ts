@@ -48,33 +48,6 @@ export const Default: Story = {
   `,
 };
 
-export const Playground: Story = {
-  args: {
-    label: 'Select options',
-    helpText: '',
-    errorMessage: '',
-    size: 'md',
-    disabled: false,
-    required: false,
-    invalid: false,
-  },
-  render: (args) => html`
-    <kds-checkbox-group
-      .label=${args.label}
-      .helpText=${args.helpText}
-      .errorMessage=${args.errorMessage}
-      .size=${args.size}
-      .disabled=${args.disabled}
-      .required=${args.required}
-      .invalid=${args.invalid}
-    >
-      <kds-checkbox value="option1">Option 1</kds-checkbox>
-      <kds-checkbox value="option2">Option 2</kds-checkbox>
-      <kds-checkbox value="option3">Option 3</kds-checkbox>
-    </kds-checkbox-group>
-  `,
-};
-
 export const WithHelpText: Story = {
   render: () => html`
     <kds-checkbox-group

@@ -51,36 +51,6 @@ export const Default: Story = {
   `,
 };
 
-export const Playground: Story = {
-  args: {
-    label: 'Choose an option',
-    helpText: '',
-    errorMessage: '',
-    value: '',
-    size: 'md',
-    disabled: false,
-    required: false,
-    invalid: false,
-  },
-  render: (args) => html`
-    <kds-radio-group
-      .label=${args.label}
-      name="playground"
-      .helpText=${args.helpText}
-      .errorMessage=${args.errorMessage}
-      .value=${args.value}
-      .size=${args.size}
-      .disabled=${args.disabled}
-      .required=${args.required}
-      .invalid=${args.invalid}
-    >
-      <kds-radio value="option1">Option 1</kds-radio>
-      <kds-radio value="option2">Option 2</kds-radio>
-      <kds-radio value="option3">Option 3</kds-radio>
-    </kds-radio-group>
-  `,
-};
-
 export const WithValue: Story = {
   render: () => html`
     <kds-radio-group label="Choose a size" name="size" value="medium">
