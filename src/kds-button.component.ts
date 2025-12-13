@@ -15,7 +15,10 @@ import { buttonStyles } from "./kds-button.styles.js";
  * This means inline or page-level `--mod-btn-*` overrides always beat color/variant/priority.
  *
  * The button supports a **pending** state that replaces the start slot with a spinner, blocks
- * interaction, and updates the accessible name via `pending-label`.
+ * interaction, and updates the accessible name. When pending:
+ * - If `pending-label` is provided, screen readers hear exactly that phrase.
+ * - If `pending-label` is not provided, screen readers hear the button's label + ", processing".
+ * - If there's no label, screen readers hear "Processing".
  *
  * **Precedence (highest → lowest):**
  * 1) Inline/page `--mod-btn-*`
@@ -130,14 +133,20 @@ export class KDSButton extends LitElement {
 
   /**
    * Shows a pending state and suppresses interaction while true.
-   * When pending, the button blocks clicks/submits and displays a spinner.
+   * When pending, the button blocks clicks/submits and displays a spinner with aria-label "Processing".
    */
   @property({ type: Boolean, reflect: true })
   pending = false;
 
   /**
-   * Accessible label prefix used while pending (combined with the base label).
-   * Example: `pending-label="Saving"` → "Saving Save changes".
+   * Optional accessible label while the button is pending.
+   *
+   * If set, this is the full accessible label that screen readers hear when the button is pending.
+   * If not set, the button append aria-label ", processing".
+   *
+   * Examples:
+   * - With `pending-label="Saving"`: screen reader says "Saving"
+   * - Without `pending-label` on a "Send email" button: screen reader says "Send email, processing"
    */
   @property({ type: String, attribute: 'pending-label' })
   pendingLabel?: string;
@@ -317,9 +326,17 @@ export class KDSButton extends LitElement {
       return base || undefined;
     }
 
-    const pendingLabel = this.pendingLabel ?? 'Loading';
-    if (!base) return pendingLabel;
-    return `${pendingLabel} ${base}`;
+    // If pending-label is provided, treat it as the full phrase
+    if (this.pendingLabel) {
+      return this.pendingLabel;
+    }
+
+    // Fallback: reuse the base label and append a loading hint
+    if (base) {
+      return `${base}, processing`;
+    }
+
+    return 'Processing';
   }
 
   private get _spinnerSize(): 'xs' | 'sm' | 'md' {
