@@ -28,12 +28,6 @@
               "name": "--mod-alert-gap"
             }
           ],
-          "cssParts": [
-            {
-              "description": "The status icon container",
-              "name": "icon"
-            }
-          ],
           "slots": [
             {
               "description": "Default slot for the alert message text",
@@ -431,7 +425,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Shows a pending state and suppresses interaction while true.\nWhen pending, the button blocks clicks/submits and displays a spinner.",
+              "description": "Shows a pending state and suppresses interaction while true.\nWhen pending, the button blocks clicks/submits and displays a spinner with aria-label \"Processing\".",
               "attribute": "pending",
               "reflects": true
             },
@@ -441,7 +435,7 @@
               "type": {
                 "text": "string | undefined"
               },
-              "description": "Accessible label prefix used while pending (combined with the base label).\nExample: `pending-label=\"Saving\"` → \"Saving Save changes\".",
+              "description": "Optional accessible label while the button is pending.\n\nIf set, this is the full accessible label that screen readers hear when the button is pending.\nIf not set, the button append aria-label \", processing\".\n\nExamples:\n- With `pending-label=\"Saving\"`: screen reader says \"Saving\"\n- Without `pending-label` on a \"Send email\" button: screen reader says \"Send email, processing\"",
               "attribute": "pending-label"
             },
             {
