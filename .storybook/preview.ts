@@ -32,7 +32,16 @@ const preview: Preview = {
        date: /Date$/i,
       },
       expanded: true,
-      exclude: ['shadowRootOptions'],
+      // Hide internal/private-ish props globally
+      exclude: [
+        'shadowRootOptions',
+        'internals',
+        /^(#|_).*$/, // private fields and underscore-prefixed
+        'uid',
+        'inputId',
+        'helpTextId',
+        'errorId',
+      ],
     },
     backgrounds: {
       default: 'light',
@@ -43,6 +52,7 @@ const preview: Preview = {
     },
     docs: {
       toc: true,
+      source: { excludeDecorators: true },
     },
   },
   tags: ['autodocs'],
@@ -50,6 +60,7 @@ const preview: Preview = {
     shadowRootOptions: {
       table: { disable: true },
     },
+    internals: { table: { disable: true } },
   },
 };
 
