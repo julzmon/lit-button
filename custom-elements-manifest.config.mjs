@@ -21,8 +21,26 @@ export default {
                 const jsDoc = (m.jsDoc || '').toLowerCase();
                 const hasInternalTag = jsDoc.includes('@internal') || jsDoc.includes('@private') || jsDoc.includes('@ignore');
                 const isState = (m.kind === 'field' || m.kind === 'property') && /@state\(\)/.test(jsDoc);
+
                 // Hide Lit @state() and anything annotated internal/private/ignore
                 if (hasInternalTag || isState) return false;
+
+                // Hide members with privacy: "private" set by analyzer
+                if (m.privacy === 'private' || m.privacy === 'protected') return false;
+
+                // Hide underscore-prefixed members (naming convention for private)
+                if (m.name && m.name.startsWith('_')) return false;
+
+                // Hide common internal method patterns
+                if (m.kind === 'method' && m.name && (
+                  m.name.startsWith('handle') ||
+                  m.name.startsWith('update') ||
+                  m.name.startsWith('render') && m.name !== 'render'
+                )) {
+                  // Keep only if explicitly documented as public
+                  const isPubliclyDocumented = jsDoc.includes('@public');
+                  if (!isPubliclyDocumented) return false;
+                }
 
                 // Keep properties even if they have attribute mapping (avoid losing Properties in Docs)
                 return true;

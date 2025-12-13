@@ -71,11 +71,6 @@
               "description": "The size of the alert.\n- `sm`: Small size\n- `md`: Medium size (default)",
               "attribute": "size",
               "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "_renderIcon",
-              "privacy": "private"
             }
           ],
           "attributes": [],
@@ -559,31 +554,6 @@
               "attribute": "aria-describedby"
             },
             {
-              "kind": "field",
-              "name": "element",
-              "type": {
-                "text": "HTMLButtonElement | HTMLAnchorElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_labelSlot",
-              "type": {
-                "text": "HTMLSlotElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_computedRel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
               "kind": "method",
               "name": "focus",
               "parameters": [
@@ -600,69 +570,6 @@
               "kind": "method",
               "name": "blur",
               "description": "Removes focus on the button and anchor.\nUseful for programmatically triggering blur-related behavior."
-            },
-            {
-              "kind": "field",
-              "name": "handleLabelSlotChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_applyAriaAttributes",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "el",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                },
-                {
-                  "name": "computedAriaLabel",
-                  "optional": true,
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_getTextLabel",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "string"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_computedAriaLabel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_spinnerSize",
-              "type": {
-                "text": "'xs' | 'sm' | 'md'"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "_renderSpinner",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_handleClick",
-              "privacy": "private"
             }
           ],
           "events": [
@@ -729,14 +636,6 @@
               },
               "static": true,
               "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
-            },
-            {
-              "kind": "field",
-              "name": "internals",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "privacy": "private"
             },
             {
               "kind": "field",
@@ -850,30 +749,6 @@
               "default": "[]",
               "description": "The values of all checked checkboxes in the group.",
               "attribute": "value"
-            },
-            {
-              "kind": "method",
-              "name": "updateSlottedElements",
-              "privacy": "private",
-              "description": "Propagates the group's size, invalid, and disabled state to all slotted checkboxes."
-            },
-            {
-              "kind": "field",
-              "name": "handleSlotChange",
-              "privacy": "private",
-              "description": "Handles slot content changes."
-            },
-            {
-              "kind": "field",
-              "name": "handleCheckboxChange",
-              "privacy": "private",
-              "description": "Handles checkbox change events and tracks group values."
-            },
-            {
-              "kind": "method",
-              "name": "updateGroupValue",
-              "privacy": "private",
-              "description": "Updates the group's value array from checked checkboxes."
             },
             {
               "kind": "method",
@@ -1007,40 +882,6 @@
             },
             {
               "kind": "field",
-              "name": "internals",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_native",
-              "type": {
-                "text": "HTMLInputElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_helpTextId",
-              "privacy": "private",
-              "default": "`kds-checkbox-help-${++uid}`"
-            },
-            {
-              "kind": "field",
-              "name": "_errorId",
-              "privacy": "private",
-              "default": "`kds-checkbox-error-${++uid}`"
-            },
-            {
-              "kind": "field",
-              "name": "_inputId",
-              "privacy": "private",
-              "default": "`kds-checkbox-${++uid}`"
-            },
-            {
-              "kind": "field",
               "name": "name",
               "type": {
                 "text": "string | undefined"
@@ -1141,36 +982,6 @@
               },
               "description": "The checkbox's error message. Alternatively, use the error-message slot.",
               "attribute": "error-message"
-            },
-            {
-              "kind": "method",
-              "name": "updateIndeterminate",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleInput",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleFocus",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleBlur",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "updateValidity",
-              "privacy": "private"
             },
             {
               "kind": "method",
@@ -1355,41 +1166,6 @@
               },
               "description": "The value of the selected radio (for radio groups).\nAutomatically tracks which radio is checked.",
               "attribute": "value"
-            },
-            {
-              "kind": "method",
-              "name": "updateSlottedElements",
-              "privacy": "private",
-              "description": "Propagates the group's size, invalid, and disabled state to all slotted elements.\nThis ensures child components (like inputs, buttons, selects) inherit the group's state.\n\nOnly updates properties that exist on each slotted element (duck typing approach)."
-            },
-            {
-              "kind": "field",
-              "name": "handleSlotChange",
-              "privacy": "private",
-              "description": "Handles slot content changes.\nPropagates properties to newly slotted elements and updates border radius."
-            },
-            {
-              "kind": "field",
-              "name": "handleRadioChange",
-              "privacy": "private",
-              "description": "Handles radio button change events for coordinating radio groups."
-            },
-            {
-              "kind": "method",
-              "name": "getRadios",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "any[]"
-                }
-              },
-              "description": "Gets all radio buttons in the default slot."
-            },
-            {
-              "kind": "method",
-              "name": "updateRadioTabIndexes",
-              "privacy": "private",
-              "description": "Implements roving tabindex for radio button keyboard navigation.\nOnly one radio should be tabbable at a time."
             }
           ],
           "attributes": [],
@@ -1479,25 +1255,6 @@
               "description": "Preset sizes mapped to design tokens.\n\n- `xs`: Extra small\n- `sm`: Small\n- `md`: Medium (default)\n- `lg`: Large\n- `xl`: Extra large",
               "attribute": "size",
               "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "arcDeg",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "method",
-              "name": "getProgressValue",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "number | undefined"
-                }
-              }
             }
           ],
           "attributes": [],
@@ -1555,14 +1312,6 @@
               },
               "static": true,
               "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
-            },
-            {
-              "kind": "field",
-              "name": "internals",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "privacy": "private"
             },
             {
               "kind": "field",
@@ -1676,41 +1425,6 @@
               "default": "\"\"",
               "description": "The value of the selected radio in the group.",
               "attribute": "value"
-            },
-            {
-              "kind": "method",
-              "name": "updateSlottedElements",
-              "privacy": "private",
-              "description": "Propagates the group's size, invalid, and disabled state to all slotted radios."
-            },
-            {
-              "kind": "field",
-              "name": "handleSlotChange",
-              "privacy": "private",
-              "description": "Handles slot content changes."
-            },
-            {
-              "kind": "field",
-              "name": "handleRadioChange",
-              "privacy": "private",
-              "description": "Handles radio change events and maintains single selection."
-            },
-            {
-              "kind": "method",
-              "name": "getRadios",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "any[]"
-                }
-              },
-              "description": "Gets all radio buttons in the default slot."
-            },
-            {
-              "kind": "method",
-              "name": "updateRadioTabIndexes",
-              "privacy": "private",
-              "description": "Implements roving tabindex for radio button keyboard navigation.\nOnly one radio should be tabbable at a time (the checked one, or first if none checked)."
             },
             {
               "kind": "method",
@@ -1840,40 +1554,6 @@
             },
             {
               "kind": "field",
-              "name": "internals",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_native",
-              "type": {
-                "text": "HTMLInputElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_helpTextId",
-              "privacy": "private",
-              "default": "`kds-radio-help-${++uid}`"
-            },
-            {
-              "kind": "field",
-              "name": "_errorId",
-              "privacy": "private",
-              "default": "`kds-radio-error-${++uid}`"
-            },
-            {
-              "kind": "field",
-              "name": "_inputId",
-              "privacy": "private",
-              "default": "`kds-radio-${++uid}`"
-            },
-            {
-              "kind": "field",
               "name": "name",
               "type": {
                 "text": "string | undefined"
@@ -1965,31 +1645,6 @@
               "attribute": "error-message"
             },
             {
-              "kind": "field",
-              "name": "handleChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleInput",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleFocus",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleBlur",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "updateValidity",
-              "privacy": "private"
-            },
-            {
               "kind": "method",
               "name": "reportValidity",
               "description": "Checks for validity and shows the browser's validation message if invalid."
@@ -2069,14 +1724,6 @@
               },
               "static": true,
               "default": "{ mode: \"open\" as ShadowRootMode, delegatesFocus: true, }"
-            },
-            {
-              "kind": "field",
-              "name": "internals",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "privacy": "private"
             },
             {
               "kind": "field",
@@ -2283,115 +1930,6 @@
               "reflects": true
             },
             {
-              "kind": "field",
-              "name": "_hasStart",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_hasEnd",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_hasErrorSlot",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_hasHelpTextSlot",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_showClear",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_inputId",
-              "privacy": "private",
-              "default": "`kds-text-input-${++uid}`"
-            },
-            {
-              "kind": "field",
-              "name": "_showPassword",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_native",
-              "type": {
-                "text": "HTMLInputElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_startSlot",
-              "type": {
-                "text": "HTMLSlotElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_endSlot",
-              "type": {
-                "text": "HTMLSlotElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_errorSlot",
-              "type": {
-                "text": "HTMLSlotElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_helpTextSlot",
-              "type": {
-                "text": "HTMLSlotElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "hadUserInteraction",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
               "kind": "method",
               "name": "focus",
               "description": "Sets focus to the input element."
@@ -2405,79 +1943,6 @@
               "kind": "method",
               "name": "select",
               "description": "Selects all text in the input element."
-            },
-            {
-              "kind": "field",
-              "name": "handleInput",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleFocus",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleBlur",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "handleClearClick",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleStartSlotChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleEndSlotChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleErrorSlotChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleHelpTextSlotChange",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleKeyDown",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "buildValidityFlags",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Partial<Record<keyof ValidityState, boolean>>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "validity",
-                  "type": {
-                    "text": "ValidityState"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "updateValidity",
-              "privacy": "private"
             },
             {
               "kind": "method",
