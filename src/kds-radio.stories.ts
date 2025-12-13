@@ -22,8 +22,28 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => html`
-    <kds-radio name="example" value="1">Radio option</kds-radio>
+  args: {
+    label: 'Radio option',
+    name: 'example',
+    value: '1',
+    size: 'md',
+    checked: false,
+    disabled: false,
+    required: false,
+    invalid: false,
+  },
+  render: (args) => html`
+    <kds-radio
+      .name=${args.name}
+      .value=${args.value}
+      .size=${args.size}
+      .checked=${args.checked}
+      .disabled=${args.disabled}
+      .required=${args.required}
+      .invalid=${args.invalid}
+    >
+      ${args.label}
+    </kds-radio>
   `,
 };
 

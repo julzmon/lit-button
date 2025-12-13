@@ -80,7 +80,32 @@ type Story = StoryObj;
  * The default button with medium size and neutral styling.
  */
 export const Default: Story = {
-  render: () => html`<kds-button>Button</kds-button>`,
+  args: {
+    priority: undefined,
+    color: undefined,
+    variant: undefined,
+    size: 'md',
+    disabled: false,
+    pending: false,
+    pendingLabel: '',
+    type: 'button',
+    block: false,
+  },
+  render: (args) => html`
+    <kds-button
+      .priority=${args.priority}
+      .color=${args.color}
+      .variant=${args.variant}
+      .size=${args.size}
+      .disabled=${args.disabled}
+      .pending=${args.pending}
+      .pendingLabel=${args.pendingLabel}
+      .type=${args.type}
+      .block=${args.block}
+    >
+      Button
+    </kds-button>
+  `,
 };
 
 /**

@@ -37,9 +37,14 @@ export default meta;
 type Story = StoryObj<AlertArgs>;
 
 export const Default: Story = {
-  render: () => html`
-    <kds-alert-contextual status="info">
-      This is an informational message.
+  args: {
+    status: 'info',
+    size: 'md',
+    message: 'This is an informational message.',
+  },
+  render: ({ status, size, message }) => html`
+    <kds-alert-contextual .status=${status} .size=${size}>
+      ${message}
     </kds-alert-contextual>
   `,
 };

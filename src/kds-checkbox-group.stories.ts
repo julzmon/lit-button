@@ -21,6 +21,33 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
+export const Default: Story = {
+  args: {
+    label: 'Select your preferences',
+    helpText: '',
+    errorMessage: '',
+    size: 'md',
+    disabled: false,
+    required: false,
+    invalid: false,
+  },
+  render: (args) => html`
+    <kds-checkbox-group
+      .label=${args.label}
+      .helpText=${args.helpText}
+      .errorMessage=${args.errorMessage}
+      .size=${args.size}
+      .disabled=${args.disabled}
+      .required=${args.required}
+      .invalid=${args.invalid}
+    >
+      <kds-checkbox value="email">Email notifications</kds-checkbox>
+      <kds-checkbox value="sms">SMS notifications</kds-checkbox>
+      <kds-checkbox value="push">Push notifications</kds-checkbox>
+    </kds-checkbox-group>
+  `,
+};
+
 export const Playground: Story = {
   args: {
     label: 'Select options',
@@ -44,16 +71,6 @@ export const Playground: Story = {
       <kds-checkbox value="option1">Option 1</kds-checkbox>
       <kds-checkbox value="option2">Option 2</kds-checkbox>
       <kds-checkbox value="option3">Option 3</kds-checkbox>
-    </kds-checkbox-group>
-  `,
-};
-
-export const Default: Story = {
-  render: () => html`
-    <kds-checkbox-group label="Select your preferences">
-      <kds-checkbox value="email">Email notifications</kds-checkbox>
-      <kds-checkbox value="sms">SMS notifications</kds-checkbox>
-      <kds-checkbox value="push">Push notifications</kds-checkbox>
     </kds-checkbox-group>
   `,
 };

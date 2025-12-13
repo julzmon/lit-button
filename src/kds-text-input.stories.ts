@@ -27,8 +27,29 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => html`
-    <kds-text-input label="Username" placeholder="Enter username"></kds-text-input>
+  args: {
+    label: 'Username',
+    placeholder: 'Enter username',
+    size: 'md',
+    type: 'text',
+    disabled: false,
+    readonly: false,
+    required: false,
+    invalid: false,
+    clearable: false,
+  },
+  render: (args) => html`
+    <kds-text-input
+      .label=${args.label}
+      .placeholder=${args.placeholder}
+      .size=${args.size}
+      .type=${args.type}
+      .disabled=${args.disabled}
+      .readonly=${args.readonly}
+      .required=${args.required}
+      .invalid=${args.invalid}
+      .clearable=${args.clearable}
+    ></kds-text-input>
   `,
 };
 

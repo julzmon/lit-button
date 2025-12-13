@@ -22,8 +22,17 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => html`
-    <kds-progress-circle value="75"></kds-progress-circle>
+  args: {
+    progress: 75,
+    size: 'md',
+    label: 'Loading',
+  },
+  render: (args) => html`
+    <kds-progress-circle
+      .progress=${args.progress}
+      .size=${args.size}
+      .label=${args.label || ''}
+    ></kds-progress-circle>
   `,
 };
 

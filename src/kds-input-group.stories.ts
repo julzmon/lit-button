@@ -17,9 +17,9 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-export const Playground: Story = {
+export const Default: Story = {
   args: {
-    label: 'Field Group',
+    label: 'Personal Information',
     helpText: '',
     errorMessage: '',
     disabled: false,
@@ -41,9 +41,24 @@ export const Playground: Story = {
   `,
 };
 
-export const Default: Story = {
-  render: () => html`
-    <kds-input-group label="Personal Information">
+export const Playground: Story = {
+  args: {
+    label: 'Field Group',
+    helpText: '',
+    errorMessage: '',
+    disabled: false,
+    required: false,
+    invalid: false,
+  },
+  render: (args) => html`
+    <kds-input-group
+      .label=${args.label}
+      .helpText=${args.helpText}
+      .errorMessage=${args.errorMessage}
+      .disabled=${args.disabled}
+      .required=${args.required}
+      .invalid=${args.invalid}
+    >
       <kds-text-input label="First Name" name="firstName"></kds-text-input>
       <kds-text-input label="Last Name" name="lastName"></kds-text-input>
     </kds-input-group>

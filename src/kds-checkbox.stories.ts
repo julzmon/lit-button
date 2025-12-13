@@ -23,8 +23,26 @@ export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => html`
-    <kds-checkbox>Accept terms and conditions</kds-checkbox>
+  args: {
+    label: 'Accept terms and conditions',
+    size: 'md',
+    checked: false,
+    indeterminate: false,
+    disabled: false,
+    required: false,
+    invalid: false,
+  },
+  render: (args) => html`
+    <kds-checkbox
+      .size=${args.size}
+      .checked=${args.checked}
+      .indeterminate=${args.indeterminate}
+      .disabled=${args.disabled}
+      .required=${args.required}
+      .invalid=${args.invalid}
+    >
+      ${args.label}
+    </kds-checkbox>
   `,
 };
 

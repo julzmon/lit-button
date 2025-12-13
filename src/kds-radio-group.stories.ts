@@ -21,6 +21,36 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
+export const Default: Story = {
+  args: {
+    label: 'Choose a color',
+    helpText: '',
+    errorMessage: '',
+    value: '',
+    size: 'md',
+    disabled: false,
+    required: false,
+    invalid: false,
+  },
+  render: (args) => html`
+    <kds-radio-group
+      .label=${args.label}
+      name="color"
+      .helpText=${args.helpText}
+      .errorMessage=${args.errorMessage}
+      .value=${args.value}
+      .size=${args.size}
+      .disabled=${args.disabled}
+      .required=${args.required}
+      .invalid=${args.invalid}
+    >
+      <kds-radio value="red">Red</kds-radio>
+      <kds-radio value="green">Green</kds-radio>
+      <kds-radio value="blue">Blue</kds-radio>
+    </kds-radio-group>
+  `,
+};
+
 export const Playground: Story = {
   args: {
     label: 'Choose an option',
@@ -47,16 +77,6 @@ export const Playground: Story = {
       <kds-radio value="option1">Option 1</kds-radio>
       <kds-radio value="option2">Option 2</kds-radio>
       <kds-radio value="option3">Option 3</kds-radio>
-    </kds-radio-group>
-  `,
-};
-
-export const Default: Story = {
-  render: () => html`
-    <kds-radio-group label="Choose a color" name="color">
-      <kds-radio value="red">Red</kds-radio>
-      <kds-radio value="green">Green</kds-radio>
-      <kds-radio value="blue">Blue</kds-radio>
     </kds-radio-group>
   `,
 };

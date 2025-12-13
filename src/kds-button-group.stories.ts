@@ -47,8 +47,19 @@ type Story = StoryObj;
  * Default button group with medium spacing.
  */
 export const Default: Story = {
-  render: () => html`
-    <kds-button-group>
+  args: {
+    gap: 'md',
+    direction: 'row',
+    justify: 'start',
+    stretch: false,
+  },
+  render: (args) => html`
+    <kds-button-group
+      .gap=${args.gap}
+      .direction=${args.direction}
+      .justify=${args.justify}
+      .stretch=${args.stretch}
+    >
       <kds-button>First</kds-button>
       <kds-button>Second</kds-button>
       <kds-button>Third</kds-button>
